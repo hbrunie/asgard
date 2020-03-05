@@ -20,6 +20,7 @@
 #include "tensors.hpp"
 #include "time_advance.hpp"
 #include "transformations.hpp"
+#include <chrono>
 #include <numeric>
 
 using prec = double;
@@ -223,10 +224,12 @@ int main(int argc, char **argv)
   // -- time loop
   node_out() << "--- begin time loop ---" << '\n';
   prec const dt = pde->get_dt() * opts.get_cfl();
+  std::vector<double> time_advance_ms;
   for (int i = 0; i < opts.get_time_steps(); ++i)
   {
     prec const time = i * dt;
 
+    auto const start = std::chrono::high_resolution_clock::now();
     if (opts.using_implicit())
     {
       bool const update_system = i == 0;
@@ -239,6 +242,10 @@ int main(int argc, char **argv)
       explicit_time_advance(*pde, table, initial_sources, host_space,
                             rank_space, chunks, plan, time, dt);
     }
+    time_advance_ms.push_back(
+        std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::high_resolution_clock::now() - start)
+            .count());
 
     // print root mean squared error from analytic solution
     if (pde->has_analytic_soln)
@@ -290,6 +297,11 @@ int main(int argc, char **argv)
 
     node_out() << "timestep: " << i << " complete" << '\n';
   }
+
+  auto const time_advance_avg_ms =
+      std::accumulate(time_advance_ms.begin(), time_advance_ms.end(), 0.0) /
+      time_advance_ms.size();
+  node_out() << "avg time advance (ms): " << time_advance_avg_ms << '\n';
 
   node_out() << "--- simulation complete ---" << '\n';
 
