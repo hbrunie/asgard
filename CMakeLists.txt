@@ -67,7 +67,6 @@ endif()
 
 if(ASGARD_USE_OPENMP)
   find_package(OpenMP REQUIRED)
-  add_compile_options ("-fopenmp")
 endif()
 
 if(ASGARD_USE_CUDA)
@@ -131,7 +130,7 @@ target_link_libraries (basis PRIVATE matlab_utilities quadrature tensors)
 
 target_link_libraries (batch PRIVATE lib_dispatch coefficients connectivity chunk element_table pde tensors)
 
-if (ASGARD_USE_OPENMP AND NOT ASGARD_USE_MKL)
+if (ASGARD_USE_OPENMP)
    target_link_libraries(batch PRIVATE OpenMP::OpenMP_CXX)
 endif ()
 
@@ -163,7 +162,9 @@ if (ASGARD_USE_CUDA)
   target_link_libraries(lib_dispatch PRIVATE ${CUDA_LIBRARIES}
 					     ${CUDA_CUBLAS_LIBRARIES})
 endif()
-
+if (ASGARD_USE_OPENMP)
+   target_link_libraries(lib_dispatch PRIVATE OpenMP::OpenMP_CXX)
+endif ()
 target_link_libraries (matlab_utilities PUBLIC tensors)
 
 target_link_libraries (pde PRIVATE basis matlab_utilities tensors)

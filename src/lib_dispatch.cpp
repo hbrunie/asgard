@@ -3,6 +3,10 @@
 #include <iostream>
 #include <type_traits>
 
+#ifdef ASGARD_USE_OPENMP
+#include <omp.h>
+#endif
+
 #ifdef ASGARD_USE_CUDA
 #include <cublas_v2.h>
 #include <cuda_runtime.h>
@@ -680,6 +684,9 @@ void batched_gemm(P **const &a, int *lda, char const *transa, P **const &b,
   }
 
   // default execution on the host for any resource
+#ifdef ASGARD_USE_OPENMP
+#pragma omp parallel for
+#endif
   for (int i = 0; i < *num_batch; ++i)
   {
     gemm(transa, transb, m, n, k, alpha, a[i], lda, b[i], ldb, beta, c[i], ldc,
