@@ -1,0 +1,2 @@
+module load cmake/3.18.2
+otherwise cmake won't find BLAS from cray-libsci
