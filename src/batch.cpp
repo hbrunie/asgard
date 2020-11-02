@@ -256,6 +256,16 @@ void batched_gemm(batch<P, resrc> const &a, batch<P, resrc> const &b,
   P beta_  = beta;
 
   int num_batch = a.num_entries();
+  node_out() << "Batched gemm: " << m
+             << " " << n
+             << " " << k
+             << " " << lda
+             << " " << ldb
+             << " " << ldc
+             << " " << trans_a
+             << " " << trans_b
+             << " " << num_batch
+             << '\n';
 
   lib_dispatch::batched_gemm(a.get_list(), &lda, &trans_a, b.get_list(), &ldb,
                              &trans_b, c.get_list(), &ldc, &m, &n, &k, &alpha_,

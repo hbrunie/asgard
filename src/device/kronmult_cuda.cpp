@@ -297,6 +297,12 @@ void call_kronmult(int const n, P *x_ptrs[], P *output_ptrs[], P *work_ptrs[],
     int constexpr nwarps      = 1;
     int constexpr num_threads = nwarps * warpsize;
 
+    node_out() << "Kronmult data: "<< num_dims
+       << " " << n
+       << " " << lda
+       << " " << num_krons
+       << " " << num_threads
+       << '\n';
     switch (num_dims)
     {
     case 1:
