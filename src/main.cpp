@@ -16,17 +16,12 @@
 
 #include "boundary_conditions.hpp"
 #include "pde.hpp"
+#include "floating_point_precisions.hpp"
 #include "program_options.hpp"
 #include "tensors.hpp"
 #include "time_advance.hpp"
 #include "transformations.hpp"
 #include <numeric>
-
-#ifdef ASGARD_USE_DOUBLE_PREC
-using prec = double;
-#else
-using prec = float;
-#endif
 
 int main(int argc, char **argv)
 {
