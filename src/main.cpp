@@ -50,11 +50,14 @@ int main(int argc, char **argv)
 
   // -- generate pde
   node_out() << "generating: pde..." << '\n';
-  auto pde = make_PDE<prec>(cli_input);
+  // -- High Precision PDE for the analytic solution
+  std::unique_ptr<PDE<analytic_prec>> analytic_prec_pde = make_PDE<analytic_prec>(cli_input);
+  // -- Choosen Precision PDE for the numeric solution
+  std::unique_ptr<PDE<prec>> pde = make_PDE<prec>(cli_input);
 
   // do this only once to avoid confusion
   // if we ever do go to p-adaptivity (variable degree) we can change it then
-  auto const degree = pde->get_dimensions()[0].get_degree();
+  int const degree = analytic_prec_pde->get_dimensions()[0].get_degree();
 
   node_out() << "ASGarD problem configuration:" << '\n';
   node_out() << "  selected PDE: " << cli_input.get_pde_string() << '\n';
@@ -68,9 +71,9 @@ int main(int argc, char **argv)
   node_out() << "  Poisson solve: " << opts.do_poisson_solve << '\n';
   node_out() << "  starting levels: ";
   node_out() << std::accumulate(
-                    pde->get_dimensions().begin(), pde->get_dimensions().end(),
+                    analytic_prec_pde->get_dimensions().begin(), analytic_prec_pde->get_dimensions().end(),
                     std::string(),
-                    [](std::string const &accum, dimension<prec> const &dim) {
+                    [](std::string const &accum, dimension<analytic_prec> const &dim) {
                       return accum + std::to_string(dim.get_level()) + " ";
                     })
              << '\n';
@@ -78,32 +81,98 @@ int main(int argc, char **argv)
 
   node_out() << "--- begin setup ---" << '\n';
 
-  // -- create forward/reverse mapping between elements and indices,
-  // -- along with a distribution plan. this is the adaptive grid.
-  node_out() << "  generating: adaptive grid..." << '\n';
+  // -- create forward/reverse mapping between elements and indices
+  node_out() << "  generating: element table..." << '\n';
+
+  auto const table = elements::table(opts, *analytic_prec_pde);
 
   adapt::distributed_grid adaptive_grid(*pde, opts);
   node_out() << "  degrees of freedom: "
-             << adaptive_grid.size() *
-                    static_cast<uint64_t>(std::pow(degree, pde->num_dims))
+             << table.size() *
+                    static_cast<uint64_t>(std::pow(degree, analytic_prec_pde->num_dims))
              << '\n';
 
   node_out() << "  generating: basis operator..." << '\n';
-  auto const quiet = false;
-  basis::wavelet_transform<prec, resource::host> const transformer(opts, *pde,
-                                                                   quiet);
+  bool const quiet = false;
+  // -- High Precision transformer for the analytic solution
+  basis::wavelet_transform<analytic_prec, resource::host> const analytic_prec_transformer(opts,
+                                                                        *analytic_prec_pde,
+                                                                        quiet);
+  // -- Choosen Precision transformer for the numeric solution
+  basis::wavelet_transform<prec, resource::host> const transformer(opts,
+                                                                        *pde,
+                                                                        quiet);
+
+  // -- get distribution plan - dividing element grid into subgrids
+  // No floating point precision dependance
+  auto const plan    = get_plan(num_ranks, table);
+  auto const subgrid = plan.at(get_rank());
+
   // -- generate initial condition vector
   node_out() << "  generating: initial conditions..." << '\n';
-  auto const initial_condition =
-      adaptive_grid.get_initial_condition(*pde, transformer, opts);
-  node_out() << "  degrees of freedom (post initial adapt): "
-             << adaptive_grid.size() *
-                    static_cast<uint64_t>(std::pow(degree, pde->num_dims))
-             << '\n';
+
+  fk::vector<analytic_prec> const initial_condition = [&analytic_prec_pde, &table,
+                                              &analytic_prec_transformer,
+                                              &subgrid, degree]() {
+    std::vector<vector_func<analytic_prec>> v_functions;
+
+    for (dimension<analytic_prec> const &dim : analytic_prec_pde->get_dimensions())
+    {
+      v_functions.push_back(dim.initial_condition);
+    }
+
+    return transform_and_combine_dimensions(*analytic_prec_pde, v_functions, table,
+                                            analytic_prec_transformer, subgrid.col_start,
+                                            subgrid.col_stop, degree);
+  }();
+
+  // -- generate source vectors
+  // these will be scaled later according to the simulation time applied
+  // with their own time-scaling functions
+  node_out() << "  generating: source vectors..." << '\n';
+  std::vector<fk::vector<prec>> const initial_sources =
+      [&pde, &table, &transformer, &subgrid, degree]() {
+        std::vector<fk::vector<prec>> initial_sources;
+
+        for (source<prec> const &source : pde->sources)
+        {
+          initial_sources.push_back(transform_and_combine_dimensions(
+              *pde, source.source_funcs, table, transformer, subgrid.row_start,
+             subgrid.row_stop, degree));
+        }
+        return initial_sources;
+      }();
+
+  // -- generate analytic solution vector.
+  node_out() << "  generating: analytic solution at t=0 ..." << '\n';
+
+  // Analytic solution always in double precision (or long double?)
+  fk::vector<analytic_prec> const analytic_solution = [&analytic_prec_pde, &table, &analytic_prec_transformer,
+                                              &subgrid, degree]() {
+    if (analytic_prec_pde->has_analytic_soln)
+    {
+      return transform_and_combine_dimensions(
+          *analytic_prec_pde, analytic_prec_pde->exact_vector_funcs, table, analytic_prec_transformer, subgrid.col_start,
+          subgrid.col_stop, degree);
+    }
+    else
+    {
+      return fk::vector<analytic_prec>();
+    }
+  }();
 
   // -- generate and store coefficient matrices.
   node_out() << "  generating: coefficient matrices..." << '\n';
-  generate_all_coefficients<prec>(*pde, transformer);
+  generate_all_coefficients<analytic_prec>(*analytic_prec_pde, analytic_prec_transformer);
+
+  /* generate boundary condition vectors */
+  /* these will be scaled later similarly to the source vectors */
+  node_out() << "  generating: boundary condition vectors..." << '\n';
+
+  std::array<unscaled_bc_parts<prec>, 2> unscaled_parts =
+      boundary_conditions::make_unscaled_bc_parts(
+          *pde, table, transformer, 
+          subgrid.row_start, subgrid.row_stop);
 
   // this is to bail out for further profiling/development on the setup routines
   if (opts.num_time_steps < 1)
@@ -134,7 +203,7 @@ int main(int argc, char **argv)
 
   // realspace solution vector - WARNING this is
   // currently infeasible to form for large problems
-  auto const real_space_size = real_solution_size(*pde);
+  int const real_space_size = real_solution_size(*analytic_prec_pde);
   fk::vector<prec> real_space(real_space_size);
 
   // temporary workspaces for the transform
@@ -147,9 +216,9 @@ int main(int argc, char **argv)
           fk::vector<prec, mem_type::view, resource::host>(
               workspace, real_space_size, real_space_size * 2 - 1)};
   // transform initial condition to realspace
-  wavelet_to_realspace<prec>(*pde, initial_condition, adaptive_grid.get_table(),
-                             transformer, default_workspace_cpu_MB,
-                             tmp_workspace, real_space);
+  wavelet_to_realspace<analytic_prec>(*analytic_prec_pde, initial_condition, table, transformer,
+                             default_workspace_cpu_MB, tmp_workspace,
+                             real_space);
 
   // initialize realspace output
   auto const realspace_output_name = "asgard_realspace";
@@ -159,39 +228,52 @@ int main(int argc, char **argv)
 
   // -- time loop
 
+  // Convert to choosen floating point precision
   fk::vector<prec> f_val(initial_condition);
   node_out() << "--- begin time loop w/ dt " << pde->get_dt() << " ---\n";
   for (auto i = 0; i < opts.num_time_steps; ++i)
   {
-    // take a time advance step
-    auto const time          = i * pde->get_dt();
-    auto const update_system = i == 0;
-    auto const method = opts.use_implicit_stepping ? time_advance::method::imp
-                                                   : time_advance::method::exp;
-    auto const time_str = opts.use_implicit_stepping ? "implicit_time_advance"
-                                                     : "explicit_time_advance";
-    auto const time_id = tools::timer.start(time_str);
-    auto const sol     = time_advance::adaptive_advance(
-        method, *pde, adaptive_grid, transformer, opts, f_val, time,
-        default_workspace_MB, update_system);
-    f_val.resize(sol.size()) = sol;
-    tools::timer.stop(time_id);
+    prec const time = i * pde->get_dt();
+
+    if (opts.use_implicit_stepping)
+    {
+      bool const update_system = i == 0;
+
+      auto const time_id = timer::record.start("implicit_time_advance");
+      f_val =
+          implicit_time_advance(*pde, table, initial_sources,
+                                unscaled_parts, f_val, plan, time, opts.solver,
+                                update_system);
+      timer::record.stop(time_id);
+    }
+    else
+    {
+      // FIXME fold initial sources/unscaled parts into pde object
+      // after pde spec/pde split
+      auto const &time_id = timer::record.start("explicit_time_advance");
+      f_val = explicit_time_advance(*pde, table, opts, initial_sources,
+                                    unscaled_parts, f_val, plan,
+                                    default_workspace_MB, time);
+
+      timer::record.stop(time_id);
+    }
 
     // print root mean squared error from analytic solution
-    if (pde->has_analytic_soln)
+    if (analytic_prec_pde->has_analytic_soln)
     {
-      auto const subgrid           = adaptive_grid.get_subgrid(get_rank());
-      auto const analytic_solution = transform_and_combine_dimensions(
-          *pde, pde->exact_vector_funcs, adaptive_grid.get_table(), transformer,
-          subgrid.col_start, subgrid.col_stop, degree);
-      auto const time_multiplier     = pde->exact_time((i + 1) * pde->get_dt());
-      auto const analytic_solution_t = analytic_solution * time_multiplier;
-      auto const diff                = f_val - analytic_solution_t;
-      auto const RMSE                = [&diff]() {
-        fk::vector<prec> squared(diff);
+      prec const time_multiplier = analytic_prec_pde->exact_time((i + 1) * analytic_prec_pde->get_dt());
+
+      fk::vector<analytic_prec> const analytic_solution_t =
+          analytic_solution * time_multiplier;
+      // Convert back to analytic floating point precision
+      fk::vector<analytic_prec> analytic_prec_f_val(f_val);
+
+      fk::vector<analytic_prec> const diff = analytic_prec_f_val - analytic_solution_t;
+      analytic_prec const RMSE             = [&diff]() {
+        fk::vector<analytic_prec> squared(diff);
         std::transform(squared.begin(), squared.end(), squared.begin(),
-                       [](prec const &elem) { return elem * elem; });
-        auto const mean = std::accumulate(squared.begin(), squared.end(), 0.0) /
+                       [](analytic_prec const &elem) { return elem * elem; });
+        analytic_prec const mean = std::accumulate(squared.begin(), squared.end(), 0.0) /
                           squared.size();
         return std::sqrt(mean);
       }();
