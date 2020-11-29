@@ -84,7 +84,8 @@ int main(int argc, char **argv)
   // -- create forward/reverse mapping between elements and indices
   node_out() << "  generating: element table..." << '\n';
 
-  auto const table = elements::table(opts, *analytic_prec_pde);
+  // TODO: not supposed to depend on PDE precision
+  auto const table = elements::table(opts, *pde);
 
   adapt::distributed_grid adaptive_grid(*pde, opts);
   node_out() << "  degrees of freedom: "
