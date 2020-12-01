@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 
   // do this only once to avoid confusion
   // if we ever do go to p-adaptivity (variable degree) we can change it then
-  int const degree = analytic_prec_pde->get_dimensions()[0].get_degree();
+  int const degree = pde->get_dimensions()[0].get_degree();
 
   node_out() << "ASGarD problem configuration:" << '\n';
   node_out() << "  selected PDE: " << cli_input.get_pde_string() << '\n';
