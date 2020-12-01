@@ -184,37 +184,35 @@ endif ()
 # link to Ed D'Azevedo's kronmult library, or download/build if not present
 #
 ###############################################################################
-
-set(KRON_PATH "${CMAKE_SOURCE_DIR}/contrib/kronmult/src/kronmult-ext")
-find_library(KRON_LIB kron PATHS ${KRON_PATH})
-
-if(NOT KRON_LIB)
-    message("-- kronmult library not found - dl and build from src")
-    
-    set(KRON_INC_PATH ${KRON_PATH}/make.inc.cpu)
-    set(KRON_ARGS "")
-    if(ASGARD_USE_CUDA)
-       message("-- build with CUDA support")
-       set(KRON_INC_PATH ${KRON_PATH}/make.inc.gpu)
-       set(KRON_ARGS -DUSE_GPU=1)
-    else()
-       message("-- build without CUDA support")
-    endif()
-
-    
-    include (ExternalProject)
-    ExternalProject_Add (kronmult-ext
-      UPDATE_COMMAND ""
-      PREFIX ${CMAKE_SOURCE_DIR}/contrib/kronmult
-      URL https://github.com/project-asgard/kronmult/archive/v2.1.tar.gz
-      DOWNLOAD_NO_PROGRESS 1
-      CMAKE_ARGS ${KRON_ARGS}
-      BUILD_IN_SOURCE 1
-      INSTALL_COMMAND ""
-    )
-
-    set (build_kron TRUE)
-    set (KRON_LIB "-L${KRON_PATH} -lkron")
-
+if(ASGARD_USE_CUDA)
+    set(USE_GPU 1)
 endif()
+set(KRON_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/extern-deps/kronmult/")
+if((NOT EXISTS ${KRON_INCLUDE_DIR}/CMakeLists.txt))
+    # we couldn't find the header files for KRON or they don't exist
+    message("Unable to find kronmult")
 
+    # we have a submodule setup for kron, assume it is under external/kron
+    # now we need to clone this submodule
+    execute_process(COMMAND git submodule update --init -- extern-deps/kronmult
+                    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
+    # set KRON_INCLUDE_DIR properly: TODO add include dir in kronmult
+    set(KRON_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/extern-deps/kronmult/
+        CACHE PATH "kronmult include directory")
+
+    # also install it
+    install(DIRECTORY ${KRON_INCLUDE_DIR}/kronmult DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+    # for convenience setup a target
+    add_library(kronmult_interface INTERFACE)
+    target_include_directories(kronmult_interface INTERFACE
+        $<BUILD_INTERFACE:${KRON_INCLUDE_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>)
+
+    # need to export target as well
+    install(TARGETS kronmult_interface EXPORT my_export_set DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+else()
+    # see above, setup target as well
+endif()
+add_subdirectory("${CMAKE_SOURCE_DIR}/extern-deps/kronmult")
