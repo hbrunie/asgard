@@ -1,0 +1,3 @@
+[submodule "extern-deps/kronmult"]
+	path = extern-deps/kronmult
+	url = https://github.com/project-asgard/kronmult.git
