@@ -72,9 +72,10 @@ int main(int argc, char **argv)
   node_out() << "  Poisson solve: " << opts.do_poisson_solve << '\n';
   node_out() << "  starting levels: ";
   node_out() << std::accumulate(
-                    analytic_prec_pde->get_dimensions().begin(), analytic_prec_pde->get_dimensions().end(),
+                    pde->get_dimensions().begin(), pde->get_dimensions().end(),
                     std::string(),
-                    [](std::string const &accum, dimension<analytic_prec> const &dim) {
+                    //TODO: does dim really need to be a float ??
+                    [](std::string const &accum, dimension<prec> const &dim) {
                       return accum + std::to_string(dim.get_level()) + " ";
                     })
              << '\n';
@@ -90,7 +91,7 @@ int main(int argc, char **argv)
 
   node_out() << "  degrees of freedom: "
              << table.size() *
-                    static_cast<uint64_t>(std::pow(degree, analytic_prec_pde->num_dims))
+                    static_cast<uint64_t>(std::pow(degree, pde->num_dims))
              << '\n';
 
   node_out() << "  generating: basis operator..." << '\n';
