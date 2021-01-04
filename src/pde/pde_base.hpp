@@ -16,6 +16,7 @@
 #include "../matlab_utilities.hpp"
 #include "../program_options.hpp"
 #include "../tensors.hpp"
+#include "../floating_point_precisions.hpp"
 
 //
 // This file contains all of the interface and object definitions for our
@@ -335,7 +336,7 @@ class PDE
 {
 public:
   PDE(parser const &cli_input, int const num_dims, int const num_sources,
-      int const num_terms, std::vector<dimension<P>> const dimensions,
+      int const num_terms, std::vector<dimension<analytic_prec>> const dimensions,
       term_set<P> const terms, std::vector<source<P>> const sources,
       std::vector<vector_func<P>> const exact_vector_funcs,
       scalar_func<P> const exact_time, dt_func<P> const get_dt,
@@ -372,7 +373,7 @@ public:
     if (user_levels == num_dims)
     {
       auto counter = 0;
-      for (dimension<P> &d : dimensions_)
+      for (dimension<double> &d : dimensions_)
       {
         auto const num_levels = cli_input.get_starting_levels()(counter++);
         assert(num_levels > 1);
@@ -384,7 +385,7 @@ public:
     if (cli_degree != parser::NO_USER_VALUE)
     {
       assert(cli_degree > 0);
-      for (dimension<P> &d : dimensions_)
+      for (dimension<analytic_prec> &d : dimensions_)
       {
         d.set_degree(cli_degree);
       }

@@ -74,7 +74,6 @@ int main(int argc, char **argv)
   node_out() << std::accumulate(
                     pde->get_dimensions().begin(), pde->get_dimensions().end(),
                     std::string(),
-                    //TODO: does dim really need to be a float ??
                     [](std::string const &accum, dimension<prec> const &dim) {
                       return accum + std::to_string(dim.get_level()) + " ";
                     })
@@ -98,7 +97,7 @@ int main(int argc, char **argv)
   bool const quiet = false;
   // -- High Precision transformer for the analytic solution
   basis::wavelet_transform<analytic_prec, resource::host> const analytic_prec_transformer(opts,
-                                                                        *analytic_prec_pde,
+                                                                        *pde,
                                                                         quiet);
   // -- Choosen Precision transformer for the numeric solution
   basis::wavelet_transform<prec, resource::host> const transformer(opts,
@@ -113,7 +112,7 @@ int main(int argc, char **argv)
   // -- generate initial condition vector
   node_out() << "  generating: initial conditions..." << '\n';
 
-  fk::vector<analytic_prec> const initial_condition = [&analytic_prec_pde, &table,
+  fk::vector<analytic_prec> const initial_condition = [&pde, &table,
                                               &analytic_prec_transformer,
                                               &subgrid, degree]() {
     std::vector<vector_func<analytic_prec>> v_functions;
@@ -154,7 +153,7 @@ int main(int argc, char **argv)
     if (analytic_prec_pde->has_analytic_soln)
     {
       return transform_and_combine_dimensions(
-          *analytic_prec_pde, analytic_prec_pde->exact_vector_funcs, table, analytic_prec_transformer, subgrid.col_start,
+          *pde, analytic_prec_pde->exact_vector_funcs, table, analytic_prec_transformer, subgrid.col_start,
           subgrid.col_stop, degree);
     }
     else
@@ -166,7 +165,7 @@ int main(int argc, char **argv)
   // -- generate and store coefficient matrices.
 
   node_out() << "  generating: coefficient matrices..." << '\n';
-  generate_all_coefficients<analytic_prec>(*analytic_prec_pde, analytic_prec_transformer);
+  generate_all_coefficients<prec>(*pde, transformer);
 
   /* generate boundary condition vectors */
   /* these will be scaled later similarly to the source vectors */
@@ -244,7 +243,7 @@ int main(int argc, char **argv)
 
       auto const time_id = timer::record.start("implicit_time_advance");
       f_val =
-          implicit_time_advance(*pde, table, initial_sources,
+          implicit_time_advance<prec>(*pde, table, initial_sources,
                                 unscaled_parts, f_val, plan, time, opts.solver,
                                 update_system);
       timer::record.stop(time_id);

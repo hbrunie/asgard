@@ -11,9 +11,9 @@
 
 // generate coefficient matrices for each 1D term in each dimension and
 // underlying partial term coefficients matrices
-template<typename P>
+template<typename P, typename PP>
 void generate_all_coefficients(
-    PDE<P> &pde, basis::wavelet_transform<P, resource::host> const &transformer,
+    PDE<PP> &pde, basis::wavelet_transform<P, PP, resource::host> const &transformer,
     P const time, bool const rotate)
 {
   assert(time >= 0.0);
@@ -24,12 +24,12 @@ void generate_all_coefficients(
 
     for (auto j = 0; j < pde.num_terms; ++j)
     {
-      auto const &term_1D       = pde.get_terms()[j][i];
-      auto const &partial_terms = term_1D.get_partial_terms();
+      P const &term_1D       = pde.get_terms()[j][i];
+      P const &partial_terms = term_1D.get_partial_terms();
 
       for (auto k = 0; k < static_cast<int>(partial_terms.size()); ++k)
       {
-        auto const partial_term_coeff = generate_coefficients<P>(
+        auto const partial_term_coeff = generate_coefficients<P,PP>(
             dim, term_1D, partial_terms[k], transformer, time, rotate);
         pde.set_partial_coefficients(j, i, k, partial_term_coeff);
       }
@@ -42,11 +42,11 @@ void generate_all_coefficients(
 // this routine returns a 2D array representing an operator coefficient
 // matrix for a single dimension (1D). Each term in a PDE requires D many
 // coefficient matricies
-template<typename P>
+template<typename P, typename PP>
 fk::matrix<P> generate_coefficients(
-    dimension<P> const &dim, term<P> const &term_1D,
+    dimension<PP> const &dim, term<P> const &term_1D,
     partial_term<P> const &pterm,
-    basis::wavelet_transform<P, resource::host> const &transformer,
+    basis::wavelet_transform<P, PP, resource::host> const &transformer,
     P const time, bool const rotate)
 {
   assert(time >= 0.0);
@@ -56,8 +56,8 @@ fk::matrix<P> generate_coefficients(
   // setup jacobi of variable x and define coeff_mat
   auto const num_points = fm::two_raised_to(transformer.max_level);
 
-  auto const grid_spacing = (dim.domain_max - dim.domain_min) / num_points;
-  auto const degrees_freedom_1d = dim.get_degree() * num_points;
+  P const grid_spacing = ((P)dim.domain_max - (P)dim.domain_min) / num_points;
+  int const degrees_freedom_1d = dim.get_degree() * num_points;
   fk::matrix<P> coefficients(degrees_freedom_1d, degrees_freedom_1d);
 
   // get quadrature points and quadrature_weights.
@@ -383,24 +383,35 @@ fk::matrix<P> generate_coefficients(
   return coefficients;
 }
 
-template fk::matrix<float> generate_coefficients<float>(
-    dimension<float> const &dim, term<float> const &term_1D,
-    partial_term<float> const &pterm,
-    basis::wavelet_transform<float, resource::host> const &transformer,
-    float const time, bool const rotate);
-
-template fk::matrix<double> generate_coefficients<double>(
-    dimension<double> const &dim, term<double> const &term_1D,
+template fk::matrix<double> generate_coefficients<double, float>(
+    dimension<float> const &dim, term<double> const &term_1D,
     partial_term<double> const &pterm,
-    basis::wavelet_transform<double, resource::host> const &transformer,
+    basis::wavelet_transform<double, float, resource::host> const &transformer,
     double const time, bool const rotate);
 
-template void generate_all_coefficients<float>(
-    PDE<float> &pde,
-    basis::wavelet_transform<float, resource::host> const &transformer,
+template fk::matrix<float> generate_coefficients<float, float>(
+    dimension<float> const &dim, term<float> const &term_1D,
+    partial_term<float> const &pterm,
+    basis::wavelet_transform<float, float, resource::host> const &transformer,
     float const time, bool const rotate);
 
-template void generate_all_coefficients<double>(
+template fk::matrix<double> generate_coefficients<double, double>(
+    dimension<double> const &dim, term<double> const &term_1D,
+    partial_term<double> const &pterm,
+    basis::wavelet_transform<double, double, resource::host> const &transformer,
+    double const time, bool const rotate);
+
+template void generate_all_coefficients<float, float>(
+    PDE<float> &pde,
+    basis::wavelet_transform<float, float, resource::host> const &transformer,
+    float const time, bool const rotate);
+
+template void generate_all_coefficients<double, float>(
+    PDE<float> &pde,
+    basis::wavelet_transform<double, float, resource::host> const &transformer,
+    double const time, bool const rotate);
+
+template void generate_all_coefficients<double, double>(
     PDE<double> &pde,
-    basis::wavelet_transform<double, resource::host> const &transformer,
+    basis::wavelet_transform<double, double, resource::host> const &transformer,
     double const time, bool const rotate);

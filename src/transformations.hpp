@@ -17,16 +17,16 @@ fk::matrix<P>
 recursive_kron(std::vector<fk::matrix<P, mem_type::view>> &kron_matrices,
                int const index = 0);
 
-template<typename P>
+template<typename P, typename PP>
 std::vector<fk::matrix<P>> gen_realspace_transform(
-    PDE<P> const &pde,
-    basis::wavelet_transform<P, resource::host> const &transformer);
+    PDE<PP> const &pde,
+    basis::wavelet_transform<P, PP, resource::host> const &transformer);
 
-template<typename P>
+template<typename P, typename PP>
 void wavelet_to_realspace(
-    PDE<P> const &pde, fk::vector<P> const &wave_space,
+    PDE<PP> const &pde, fk::vector<P> const &wave_space,
     elements::table const &table,
-    basis::wavelet_transform<P, resource::host> const &transformer,
+    basis::wavelet_transform<P, PP, resource::host> const &transformer,
     int const memory_limit_MB,
     std::array<fk::vector<P, mem_type::view, resource::host>, 2> &workspace,
     fk::vector<P> &real_space);
@@ -43,10 +43,10 @@ fk::vector<P>
 combine_dimensions(int const, elements::table const &, int const, int const,
                    std::vector<fk::vector<P>> const &, P const = 1.0);
 
-template<typename P, typename F>
+template<typename P, typename PP, typename F>
 fk::vector<P> forward_transform(
     dimension<P> const &dim, F function,
-    basis::wavelet_transform<P, resource::host> const &transformer,
+    basis::wavelet_transform<P, PP, resource::host> const &transformer,
     P const t = 0)
 {
   int const num_levels = dim.get_level();
@@ -136,11 +136,11 @@ fk::vector<P> forward_transform(
   return transformed;
 }
 
-template<typename P>
+template<typename P, typename PP>
 inline fk::vector<P> transform_and_combine_dimensions(
-    PDE<P> const &pde, std::vector<vector_func<P>> const &v_functions,
+    PDE<PP> const &pde, std::vector<vector_func<P>> const &v_functions,
     elements::table const &table,
-    basis::wavelet_transform<P, resource::host> const &transformer,
+    basis::wavelet_transform<P, PP, resource::host> const &transformer,
     int const start, int const stop, int const degree)
 {
   assert(static_cast<int>(v_functions.size()) == pde.num_dims);
@@ -153,7 +153,7 @@ inline fk::vector<P> transform_and_combine_dimensions(
 
   for (int i = 0; i < pde.num_dims; ++i)
   {
-    dimension_components.push_back(forward_transform<P>(
+    dimension_components.push_back(forward_transform<P,PP>(
         pde.get_dimensions()[i], v_functions[i], transformer));
   }
 
