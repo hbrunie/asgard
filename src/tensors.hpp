@@ -997,8 +997,8 @@ fk::vector<P, mem, resrc>::vector(vector<P, mem, resrc> const &a)
 // http://stackoverflow.com/questions/3279543/what-is-the-copy-and-swap-idiom
 //
 template<typename P, mem_type mem, resource resrc>
-fk::vector<P, mem, resrc> &fk::vector<P, mem, resrc>::
-operator=(vector<P, mem, resrc> const &a)
+fk::vector<P, mem, resrc> &
+fk::vector<P, mem, resrc>::operator=(vector<P, mem, resrc> const &a)
 {
   static_assert(mem != mem_type::const_view,
                 "cannot copy assign into const_view!");
@@ -1043,8 +1043,8 @@ fk::vector<P, mem, resrc>::vector(vector<P, mem, resrc> &&a)
 // vector move assignment
 //
 template<typename P, mem_type mem, resource resrc>
-fk::vector<P, mem, resrc> &fk::vector<P, mem, resrc>::
-operator=(vector<P, mem, resrc> &&a)
+fk::vector<P, mem, resrc> &
+fk::vector<P, mem, resrc>::operator=(vector<P, mem, resrc> &&a)
 {
   static_assert(mem != mem_type::const_view,
                 "cannot move assign into const_view!");
@@ -1090,8 +1090,8 @@ fk::vector<P, mem, resrc>::vector(vector<PP, omem> const &a)
 //
 template<typename P, mem_type mem, resource resrc>
 template<typename PP, mem_type omem, mem_type, typename, resource, typename>
-fk::vector<P, mem> &fk::vector<P, mem, resrc>::
-operator=(vector<PP, omem> const &a)
+fk::vector<P, mem> &
+fk::vector<P, mem, resrc>::operator=(vector<PP, omem> const &a)
 {
   tools::expect(size() == a.size());
 
@@ -1125,8 +1125,8 @@ fk::vector<P, mem, resrc>::vector(vector<P, omem, resrc> const &a)
 // assignment owner <-> view
 template<typename P, mem_type mem, resource resrc>
 template<mem_type omem, mem_type, typename>
-fk::vector<P, mem, resrc> &fk::vector<P, mem, resrc>::
-operator=(vector<P, omem, resrc> const &a)
+fk::vector<P, mem, resrc> &
+fk::vector<P, mem, resrc>::operator=(vector<P, omem, resrc> const &a)
 {
   tools::expect(size() == a.size());
   if constexpr (resrc == resource::host)
@@ -1192,8 +1192,8 @@ fk::vector<P, mem, resrc> &fk::vector<P, mem, resrc>::transfer_from(
 //
 template<typename P, mem_type mem, resource resrc>
 template<mem_type, typename, resource, typename>
-fk::vector<P, mem> &fk::vector<P, mem, resrc>::
-operator=(std::vector<P> const &v)
+fk::vector<P, mem> &
+fk::vector<P, mem, resrc>::operator=(std::vector<P> const &v)
 {
   tools::expect(size() == static_cast<int>(v.size()));
   std::memcpy(data_, v.data(), v.size() * sizeof(P));
@@ -1279,8 +1279,8 @@ bool fk::vector<P, mem, resrc>::operator<(vector<P, omem> const &other) const
 //
 template<typename P, mem_type mem, resource resrc>
 template<mem_type omem, resource, typename>
-fk::vector<P> fk::vector<P, mem, resrc>::
-operator+(vector<P, omem> const &right) const
+fk::vector<P>
+fk::vector<P, mem, resrc>::operator+(vector<P, omem> const &right) const
 {
   tools::expect(size() == right.size());
   vector<P> ans(size());
@@ -1294,8 +1294,8 @@ operator+(vector<P, omem> const &right) const
 //
 template<typename P, mem_type mem, resource resrc>
 template<mem_type omem, resource, typename>
-fk::vector<P> fk::vector<P, mem, resrc>::
-operator-(vector<P, omem> const &right) const
+fk::vector<P>
+fk::vector<P, mem, resrc>::operator-(vector<P, omem> const &right) const
 {
   tools::expect(size() == right.size());
   vector<P> ans(size());
@@ -1324,8 +1324,8 @@ P fk::vector<P, mem, resrc>::operator*(vector<P, omem> const &right) const
 //
 template<typename P, mem_type mem, resource resrc>
 template<mem_type omem, resource, typename>
-fk::vector<P> fk::vector<P, mem, resrc>::
-operator*(fk::matrix<P, omem> const &A) const
+fk::vector<P>
+    fk::vector<P, mem, resrc>::operator*(fk::matrix<P, omem> const &A) const
 {
   // check dimension compatibility
   tools::expect(size() == A.nrows());
@@ -1781,8 +1781,8 @@ fk::matrix<P, mem, resrc>::matrix(matrix<P, mem, resrc> const &a)
 // http://stackoverflow.com/questions/3279543/what-is-the-copy-and-swap-idiom
 //
 template<typename P, mem_type mem, resource resrc>
-fk::matrix<P, mem, resrc> &fk::matrix<P, mem, resrc>::
-operator=(matrix<P, mem, resrc> const &a)
+fk::matrix<P, mem, resrc> &
+fk::matrix<P, mem, resrc>::operator=(matrix<P, mem, resrc> const &a)
 {
   static_assert(mem != mem_type::const_view,
                 "cannot copy assign into const_view!");
@@ -1835,8 +1835,8 @@ fk::matrix<P, mem, resrc>::matrix(matrix<P, omem, resrc> const &a)
 // assignment owner <-> view
 template<typename P, mem_type mem, resource resrc>
 template<mem_type omem, mem_type, typename>
-fk::matrix<P, mem, resrc> &fk::matrix<P, mem, resrc>::
-operator=(matrix<P, omem, resrc> const &a)
+fk::matrix<P, mem, resrc> &
+fk::matrix<P, mem, resrc>::operator=(matrix<P, omem, resrc> const &a)
 {
   tools::expect(nrows() == a.nrows());
   tools::expect(ncols() == a.ncols());
@@ -1875,8 +1875,8 @@ fk::matrix<P, mem, resrc>::matrix(matrix<PP, omem> const &a)
 //
 template<typename P, mem_type mem, resource resrc>
 template<typename PP, mem_type omem, mem_type, typename, resource, typename>
-fk::matrix<P, mem> &fk::matrix<P, mem, resrc>::
-operator=(matrix<PP, omem> const &a)
+fk::matrix<P, mem> &
+fk::matrix<P, mem, resrc>::operator=(matrix<PP, omem> const &a)
 {
   tools::expect((nrows() == a.nrows()) && (ncols() == a.ncols()));
 
@@ -1967,8 +1967,8 @@ fk::matrix<P, mem, resrc>::matrix(matrix<P, mem, resrc> &&a)
 // matrix move assignment
 //
 template<typename P, mem_type mem, resource resrc>
-fk::matrix<P, mem, resrc> &fk::matrix<P, mem, resrc>::
-operator=(matrix<P, mem, resrc> &&a)
+fk::matrix<P, mem, resrc> &
+fk::matrix<P, mem, resrc>::operator=(matrix<P, mem, resrc> &&a)
 {
   static_assert(mem != mem_type::const_view,
                 "cannot move assign into const_view!");
@@ -1999,8 +1999,8 @@ operator=(matrix<P, mem, resrc> &&a)
 //
 template<typename P, mem_type mem, resource resrc>
 template<mem_type omem, mem_type, typename, resource, typename>
-fk::matrix<P, mem> &fk::matrix<P, mem, resrc>::
-operator=(fk::vector<P, omem> const &v)
+fk::matrix<P, mem> &
+fk::matrix<P, mem, resrc>::operator=(fk::vector<P, omem> const &v)
 {
   tools::expect(nrows() * ncols() == v.size());
 
@@ -2086,8 +2086,8 @@ bool fk::matrix<P, mem, resrc>::operator<(matrix<P, omem> const &other) const
 //
 template<typename P, mem_type mem, resource resrc>
 template<mem_type omem, resource, typename>
-fk::matrix<P> fk::matrix<P, mem, resrc>::
-operator+(matrix<P, omem> const &right) const
+fk::matrix<P>
+fk::matrix<P, mem, resrc>::operator+(matrix<P, omem> const &right) const
 {
   tools::expect(nrows() == right.nrows() && ncols() == right.ncols());
 
@@ -2107,8 +2107,8 @@ operator+(matrix<P, omem> const &right) const
 //
 template<typename P, mem_type mem, resource resrc>
 template<mem_type omem, resource, typename>
-fk::matrix<P> fk::matrix<P, mem, resrc>::
-operator-(matrix<P, omem> const &right) const
+fk::matrix<P>
+fk::matrix<P, mem, resrc>::operator-(matrix<P, omem> const &right) const
 {
   tools::expect(nrows() == right.nrows() && ncols() == right.ncols());
 
@@ -2146,8 +2146,8 @@ fk::matrix<P> fk::matrix<P, mem, resrc>::operator*(P const right) const
 //
 template<typename P, mem_type mem, resource resrc>
 template<mem_type omem, resource, typename>
-fk::vector<P> fk::matrix<P, mem, resrc>::
-operator*(fk::vector<P, omem> const &right) const
+fk::vector<P>
+    fk::matrix<P, mem, resrc>::operator*(fk::vector<P, omem> const &right) const
 {
   // check dimension compatibility
   tools::expect(ncols() == right.size());
@@ -2173,8 +2173,8 @@ operator*(fk::vector<P, omem> const &right) const
 //
 template<typename P, mem_type mem, resource resrc>
 template<mem_type omem, resource, typename>
-fk::matrix<P> fk::matrix<P, mem, resrc>::
-operator*(matrix<P, omem> const &B) const
+fk::matrix<P>
+    fk::matrix<P, mem, resrc>::operator*(matrix<P, omem> const &B) const
 {
   tools::expect(ncols() == B.nrows()); // k == k
 
