@@ -17,10 +17,26 @@ endif ()
 set (CMAKE_CXX_STANDARD 17)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
-message (STATUS "CMAKE_BUILD_TYPE is ${CMAKE_BUILD_TYPE}")
+# Set a default build type if none was specified
+# https://blog.kitware.com/cmake-and-the-default-build-type/
+set (default_build_type "Release")
+if (EXISTS "${CMAKE_SOURCE_DIR}/.git")
+  set (default_build_type "Debug")
+endif ()
+
+if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  message (STATUS "Setting build type to '${default_build_type}' as none was specified.")
+  set (CMAKE_BUILD_TYPE "${default_build_type}" CACHE
+       STRING "Choose the type of build." FORCE)
+  # Set the possible values of build type for cmake-gui
+  set_property (CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
+    "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+else ()
+  message (STATUS "CMAKE_BUILD_TYPE is ${CMAKE_BUILD_TYPE}")
+endif ()
 
 # add compiler flags we always want to use
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic -O3 -g")
+string(APPEND CMAKE_CXX_FLAGS " -Wall -Wextra -Wpedantic")
 
 # set up possible commandline input variable defaults (override with -D)
 option (ASGARD_BUILD_TESTS "Build tests for asgard" ON)
@@ -89,14 +105,15 @@ if(ASGARD_USE_CUDA)
 endif()
 
 # build component to interface with Ed's kronmult lib
+##TODO: link to kronmult as interface library
 add_library(kronmult_cuda SHARED src/device/kronmult_cuda.cpp)
 if(ASGARD_USE_CUDA)
   set_source_files_properties( src/device/kronmult_cuda.cpp PROPERTIES LANGUAGE CUDA ) # no .cu extension
   set_target_properties( kronmult_cuda PROPERTIES CUDA_ARCHITECTURES OFF)
   set_target_properties( kronmult_cuda PROPERTIES COMPILE_FLAGS "-arch sm_70 -g -lineinfo --ptxas-options=-O3")
-  set_target_properties( kronmult_cuda PROPERTIES LINK_FLAGS "-Wl,-rpath,${KRON_PATH}")
+  set_target_properties( kronmult_cuda PROPERTIES LINK_FLAGS "-Wl,-rpath,${CMAKE_BINARY_DIR}")
 endif()
-target_include_directories (kronmult_cuda PRIVATE ${KRON_PATH} ${CMAKE_BINARY_DIR})
+target_include_directories (kronmult_cuda PRIVATE ${CMAKE_SOURCE_DIR}/contrib/kronmult/ ${CMAKE_BINARY_DIR})
 
 if(ASGARD_USE_MKL)
   if(ASGARD_USE_CUDA)
@@ -123,6 +140,7 @@ endif()
 
 # define the components and how to build and link the components together
 set (components
+  adapt
   basis
   batch
   boundary_conditions
@@ -140,7 +158,7 @@ set (components
   solver
   tensors
   time_advance
-  timer
+  tools
   transformations
 )
 if (ASGARD_IO_HIGHFIVE)
@@ -167,9 +185,11 @@ if (build_kron)
   add_dependencies (kronmult_cuda kronmult-ext)
 endif ()
 
+target_link_libraries (adapt PRIVATE distribution elements program_options transformations)
+
 target_link_libraries (basis PRIVATE matlab_utilities quadrature tensors)
 
-target_link_libraries (batch PRIVATE lib_dispatch coefficients elements pde tensors)
+target_link_libraries (batch PRIVATE coefficients elements lib_dispatch pde tensors)
 
 target_link_libraries (boundary_conditions PRIVATE coefficients elements transformations
                        matlab_utilities fast_math )
@@ -192,17 +212,13 @@ target_link_libraries (elements
 target_link_libraries (fast_math
   PRIVATE lib_dispatch tensors)
 
-target_link_libraries(kronmult PRIVATE batch elements kronmult_cuda timer)
+target_link_libraries(kronmult PRIVATE batch elements kronmult_cuda tools)
 
 if (ASGARD_USE_OPENMP AND NOT ASGARD_USE_MKL)
    target_link_libraries(kronmult PRIVATE OpenMP::OpenMP_CXX)
 endif ()
 
-if (ASGARD_USE_CUDA) 
-   target_link_libraries(kronmult_cuda PRIVATE ${KRON_LIB})
-else ()
-   target_link_libraries(kronmult_cuda PRIVATE "-Wl,-rpath,${KRON_PATH} ${KRON_LIB}")
-endif ()
+target_link_libraries(kronmult_cuda PRIVATE kron)
 
 if (ASGARD_USE_OPENMP AND NOT ASGARD_USE_MKL)
    target_link_libraries(kronmult_cuda PRIVATE OpenMP::OpenMP_CXX)
@@ -217,10 +233,10 @@ if (ASGARD_USE_CUDA)
   target_link_libraries(lib_dispatch PRIVATE ${CUDA_LIBRARIES}
 					     ${CUDA_CUBLAS_LIBRARIES})
 endif()
+
 if (ASGARD_USE_OPENMP AND NOT ASGARD_USE_MKL)
    target_link_libraries(lib_dispatch PRIVATE OpenMP::OpenMP_CXX)
 endif ()
-
 
 target_link_libraries (matlab_utilities PUBLIC tensors)
 
@@ -239,7 +255,7 @@ if (ASGARD_USE_CUDA)
   target_link_libraries (tensors PRIVATE ${CUDA_LIBRARIES})
 endif ()
 
-target_link_libraries (time_advance PRIVATE batch fast_math pde kronmult solver tensors timer boundary_conditions
+target_link_libraries (time_advance PRIVATE adapt fast_math pde kronmult solver tensors tools boundary_conditions
                                     INTERFACE elements)
 
 target_link_libraries (transformations
@@ -251,8 +267,7 @@ add_executable (asgard src/main.cpp)
 
 # link in components needed directly by main
 set (main_app_link_deps
-  batch
-  boundary_conditions
+  adapt
   coefficients
   distribution
   elements
@@ -262,7 +277,7 @@ set (main_app_link_deps
   quadrature
   tensors
   time_advance
-  timer
+  tools
   transformations
 )
 if (ASGARD_IO_HIGHFIVE)
@@ -302,32 +317,38 @@ if (ASGARD_BUILD_TESTS)
   add_library (tests_general testing/tests_general.cpp)
   target_link_libraries (tests_general PUBLIC Catch PRIVATE pde program_options )
   target_include_directories(tests_general PRIVATE ${CMAKE_BINARY_DIR})
+  
+  # components with MPI-enabled testing
+  set (mpi_test_components
+    adapt
+    distribution
+    time_advance
+  )
+
+
   foreach (component IN LISTS components)
     add_executable (${component}-tests src/${component}_tests.cpp)
     target_include_directories (${component}-tests PRIVATE ${CMAKE_SOURCE_DIR}/testing)
     target_include_directories (${component}-tests PRIVATE ${CMAKE_BINARY_DIR})
     target_link_libraries (${component}-tests PRIVATE ${component} tests_general)
     
-    # FIXME
     if (ASGARD_IO_HIGHFIVE AND "${component}" STREQUAL "io")
       target_link_libraries (io-tests PRIVATE highfive hdf5 tensors)
     endif ()
 
     if (ASGARD_USE_MPI)
       target_link_libraries (${component}-tests PRIVATE ${component} MPI::MPI_CXX)
-      if ("${component}" STREQUAL "distribution" OR
-          "${component}" STREQUAL "time_advance")
-
-      set(test_ranks "4")
-      if (ASGARD_USE_CUDA)
-         set(test_ranks "1")
-      endif ()
-      if (${ASGARD_TESTING_RANKS})
+      if (${component} IN_LIST mpi_test_components)
+        set(test_ranks "4")
+      	if (ASGARD_USE_CUDA)
+          set(test_ranks "1")
+        endif ()
+        if (${ASGARD_TESTING_RANKS})
          set(test_ranks ${ASGARD_TESTING_RANKS})
-      endif ()
-      add_test (NAME ${component}-test-mpi
-                COMMAND mpirun -n ${test_ranks} ${component}-tests
-                WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR} )
+        endif ()
+        add_test (NAME ${component}-test-mpi
+                  COMMAND mpirun -n ${test_ranks} ${component}-tests
+                  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR} )
       endif()
     endif ()
 

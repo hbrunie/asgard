@@ -2,6 +2,8 @@
 #include "build_info.hpp"
 #include "clara.hpp"
 #include "distribution.hpp"
+#include "tools.hpp"
+
 #include <iostream>
 
 parser::parser(int argc, char **argv)
@@ -44,7 +46,10 @@ parser::parser(int argc, char **argv)
           "output") |
       clara::detail::Opt(realspace_output_freq,
                          "0-num_time_steps")["-r"]["--real_freq"](
-          "Frequency in steps for writing realspace output");
+          "Frequency in steps for writing realspace output") |
+      clara::detail::Opt(do_adapt)["--adapt"]("Enable/disable adaptivity") |
+      clara::detail::Opt(adapt_threshold, " 0>threshold<1 ")["--thresh"](
+          "Relative threshold for adaptivity");
 
   auto result = cli.parse(clara::detail::Args(argc, argv));
   if (!result)
@@ -211,11 +216,25 @@ parser::parser(int argc, char **argv)
     valid = false;
   }
 #endif
+
+  if (adapt_threshold > 1.0 || adapt_threshold <= 0)
+  {
+    std::cerr << "input adaptivity threshold between 0 and 1, exclusive"
+              << '\n';
+    valid = false;
+  }
+  if (adapt_threshold != DEFAULT_ADAPT_THRESH && !do_adapt)
+  {
+    std::cerr << "input adaptivity threshold without enabling adaptivity..."
+              << '\n';
+    valid = false;
+  }
 }
 
 bool parser::using_implicit() const { return use_implicit_stepping; }
 bool parser::using_full_grid() const { return use_full_grid; }
 bool parser::do_poisson_solve() const { return do_poisson; }
+bool parser::do_adapt_levels() const { return do_adapt; }
 
 fk::vector<int> parser::get_starting_levels() const { return starting_levels; }
 int parser::get_degree() const { return degree; }
@@ -226,6 +245,7 @@ int parser::get_realspace_output_freq() const { return realspace_output_freq; }
 
 double parser::get_cfl() const { return cfl; }
 double parser::get_dt() const { return dt; }
+double parser::get_adapt_thresh() const { return adapt_threshold; }
 
 std::string parser::get_pde_string() const { return pde_str; }
 std::string parser::get_solver_string() const { return solver_str; }
@@ -247,8 +267,8 @@ bool options::should_output_realspace(int const i) const
 
 bool options::write_at_step(int const i, int const freq) const
 {
-  assert(i >= 0);
-  assert(freq >= 0);
+  tools::expect(i >= 0);
+  tools::expect(freq >= 0);
 
   if (freq == 0)
   {

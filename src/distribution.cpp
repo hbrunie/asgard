@@ -1,11 +1,11 @@
-
 #include "distribution.hpp"
+#include "lib_dispatch.hpp"
+#include "tools.hpp"
 
 #include <cmath>
 #include <csignal>
+#include <list>
 #include <numeric>
-
-#include "lib_dispatch.hpp"
 
 #ifdef ASGARD_USE_MPI
 struct distribution_handler
@@ -15,7 +15,7 @@ struct distribution_handler
   void set_global_comm(MPI_Comm const &comm)
   {
     auto const status = MPI_Comm_dup(comm, &global_comm);
-    assert(status == 0);
+    tools::expect(status == 0);
   }
   MPI_Comm get_global_comm() const { return global_comm; }
 
@@ -28,17 +28,17 @@ static distribution_handler distro_handle;
 int get_local_rank()
 {
 #ifdef ASGARD_USE_MPI
-  static int const rank = []() {
+  static auto const rank = []() {
     MPI_Comm local_comm;
     auto success = MPI_Comm_split_type(distro_handle.get_global_comm(),
                                        MPI_COMM_TYPE_SHARED, 0, MPI_INFO_NULL,
                                        &local_comm);
-    assert(success == 0);
+    tools::expect(success == 0);
     int local_rank;
     success = MPI_Comm_rank(local_comm, &local_rank);
-    assert(success == 0);
+    tools::expect(success == 0);
     success = MPI_Comm_free(&local_comm);
-    assert(success == 0);
+    tools::expect(success == 0);
     return local_rank;
   }();
   return rank;
@@ -53,7 +53,7 @@ int get_rank()
     int my_rank;
     auto const status =
         MPI_Comm_rank(distro_handle.get_global_comm(), &my_rank);
-    assert(status == 0);
+    tools::expect(status == 0);
     return my_rank;
   }();
   return rank;
@@ -68,7 +68,7 @@ int get_num_ranks()
     int num_ranks;
     auto const status =
         MPI_Comm_size(distro_handle.get_global_comm(), &num_ranks);
-    assert(status == 0);
+    tools::expect(status == 0);
     return num_ranks;
   }();
   return num_ranks;
@@ -85,7 +85,9 @@ int get_num_ranks()
 auto const num_effective_ranks = [](int const num_ranks) {
   if (std::sqrt(num_ranks) == std::floor(std::sqrt(num_ranks)) ||
       num_ranks % 2 == 0)
+  {
     return num_ranks;
+  }
   return num_ranks - 1;
 };
 
@@ -100,20 +102,20 @@ static void terminate_all_ranks(int signum)
 std::array<int, 2> initialize_distribution()
 {
   static bool init_done = false;
-  assert(!init_done);
+  tools::expect(!init_done);
 #ifdef ASGARD_USE_MPI
   signal(SIGABRT, terminate_all_ranks);
   auto status = MPI_Init(NULL, NULL);
 
   init_done = true;
-  assert(status == 0);
+  tools::expect(status == 0);
 
   int num_ranks;
   status = MPI_Comm_size(MPI_COMM_WORLD, &num_ranks);
-  assert(status == 0);
+  tools::expect(status == 0);
   int my_rank;
   status = MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
-  assert(status == 0);
+  tools::expect(status == 0);
 
   auto const num_participating = num_effective_ranks(num_ranks);
   bool const participating     = my_rank < num_participating;
@@ -121,10 +123,10 @@ std::array<int, 2> initialize_distribution()
   MPI_Comm effective_communicator;
   auto success = MPI_Comm_split(MPI_COMM_WORLD, comm_color, my_rank,
                                 &effective_communicator);
-  assert(success == 0);
+  tools::expect(success == 0);
 
   status = MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
-  assert(status == 0);
+  tools::expect(status == 0);
 
   if (effective_communicator != MPI_COMM_NULL)
   {
@@ -143,24 +145,23 @@ void finalize_distribution()
 {
 #ifdef ASGARD_USE_MPI
   auto const status = MPI_Finalize();
-  assert(status == 0);
+  tools::expect(status == 0);
 #endif
 }
 
 // divide element grid into rectangular sub-areas, which will be assigned to
-// each rank require number of ranks to be a perfect square or an even number;
+// each rank. require number of ranks to be a perfect square or an even number;
 // otherwise, we will ignore (leave unused) the highest rank.
 element_subgrid get_subgrid(int const num_ranks, int const my_rank,
                             elements::table const &table)
 {
-  assert(num_ranks > 0);
+  tools::expect(num_ranks > 0);
 
-  assert(num_ranks % 2 == 0 || num_ranks == 1 ||
-         std::sqrt(num_ranks) == std::floor(std::sqrt(num_ranks)));
-  assert(my_rank >= 0);
-  assert(my_rank < num_ranks);
-
-  assert(table.size() > num_ranks);
+  tools::expect(num_ranks % 2 == 0 || num_ranks == 1 ||
+                std::sqrt(num_ranks) == std::floor(std::sqrt(num_ranks)));
+  tools::expect(my_rank >= 0);
+  tools::expect(my_rank < num_ranks);
+  tools::expect(table.size() >= num_ranks);
 
   if (num_ranks == 1)
   {
@@ -196,10 +197,9 @@ element_subgrid get_subgrid(int const num_ranks, int const my_rank,
 // distribution plan is a mapping from rank -> assigned subgrid
 distribution_plan get_plan(int const num_ranks, elements::table const &table)
 {
-  assert(num_ranks > 0);
-  assert(table.size() > num_ranks);
-
-  int const num_splits = num_effective_ranks(num_ranks);
+  tools::expect(num_ranks > 0);
+  tools::expect(table.size() > 0);
+  auto const num_splits = num_effective_ranks(num_ranks);
 
   distribution_plan plan;
   for (int i = 0; i < num_splits; ++i)
@@ -253,7 +253,6 @@ find_column_dependencies(std::vector<int> const &row_boundaries,
     }
     col_start = column_end + 1;
   }
-
   return column_dependencies;
 }
 
@@ -261,9 +260,9 @@ template<typename P>
 void reduce_results(fk::vector<P> const &source, fk::vector<P> &dest,
                     distribution_plan const &plan, int const my_rank)
 {
-  assert(source.size() == dest.size());
-  assert(my_rank >= 0);
-  assert(my_rank < static_cast<int>(plan.size()));
+  tools::expect(source.size() == dest.size());
+  tools::expect(my_rank >= 0);
+  tools::expect(my_rank < static_cast<int>(plan.size()));
 
 #ifdef ASGARD_USE_MPI
   if (plan.size() == 1)
@@ -283,16 +282,16 @@ void reduce_results(fk::vector<P> const &source, fk::vector<P> &dest,
 
   auto success =
       MPI_Comm_split(global_communicator, my_row, my_col, &row_communicator);
-  assert(success == 0);
+  tools::expect(success == 0);
 
   MPI_Datatype const mpi_type =
       std::is_same<P, double>::value ? MPI_DOUBLE : MPI_FLOAT;
   success = MPI_Allreduce((void *)source.data(), (void *)dest.data(),
                           source.size(), mpi_type, MPI_SUM, row_communicator);
-  assert(success == 0);
+  tools::expect(success == 0);
 
   success = MPI_Comm_free(&row_communicator);
-  assert(success == 0);
+  tools::expect(success == 0);
 
 #else
   fm::copy(source, dest);
@@ -305,6 +304,8 @@ void reduce_results(fk::vector<P> const &source, fk::vector<P> &dest,
 // rows via point-to-point messages.
 //
 
+// FIXME the whole exchange_results partnering process is silly and
+// overengineered.
 /* utility class for round robin selection, used in dependencies_to_messages */
 class round_robin_wheel
 {
@@ -337,7 +338,7 @@ std::vector<std::vector<message>> const static dependencies_to_messages(
     std::vector<int> const &row_boundaries,
     std::vector<int> const &column_boundaries)
 {
-  assert(col_dependencies.size() == column_boundaries.size());
+  tools::expect(col_dependencies.size() == column_boundaries.size());
 
   /* initialize a round robin selector for each row */
   std::vector<round_robin_wheel> row_round_robin_wheels;
@@ -412,7 +413,7 @@ generate_messages(distribution_plan const &plan)
   std::vector<int> col_boundaries;
 
   auto const num_cols = get_num_subgrid_cols(plan.size());
-  assert(plan.size() % num_cols == 0);
+  tools::expect(plan.size() % num_cols == 0);
   auto const num_rows = static_cast<int>(plan.size()) / num_cols;
 
   for (int i = 0; i < num_rows; ++i)
@@ -438,90 +439,97 @@ generate_messages(distribution_plan const &plan)
 }
 
 // static helper for copying my own output to input
+// message ranges are in terms of global element indices
+// index maps get us back to local element indices
 template<typename P>
-static void copy_to_input(fk::vector<P> const &source, fk::vector<P> &dest,
-                          element_subgrid const &my_grid,
-                          message const &message, int const segment_size)
+static void
+copy_to_input(fk::vector<P> const &source, fk::vector<P> &dest,
+              index_mapper const &source_map, index_mapper const &dest_map,
+              message const &message, int const segment_size)
 {
-  assert(segment_size > 0);
+  tools::expect(segment_size > 0);
   if (message.message_dir == message_direction::send)
   {
-    auto const output_start =
-        static_cast<int64_t>(my_grid.to_local_row(message.range.start)) *
+    auto const source_start =
+        static_cast<int64_t>(source_map(message.source_range.start)) *
         segment_size;
-    auto const output_end =
-        static_cast<int64_t>(my_grid.to_local_row(message.range.stop) + 1) *
+    auto const source_end =
+        static_cast<int64_t>(source_map(message.source_range.stop) + 1) *
             segment_size -
         1;
-    auto const input_start =
-        static_cast<int64_t>(my_grid.to_local_col(message.range.start)) *
-        segment_size;
-    auto const input_end =
-        static_cast<int64_t>(my_grid.to_local_col(message.range.stop) + 1) *
+    auto const dest_start =
+        static_cast<int64_t>(dest_map(message.dest_range.start)) * segment_size;
+    auto const dest_end =
+        static_cast<int64_t>(dest_map(message.dest_range.stop) + 1) *
             segment_size -
         1;
 
-    fk::vector<P, mem_type::const_view> const output_window(
-        source, output_start, output_end);
-    fk::vector<P, mem_type::view> input_window(dest, input_start, input_end);
+    fk::vector<P, mem_type::const_view> const source_window(
+        source, source_start, source_end);
+    fk::vector<P, mem_type::view> dest_window(dest, dest_start, dest_end);
 
-    fm::copy(output_window, input_window);
+    fm::copy(source_window, dest_window);
   }
   // else ignore the matching receive; I am copying locally
 }
 
 // static helper for sending/receiving output/input data using mpi
+// message ranges are in terms of global element indices
+// index map gets us back to local element indices
 template<typename P>
 static void dispatch_message(fk::vector<P> const &source, fk::vector<P> &dest,
-                             element_subgrid const &my_grid,
-                             message const &message, int const segment_size)
+                             index_mapper const &map, message const &message,
+                             int const segment_size)
 {
 #ifdef ASGARD_USE_MPI
-  assert(segment_size > 0);
+  tools::expect(segment_size > 0);
 
   MPI_Datatype const mpi_type =
       std::is_same<P, double>::value ? MPI_DOUBLE : MPI_FLOAT;
   MPI_Comm const communicator = distro_handle.get_global_comm();
 
-  int const mpi_tag = 0;
+  auto const mpi_tag = 0;
   if (message.message_dir == message_direction::send)
   {
-    auto const output_start =
-        static_cast<int64_t>(my_grid.to_local_row(message.range.start)) *
-        segment_size;
-    auto const output_end =
-        static_cast<int64_t>(my_grid.to_local_row(message.range.stop) + 1) *
+    auto const source_start =
+        static_cast<int64_t>(map(message.source_range.start)) * segment_size;
+    auto const source_end =
+        static_cast<int64_t>(map(message.source_range.stop) + 1) *
             segment_size -
         1;
 
-    fk::vector<P, mem_type::const_view> const window(source, output_start,
-                                                     output_end);
+    fk::vector<P, mem_type::const_view> const window(source, source_start,
+                                                     source_end);
 
     auto const success =
         MPI_Send((void *)window.data(), window.size(), mpi_type, message.target,
                  mpi_tag, communicator);
-    assert(success == 0);
+    tools::expect(success == 0);
   }
   else
   {
-    auto const input_start =
-        static_cast<int64_t>(my_grid.to_local_col(message.range.start)) *
-        segment_size;
-    auto const input_end =
-        static_cast<int64_t>(my_grid.to_local_col(message.range.stop) + 1) *
-            segment_size -
+    auto const dest_start =
+        static_cast<int64_t>(map(message.dest_range.start)) * segment_size;
+    auto const dest_end =
+        static_cast<int64_t>(map(message.dest_range.stop) + 1) * segment_size -
         1;
 
-    fk::vector<P, mem_type::view> window(dest, input_start, input_end);
+    fk::vector<P, mem_type::view> window(dest, dest_start, dest_end);
 
     auto const success =
         MPI_Recv((void *)window.data(), window.size(), mpi_type, message.target,
                  MPI_ANY_TAG, communicator, MPI_STATUS_IGNORE);
-    assert(success == 0);
+    tools::expect(success == 0);
   }
 #else
-  ignore({source, dest, my_grid, message, segment_size});
-  assert(false);
+
+  ignore(source);
+  ignore(dest);
+  ignore(map);
+  ignore(message);
+  ignore(segment_size);
+  tools::expect(false);
+
 #endif
 }
 
@@ -530,8 +538,8 @@ void exchange_results(fk::vector<P> const &source, fk::vector<P> &dest,
                       int const segment_size, distribution_plan const &plan,
                       int const my_rank)
 {
-  assert(my_rank >= 0);
-  assert(my_rank < static_cast<int>(plan.size()));
+  tools::expect(my_rank >= 0);
+  tools::expect(my_rank < static_cast<int>(plan.size()));
 #ifdef ASGARD_USE_MPI
 
   if (plan.size() == 1)
@@ -551,11 +559,15 @@ void exchange_results(fk::vector<P> const &source, fk::vector<P> &dest,
   {
     if (message.target == my_rank)
     {
-      copy_to_input(source, dest, my_subgrid, message, segment_size);
+      copy_to_input(source, dest, my_subgrid.get_local_row_map(),
+                    my_subgrid.get_local_col_map(), message, segment_size);
       continue;
     }
 
-    dispatch_message(source, dest, my_subgrid, message, segment_size);
+    auto const local_map = (message.message_dir == message_direction::send)
+                               ? my_subgrid.get_local_row_map()
+                               : my_subgrid.get_local_col_map();
+    dispatch_message(source, dest, local_map, message, segment_size);
   }
 
 #else
@@ -578,17 +590,17 @@ gather_errors(P const root_mean_squared, P const relative)
   auto success =
       MPI_Comm_split_type(distro_handle.get_global_comm(), MPI_COMM_TYPE_SHARED,
                           0, MPI_INFO_NULL, &local_comm);
-  assert(success == 0);
+  tools::expect(success == 0);
 
   MPI_Datatype const mpi_type =
       std::is_same<P, double>::value ? MPI_DOUBLE : MPI_FLOAT;
 
   int local_rank;
   success = MPI_Comm_rank(local_comm, &local_rank);
-  assert(success == 0);
+  tools::expect(success == 0);
   int local_size;
   success = MPI_Comm_size(local_comm, &local_size);
-  assert(success == 0);
+  tools::expect(success == 0);
 
   fk::vector<P> error_vect(local_size * 2);
 
@@ -596,7 +608,7 @@ gather_errors(P const root_mean_squared, P const relative)
              mpi_type, 0, local_comm);
 
   success = MPI_Comm_free(&local_comm);
-  assert(success == 0);
+  tools::expect(success == 0);
 
   if (local_rank == 0)
   {
@@ -621,8 +633,8 @@ std::vector<P>
 gather_results(fk::vector<P> const &my_results, distribution_plan const &plan,
                int const my_rank, int const element_segment_size)
 {
-  assert(my_rank >= 0);
-  assert(my_rank < static_cast<int>(plan.size()));
+  tools::expect(my_rank >= 0);
+  tools::expect(my_rank < static_cast<int>(plan.size()));
 
   auto const own_results = [&my_results]() {
     std::vector<P> own_results(my_results.size());
@@ -662,13 +674,13 @@ gather_results(fk::vector<P> const &my_results, distribution_plan const &plan,
   }();
 
   // split the communicator - only need the first row
-  bool const participating            = my_rank < num_subgrid_cols;
-  int const comm_color                = participating ? 1 : MPI_UNDEFINED;
+  auto const participating            = my_rank < num_subgrid_cols;
+  auto const comm_color               = participating ? 1 : MPI_UNDEFINED;
   MPI_Comm const &global_communicator = distro_handle.get_global_comm();
   MPI_Comm first_row_communicator;
   auto success = MPI_Comm_split(global_communicator, comm_color, my_rank,
                                 &first_row_communicator);
-  assert(success == 0);
+  tools::expect(success == 0);
 
   // gather values
   if (first_row_communicator != MPI_COMM_NULL)
@@ -686,24 +698,24 @@ gather_results(fk::vector<P> const &my_results, distribution_plan const &plan,
     {
       std::copy(my_results.begin(), my_results.end(), results.begin());
 
-      for (int i = 1; i < num_subgrid_cols; ++i)
+      for (auto i = 1; i < num_subgrid_cols; ++i)
       {
         success = MPI_Recv((void *)(results.data() + my_results.size() +
                                     rank_displacements(i)),
                            rank_lengths(i), mpi_type, i, MPI_ANY_TAG,
                            first_row_communicator, MPI_STATUS_IGNORE);
-        assert(success == 0);
+        tools::expect(success == 0);
       }
 
       return results;
     }
     else
     {
-      int const mpi_tag = 0;
+      auto const mpi_tag = 0;
       success = MPI_Send((void *)my_results.data(), my_results.size(), mpi_type,
                          0, mpi_tag, first_row_communicator);
 
-      assert(success == 0);
+      tools::expect(success == 0);
       return own_results();
     }
   }
@@ -714,6 +726,313 @@ gather_results(fk::vector<P> const &my_results, distribution_plan const &plan,
   ignore(element_segment_size);
   return own_results();
 #endif
+}
+
+template<typename P>
+P get_global_max(P const my_max, distribution_plan const &plan)
+{
+#ifdef ASGARD_USE_MPI
+
+  // split into rows
+  MPI_Comm row_communicator;
+  MPI_Comm const global_communicator = distro_handle.get_global_comm();
+  auto const num_cols                = get_num_subgrid_cols(plan.size());
+  auto const my_rank                 = get_rank();
+  auto const my_row                  = my_rank / num_cols;
+  auto const my_col                  = my_rank % num_cols;
+  auto success =
+      MPI_Comm_split(global_communicator, my_row, my_col, &row_communicator);
+  assert(success == 0);
+
+  // get max
+  MPI_Datatype const mpi_type =
+      std::is_same<P, double>::value ? MPI_DOUBLE : MPI_FLOAT;
+
+  P global_max;
+  success = MPI_Allreduce(&my_max, &global_max, 1, mpi_type, MPI_MAX,
+                          row_communicator);
+  assert(success == 0);
+  success = MPI_Comm_free(&row_communicator);
+  assert(success == 0);
+
+#else
+  assert(plan.size() == 1);
+  auto const global_max = my_max;
+#endif
+
+  return global_max;
+}
+
+std::vector<int64_t>
+distribute_table_changes(std::vector<int64_t> const &my_changes,
+                         distribution_plan const &plan)
+{
+  if (plan.size() == 1)
+  {
+    return my_changes;
+  }
+
+#ifdef ASGARD_USE_MPI
+  // determine size of everyone's messages
+  auto const my_rank      = get_rank();
+  auto const num_messages = [&plan, &my_changes, my_rank]() {
+    std::vector<int> num_messages(plan.size());
+    assert(my_changes.size() < INT_MAX);
+    num_messages[get_rank()] = static_cast<int>(my_changes.size());
+    assert(plan.size() < INT_MAX);
+    for (auto i = 0; i < static_cast<int>(plan.size()); ++i)
+    {
+      auto const success = MPI_Bcast(num_messages.data() + i, 1, MPI_INT, i,
+                                     distro_handle.get_global_comm());
+      assert(success == 0);
+    }
+    return num_messages;
+  }();
+
+  auto const displacements = [&num_messages]() {
+    std::vector<int> displacements(num_messages.size());
+
+    // some compilers don't support this yet...//FIXME
+    // std::exclusive_scan(num_messages.begin(), num_messages.end(),
+    //                    displacements.begin(), 0);
+    // do it manually instead...
+    for (auto i = 1; i < static_cast<int>(num_messages.size()); ++i)
+    {
+      displacements[i] = displacements[i - 1] + num_messages[i - 1];
+    }
+    return displacements;
+  }();
+
+  // now distribute changes
+  std::vector<int64_t> all_changes(
+      std::accumulate(num_messages.begin(), num_messages.end(), 0));
+
+  auto const success = MPI_Allgatherv(
+      my_changes.data(), static_cast<int>(my_changes.size()), MPI_INT64_T,
+      all_changes.data(), num_messages.data(), displacements.data(),
+      MPI_INT64_T, distro_handle.get_global_comm());
+
+  assert(success == 0);
+
+  return all_changes;
+
+#else
+  // plan size > 1, MPI off - shouldn't occur
+  assert(false);
+  return my_changes;
+#endif
+}
+
+// private helper.
+// find the rank on my subgrid row that has the old x data new_region needs,
+// using old plan
+std::unordered_map<int, std::list<message>>
+region_messages_remap(distribution_plan const &old_plan,
+                      distribution_plan const &new_plan,
+                      grid_limits const source_region,
+                      grid_limits const dest_region, int const rank)
+{
+  assert(rank >= 0);
+
+  // we should only need to communicate with our own (old) row of subgrids
+  // each has a full copy of the vector
+  auto const cols = get_num_subgrid_cols(old_plan.size());
+  auto const row  = rank / cols;
+
+  std::unordered_map<int, std::list<message>> region_messages;
+  auto const queue_msg = [&region_messages](int const rank,
+                                            message const &msg) {
+    region_messages.try_emplace(rank, std::list<message>());
+    region_messages[rank].push_back(msg);
+  };
+
+  // iterate over columns in the subgrid
+  // find grids that include parts (or all)
+  // of this region.
+  auto const my_new_subgrid = new_plan.at(rank);
+  auto dest_subregion_start = dest_region.start;
+  assert(dest_subregion_start >= my_new_subgrid.col_start);
+
+  for (auto i = 0; i < cols; ++i)
+  {
+    // FIXME assumes a row major layout of the element grid
+    auto const old_source_subgrid = old_plan.at(i);
+
+    // if the source region is contained within the old remote subgrid
+    if (source_region.start <= old_source_subgrid.col_stop &&
+        source_region.stop >= old_source_subgrid.col_start)
+    {
+      // find source values contained within the remote subgrid
+      auto const contain_start =
+          std::max(source_region.start, old_source_subgrid.col_start);
+      auto const contain_end =
+          std::min(source_region.stop, old_source_subgrid.col_stop);
+      auto const contain_subregion = grid_limits(contain_start, contain_end);
+
+      // where I am going to place those values in this subgrid
+      auto const dest_subregion_stop =
+          std::min(dest_subregion_start + contain_subregion.size() - 1,
+                   my_new_subgrid.col_stop);
+      auto const dest_subregion =
+          grid_limits(dest_subregion_start, dest_subregion_stop);
+      dest_subregion_start = dest_subregion_stop + 1;
+
+      // trim to fit dest
+      auto const source_subregion =
+          grid_limits(contain_subregion.start,
+                      contain_subregion.start + dest_subregion.size() - 1);
+
+      // enqueue the communication with
+      // the subgrid at old_grid(rank_row, i)
+      auto const partner_rank = row * cols + i;
+
+      // no deadlock ensured by simultaneously enqueing the recv and send
+      // receive
+      queue_msg(rank, message(message_direction::receive, partner_rank,
+                              source_subregion, dest_subregion));
+      // matching send
+      queue_msg(partner_rank, message(message_direction::send, rank,
+                                      source_subregion, dest_subregion));
+    }
+  }
+
+  assert(dest_subregion_start = dest_region.stop + 1);
+  return region_messages;
+}
+
+// private helper.
+// map to the old x data my subgrid requires,
+// using the element remapping
+static std::vector<std::list<message>>
+subgrid_messages_remap(distribution_plan const &old_plan,
+                       distribution_plan const &new_plan,
+                       std::map<int64_t, grid_limits> const &elem_index_remap,
+                       int const rank)
+{
+  assert(rank >= 0);
+
+  std::vector<std::list<message>> subgrid_messages(new_plan.size());
+  auto const rank_subgrid = new_plan.at(rank);
+
+  for (auto const &[new_index_start, old_region] : elem_index_remap)
+  {
+    // containment test
+    auto const new_index_stop = new_index_start + old_region.size() - 1;
+    if (new_index_start > rank_subgrid.col_stop ||
+        new_index_stop < rank_subgrid.col_start)
+    {
+      continue;
+    }
+
+    auto const dest_start =
+        std::max(new_index_start, static_cast<int64_t>(rank_subgrid.col_start));
+    auto const dest_stop =
+        std::min(new_index_stop, static_cast<int64_t>(rank_subgrid.col_stop));
+    auto const dest_region = grid_limits(dest_start, dest_stop);
+    auto const source_start =
+        std::max(static_cast<int64_t>(old_region.start),
+                 old_region.start + (rank_subgrid.col_start - new_index_start));
+    auto const source_stop =
+        std::min(static_cast<int64_t>(old_region.stop),
+                 old_region.stop - (new_index_stop - rank_subgrid.col_stop));
+    auto const source_region = grid_limits(source_start, source_stop);
+
+    auto region_messages = region_messages_remap(
+        old_plan, new_plan, source_region, dest_region, rank);
+
+    for (auto &[rank, msgs] : region_messages)
+    {
+      subgrid_messages[rank].splice(subgrid_messages[rank].end(), msgs);
+    }
+  }
+  return subgrid_messages;
+}
+
+std::vector<std::list<message>>
+generate_messages_remap(distribution_plan const &old_plan,
+                        distribution_plan const &new_plan,
+                        std::map<int64_t, grid_limits> const &elem_index_remap)
+{
+  assert(old_plan.size() == new_plan.size());
+  assert(elem_index_remap.size() != 0);
+
+  // TODO technically, all these calculations will yield the same set of
+  // messages for each subgrid row. if this requires optimization, just perform
+  // the first row, and add functionality to replicate messaging behavior across
+  // rows
+  std::vector<std::list<message>> redis_messages(new_plan.size());
+  for (auto const &[rank, subgrid] : new_plan)
+  {
+    ignore(subgrid);
+    auto rank_messages =
+        subgrid_messages_remap(old_plan, new_plan, elem_index_remap, rank);
+    assert(rank_messages.size() == new_plan.size());
+    for (auto const &[rank, subgrid] : new_plan)
+    {
+      ignore(subgrid);
+      redis_messages[rank].splice(redis_messages[rank].end(),
+                                  rank_messages[rank]);
+    }
+  }
+  return redis_messages;
+}
+
+static bool check_overlap(std::map<int64_t, grid_limits> const &elem_remap)
+{
+  auto next_valid = 0;
+  for (auto const &[new_index, old_region] : elem_remap)
+  {
+    if (new_index < next_valid)
+    {
+      return false;
+    }
+    next_valid = new_index + old_region.size();
+  }
+  return true;
+}
+
+template<typename P>
+fk::vector<P>
+redistribute_vector(fk::vector<P> const &old_x,
+                    distribution_plan const &old_plan,
+                    distribution_plan const &new_plan,
+                    std::map<int64_t, grid_limits> const &elem_remap)
+{
+  assert(old_plan.size() == new_plan.size());
+  assert(check_overlap(elem_remap));
+  assert(elem_remap.size() != 0);
+
+  auto const my_rank     = get_rank();
+  auto const old_subgrid = old_plan.at(my_rank);
+  auto const new_subgrid = new_plan.at(my_rank);
+
+  // x's size should be num_elements*deg^dim
+  // (deg^dim is one element's number of coefficients/ elements in x vector)
+  assert(old_x.size() % old_subgrid.ncols() == 0);
+  auto const segment_size = old_x.size() / old_subgrid.ncols();
+  fk::vector<P> y(new_subgrid.ncols() * segment_size);
+
+  auto const messages =
+      generate_messages_remap(old_plan, new_plan, elem_remap)[my_rank];
+
+  for (auto const &message : messages)
+  {
+    auto const source_local_map = old_subgrid.get_local_col_map();
+    auto const dest_local_map   = new_subgrid.get_local_col_map();
+    if (message.target == my_rank)
+    {
+      copy_to_input(old_x, y, source_local_map, dest_local_map, message,
+                    segment_size);
+    }
+    else
+    {
+      auto const local_map = (message.message_dir == message_direction::send)
+                                 ? source_local_map
+                                 : dest_local_map;
+      dispatch_message(old_x, y, local_map, message, segment_size);
+    }
+  }
+  return y;
 }
 
 template void reduce_results(fk::vector<float> const &source,
@@ -746,3 +1065,20 @@ template std::vector<double>
 gather_results(fk::vector<double> const &my_results,
                distribution_plan const &plan, int const my_rank,
                int const element_segment_size);
+
+template float
+get_global_max(float const my_max, distribution_plan const &plan);
+template double
+get_global_max(double const my_max, distribution_plan const &plan);
+
+template fk::vector<float>
+redistribute_vector(fk::vector<float> const &old_x,
+                    distribution_plan const &old_plan,
+                    distribution_plan const &new_plan,
+                    std::map<int64_t, grid_limits> const &elem_remap);
+
+template fk::vector<double>
+redistribute_vector(fk::vector<double> const &old_x,
+                    distribution_plan const &old_plan,
+                    distribution_plan const &new_plan,
+                    std::map<int64_t, grid_limits> const &elem_remap);

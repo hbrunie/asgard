@@ -5,6 +5,8 @@
 #ifdef ASGARD_USE_MPI
 #include "mpi.h"
 #endif
+
+#include <list>
 #include <map>
 #include <vector>
 
@@ -14,10 +16,15 @@ struct grid_limits
   grid_limits(int const start, int const stop) : start(start), stop(stop){};
   grid_limits(grid_limits const &l) : start(l.start), stop(l.stop){};
   grid_limits(grid_limits const &&l) : start(l.start), stop(l.stop){};
+
   int size() const { return stop - start + 1; }
-  bool operator==(const grid_limits &rhs) const
+  bool operator==(grid_limits const &rhs) const
   {
     return start == rhs.start && stop == rhs.stop;
+  }
+  bool operator<(grid_limits const &rhs) const
+  {
+    return std::tie(start, stop) < std::tie(rhs.start, rhs.stop);
   }
   int const start;
   int const stop;
@@ -29,6 +36,8 @@ struct grid_limits
 // start and stop members are inclusive global indices of the element grid.
 //
 // translation functions are provided for mapping global<->local indices.
+
+using index_mapper = std::function<int(int const)>;
 class element_subgrid
 {
 public:
@@ -37,10 +46,10 @@ public:
       : row_start(row_start), row_stop(row_stop), col_start(col_start),
         col_stop(col_stop)
   {
-    assert(row_start >= 0);
-    assert(row_stop >= row_start);
-    assert(col_start >= 0);
-    assert(col_stop >= col_start);
+    tools::expect(row_start >= 0);
+    tools::expect(row_stop >= row_start);
+    tools::expect(col_start >= 0);
+    tools::expect(col_stop >= col_start);
   };
   element_subgrid(element_subgrid const &e)
       : row_start(e.row_start), row_stop(e.row_stop), col_start(e.col_start),
@@ -62,38 +71,52 @@ public:
   // translation from local/global x and y
   int to_global_row(int const local_row) const
   {
-    assert(local_row >= 0);
-    assert(local_row < nrows());
+    tools::expect(local_row >= 0);
+    tools::expect(local_row < nrows());
     return local_row + row_start;
   }
   int to_global_col(int const local_col) const
   {
-    assert(local_col >= 0);
-    assert(local_col < ncols());
+    tools::expect(local_col >= 0);
+    tools::expect(local_col < ncols());
     return local_col + col_start;
   }
   int to_local_row(int const global_row) const
   {
-    assert(global_row >= 0);
+    tools::expect(global_row >= 0);
     int const local = global_row - row_start;
-    assert(local >= 0);
-    assert(local < nrows());
+    tools::expect(local >= 0);
+    tools::expect(local < nrows());
     return local;
   };
   int to_local_col(int const global_col) const
   {
-    assert(global_col >= 0);
+    tools::expect(global_col >= 0);
     int const local = global_col - col_start;
-    assert(local >= 0);
-    assert(local < ncols());
+    tools::expect(local >= 0);
+    tools::expect(local < ncols());
     return local;
   };
+
+  // shims for when we need to pass the above to functions
+  index_mapper get_local_col_map() const
+  {
+    return
+        [this](int const global_index) { return to_local_col(global_index); };
+  }
+  index_mapper get_local_row_map() const
+  {
+    return
+        [this](int const global_index) { return to_local_row(global_index); };
+  }
 
   int const row_start;
   int const row_stop;
   int const col_start;
   int const col_stop;
 };
+
+// -- funcs for distributing solution vector
 
 // helper for determining the number of subgrid columns given
 // a number of ranks.
@@ -102,7 +125,7 @@ public:
 // possible
 inline int get_num_subgrid_cols(int const num_ranks)
 {
-  assert(num_ranks > 0);
+  tools::expect(num_ranks > 0);
   int trial_factor = static_cast<int>(std::floor(std::sqrt(num_ranks)));
   while (trial_factor > 0)
   {
@@ -114,7 +137,8 @@ inline int get_num_subgrid_cols(int const num_ranks)
     trial_factor++;
   }
   // I believe this is mathematically impossible...
-  assert(false);
+  tools::expect(false);
+  return 0;
 }
 
 // should be invoked once on startup to
@@ -168,22 +192,40 @@ enum class message_direction
   receive
 };
 
-// represent a point-to-point message.
+// represent a point-to-point message within or across distribution plans.
 // target is the sender rank for a receive, and receive rank for send
-// the range describes the global indices (inclusive) that will be transmitted
+// old range describes the global indices (inclusive) that will be transmitted
+// new range describes the global indices (inclusive) for receiving
 struct message
 {
   message(message_direction const message_dir, int const target,
-          grid_limits const range)
-      : message_dir(message_dir), target(target), range(range)
+          grid_limits const &source_range, grid_limits const &dest_range)
+      : message_dir(message_dir), target(target), source_range(source_range),
+        dest_range(dest_range)
+  {
+    assert(source_range.size() == dest_range.size());
+  }
+  // within the same distro plan, only need one range
+  // global indices are consistent
+  message(message_direction const message_dir, int const target,
+          grid_limits const source_range)
+      : message_dir(message_dir), target(target), source_range(source_range),
+        dest_range(source_range)
   {}
 
   message(message const &other) = default;
   message(message &&other)      = default;
 
+  bool operator==(message const &oth) const
+  {
+    return (message_dir == oth.message_dir && target == oth.target &&
+            source_range == oth.source_range && dest_range == oth.dest_range);
+  }
+
   message_direction const message_dir;
   int const target;
-  grid_limits const range;
+  grid_limits const source_range;
+  grid_limits const dest_range;
 };
 
 // reduce the results of a subgrid row
@@ -217,8 +259,41 @@ gather_results(fk::vector<P> const &my_results, distribution_plan const &plan,
 template<typename P>
 double get_MB(int64_t const num_elems)
 {
-  assert(num_elems > 0);
+  tools::expect(num_elems > 0);
   double const bytes = num_elems * sizeof(P);
   double const MB    = bytes * 1e-6;
   return MB;
 }
+
+// -- funcs for adaptivity/redistribution
+
+// find maximum element in plan using each rank's local max
+template<typename P>
+P get_global_max(P const my_max, distribution_plan const &plan);
+
+// merge my element table additions/deletions with other nodes
+std::vector<int64_t>
+distribute_table_changes(std::vector<int64_t> const &my_changes,
+                         distribution_plan const &plan);
+
+// generate messages for redistribute_vector
+// conceptually private, exposed for testing
+
+// elem remap: new element index -> old grid start,stop
+std::vector<std::list<message>>
+generate_messages_remap(distribution_plan const &old_plan,
+                        distribution_plan const &new_plan,
+                        std::map<int64_t, grid_limits> const &elem_remap);
+
+// redistribute: after adapting distribution plan, ensure all ranks have
+// correct existing values for assigned subgrids
+
+// preconditions: old plan and new plan sizes match (same number of ranks)
+// also, elements must either be appended to the element grid (refinement)
+// or deleted from the middle of the grid with left shift to fill (coarsening)
+template<typename P>
+fk::vector<P>
+redistribute_vector(fk::vector<P> const &old_x,
+                    distribution_plan const &old_plan,
+                    distribution_plan const &new_plan,
+                    std::map<int64_t, grid_limits> const &elem_remap);
