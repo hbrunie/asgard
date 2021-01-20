@@ -131,13 +131,13 @@ adaptive_advance(method const step_method, PDE<P> &pde,
 // vector x. on exit, the next solution vector is stored in x.
 template<typename P>
 fk::vector<P>
-explicit_advance(PDE<P> const &pde,
-                 adapt::distributed_grid<P> const &adaptive_grid,
-                 options const &program_opts,
-                 std::vector<fk::vector<P>> const &unscaled_sources,
-                 std::array<unscaled_bc_parts<P>, 2> const &unscaled_parts,
-                 fk::vector<P> const &x_orig, int const workspace_size_MB,
-                 P const time)
+explicit_time_advance(PDE<analytic_prec> const &pde, elements::table const &table,
+                      options const &program_opts,
+                      std::vector<fk::vector<P>> const &unscaled_sources,
+                      std::array<unscaled_bc_parts<P>, 2> const &unscaled_parts,
+                      fk::vector<P> const &x_orig,
+                      distribution_plan const &plan,
+                      int const workspace_size_MB, P const time)
 {
   auto const &table    = adaptive_grid.get_table();
   auto const &plan     = adaptive_grid.get_distrib_plan();

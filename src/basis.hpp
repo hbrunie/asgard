@@ -28,11 +28,11 @@ enum class transpose
   trans
 };
 
-template<typename P, resource resrc>
+template<typename P, typename PP, resource resrc>
 class wavelet_transform
 {
 public:
-  wavelet_transform(options const &program_opts, PDE<P> const &pde,
+  wavelet_transform(options const &program_opts, PDE<PP> const &pde,
                     bool const quiet = true);
 
   // apply the fmwt matrix to coefficients
