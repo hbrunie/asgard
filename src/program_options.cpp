@@ -38,6 +38,8 @@ parser::parser(int argc, char **argv)
           "Number of iterations") |
       clara::detail::Opt(pde_str, "e.g. continuity2")["-p"]["--pde"](
           "PDE to solve; use -a option to print list of choices") |
+      clara::detail::Opt(case_selection, "e.g. 1 (or 2)")["--case_selection"](
+          "PDE case to solve; default is 1, sometimes there is a second case possible.") |
       clara::detail::Opt(do_poisson)["-e"]["--electric_solve"](
           "Do poisson solve for electric field") |
       clara::detail::Opt(wavelet_output_freq,
@@ -94,6 +96,12 @@ parser::parser(int argc, char **argv)
   if (degree < 1 && degree != NO_USER_VALUE)
   {
     std::cerr << "Degree must be a natural number" << '\n';
+    valid = false;
+  }
+
+  if (pde_selected_case < 0 && pde_selected_case != NO_USER_VALUE)
+  {
+    std::cerr << "PDE selected case must be a natural number" << '\n';
     valid = false;
   }
 
@@ -245,6 +253,7 @@ int parser::get_realspace_output_freq() const { return realspace_output_freq; }
 
 double parser::get_cfl() const { return cfl; }
 double parser::get_dt() const { return dt; }
+case_opts parser::get_pde_selected_case() const { return pde_selected_case; }
 double parser::get_adapt_thresh() const { return adapt_threshold; }
 
 std::string parser::get_pde_string() const { return pde_str; }

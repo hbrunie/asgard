@@ -31,7 +31,7 @@
 // q=df/fz  with homogeneous Dirichlet BC
 //
 // ---------------------------------------------------------------------------
-template<typename P>
+template<typename P, PDE_case_opts user_case = PDE_case_opts::mod0>
 class PDE_fokkerplanck_1d_pitch_E : public PDE<P>
 {
 public:

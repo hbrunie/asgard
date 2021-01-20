@@ -41,6 +41,33 @@
 // ---------------------------------------------------------------------------
 
 template<typename P>
+// the choices for supported PDE types
+enum class PDE_opts
+{
+  continuity_1,
+  continuity_2,
+  continuity_3,
+  continuity_6,
+  fokkerplanck_1d_pitch_E,
+  fokkerplanck_1d_pitch_C,
+  fokkerplanck_1d_4p3,
+  fokkerplanck_1d_4p4,
+  fokkerplanck_1d_4p5,
+  fokkerplanck_2d_complete,
+  diffusion_1,
+  diffusion_2,
+  // FIXME will need to add the user supplied PDE choice
+};
+
+enum class PDE_case_opts
+{
+  mod0,
+  mod1,
+  mod2,
+  mod_count
+  // FIXME will need to add the user supplied PDE cases choice
+};
+
 std::unique_ptr<PDE<P>> make_PDE(parser const &cli_input)
 {
   switch (cli_input.get_selected_pde())
@@ -54,7 +81,10 @@ std::unique_ptr<PDE<P>> make_PDE(parser const &cli_input)
   case PDE_opts::continuity_6:
     return std::make_unique<PDE_continuity_6d<P>>(cli_input);
   case PDE_opts::fokkerplanck_1d_pitch_E:
-    return std::make_unique<PDE_fokkerplanck_1d_pitch_E<P>>(cli_input);
+    if(cli_input.get_pde_selected_case() == opts_case::mod1)
+        return std::make_unique<PDE_fokkerplanck_1d_pitch_E<P,case_opts::mod1>>(cli_input);
+    else
+        return std::make_unique<PDE_fokkerplanck_1d_pitch_E<P>>(cli_input);
   case PDE_opts::fokkerplanck_1d_pitch_C:
     return std::make_unique<PDE_fokkerplanck_1d_pitch_C<P>>(cli_input);
   case PDE_opts::fokkerplanck_1d_4p3:

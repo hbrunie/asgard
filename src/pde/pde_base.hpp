@@ -66,6 +66,15 @@ auto const element_segment_size = [](auto const &pde) {
 //
 // ---------------------------------------------------------------------------
 // forward dec
+
+enum class case_opts
+{
+  mod0,
+  mod1,
+  mod2,
+  mod_count
+};
+
 template<typename P>
 class PDE;
 
