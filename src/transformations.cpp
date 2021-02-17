@@ -112,7 +112,7 @@ std::vector<fk::matrix<P>> gen_realspace_transform(
        polynomial of degree i. element (i, j) is polynomial evaluated at jth
        root of the highest degree polynomial */
     fk::matrix<P> const basis = legendre<P>(roots, d.get_degree())[0] *
-                                (static_cast<P>(1.0) / std::sqrt(normalize));
+                                (static_cast<P>(1.0) / sqrt(normalize));
     /* set submatrices of dimension_transform */
     for (int j = 0; j < n_segments; j++)
     {

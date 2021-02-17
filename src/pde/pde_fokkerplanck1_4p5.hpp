@@ -65,12 +65,11 @@ private:
 
   static P phi(P const z, P const t)
   {
-    return z * std::exp(-t) /
-           std::sqrt(1 - (std::exp(-2 * t) - 1) * std::pow(z, 2));
+    return z * exp(-t) / sqrt(1 - (exp(-2 * t) - 1) * pow(z, 2));
   }
   static P f0(P const z)
   {
-    return std::exp(-std::pow(z, 2) / std::pow(sig, 2));
+    return exp(-pow(z, 2) / pow(sig, 2));
   }
 
   static fk::vector<P> f0_vec(fk::vector<P> const z, P const t = 0)
@@ -93,8 +92,8 @@ private:
     {
       auto const A     = E / C;
       auto const B     = R / C;
-      static const P Q = 0.03;
-      f(i)             = Q * std::exp(A * z(i) + (B / 2) * std::pow(z(i), 2));
+      static const P Q = (P) 0.03;
+      f(i)             = Q * exp(A * z(i) + (B / 2) * pow(z(i), 2));
     }
     return f;
   }
@@ -114,7 +113,7 @@ private:
   static P get_dt_(dimension<P> const &dim)
   {
     P const x_range = dim.domain_max - dim.domain_min;
-    P const dx      = x_range / std::pow(2, dim.get_level());
+    P const dx      = x_range / pow(2, dim.get_level());
     P const dt      = dx;
     // this will be scaled by CFL
     // from command line

@@ -11,7 +11,7 @@ TEMPLATE_TEST_CASE("floating point norms", "[fast_math]", float, double)
       2,  3,  4, 5, 6, 6, 5, 4, 3, 2, 10, 10, 10,
       10, 10, 7, 3, 5, 9, 9, 4, 5, 4, 5,  7};
 
-  TestType gold_norm = 4.0 * std::sqrt(66.0);
+  TestType gold_norm = 4.0 * sqrt(66.0);
 
   SECTION("fk::vector: owner, host")
   {
@@ -83,7 +83,7 @@ TEMPLATE_TEST_CASE("floating point norms", "[fast_math]", float, double)
       {7, 3, 5, 9, 9},
       {4, 5, 4, 5, 7}};
 
-  TestType gold_norm_submatrix = 3.0 * std::sqrt(26.0);
+  TestType gold_norm_submatrix = 3.0 * sqrt(26.0);
 
   SECTION("fk::matrix: owner, host")
   {

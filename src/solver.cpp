@@ -120,7 +120,7 @@ P simple_gmres(fk::matrix<P> const &A, fk::vector<P> &x, fk::vector<P> const &b,
       P const temp          = cosines(i) * krylov_sol(i);
       krylov_sol(i + 1)     = -sines(i) * krylov_sol(i);
       krylov_sol(i)         = temp;
-      error                 = std::abs(krylov_sol(i + 1)) / norm_b;
+      error                 = abs(krylov_sol(i + 1)) / norm_b;
 
       if (error <= tolerance)
       {

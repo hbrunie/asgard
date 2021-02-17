@@ -258,7 +258,7 @@ TEST_CASE("rank subgrid function", "[distribution]")
     for (int i = 0; i < num_ranks; ++i)
     {
       element_subgrid const e(get_subgrid(num_ranks, i, table));
-      REQUIRE(std::abs(e.nrows() - e.ncols()) <
+      REQUIRE(abs(e.nrows() - e.ncols()) <
               2); // square number of ranks should produce square subgrids
                   // left over elements are greedily assigned, maximum
                   // difference between row/col number should be one
@@ -521,7 +521,7 @@ void generate_messages_test(int const num_ranks, elements::table const &table)
 
     for (int i = row_begin; i < num_rows; ++i)
     {
-      REQUIRE(std::abs(my_sends - send_counter(i)) < 2);
+      REQUIRE(abs(my_sends - send_counter(i)) < 2);
     }
   }
 }

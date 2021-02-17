@@ -126,7 +126,7 @@ public:
 inline int get_num_subgrid_cols(int const num_ranks)
 {
   expect(num_ranks > 0);
-  int trial_factor = static_cast<int>(std::floor(std::sqrt(num_ranks)));
+  int trial_factor = static_cast<int>(std::floor(sqrt(num_ranks)));
   while (trial_factor > 0)
   {
     int const other_factor = num_ranks / trial_factor;

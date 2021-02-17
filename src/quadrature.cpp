@@ -94,11 +94,11 @@ legendre(fk::vector<P> const domain, int const degree,
     else if (normalization == legendre_normalization::lin)
     {
       P norm_2 = static_cast<P>(2.0) / (2.0 * i + 1.0);
-      dscale   = static_cast<P>(1.0) / std::sqrt(norm_2);
+      dscale   = static_cast<P>(1.0) / sqrt(norm_2);
     }
     else if (normalization == legendre_normalization::matlab)
     {
-      dscale = static_cast<P>(1.0) / std::sqrt(2.0);
+      dscale = static_cast<P>(1.0) / sqrt(2.0);
     }
 
     expect(dscale > 0);
@@ -127,8 +127,8 @@ legendre(fk::vector<P> const domain, int const degree,
   if (degree > 0)
   {
     // "scaling to use normalization
-    legendre       = legendre * static_cast<P>(std::sqrt(2.0));
-    legendre_prime = legendre_prime * static_cast<P>(std::sqrt(2.0));
+    legendre       = legendre * static_cast<P>(sqrt(2.0));
+    legendre_prime = legendre_prime * static_cast<P>(sqrt(2.0));
   }
   return {legendre, legendre_prime};
 }
@@ -195,15 +195,15 @@ legendre_weights(int const degree, P const lower_bound, P const upper_bound,
   x_roots = linspace(static_cast<P>(0.0), static_cast<P>((num_points - 1)),
                      num_points);
   std::transform(x_roots.begin(), x_roots.end(), x_roots.begin(), [&](P &elem) {
-    return std::cos((2 * elem + 1) * M_PI /
-                    static_cast<P>((2 * (num_points - 1) + 2)));
+    return cos((2 * elem + 1) * M_PI /
+               static_cast<P>((2 * (num_points - 1) + 2)));
   });
 
   fk::vector<P> x_roots2(x_linspace);
   std::transform(
       x_roots2.begin(), x_roots2.end(), x_roots2.begin(), [&](P &elem) {
         return (static_cast<P>(0.27) / num_points) *
-               std::sin(M_PI * elem * (num_points - 1) / (num_points + 1));
+               sin(M_PI * elem * (num_points - 1) / (num_points + 1));
       });
 
   x_roots = x_roots + x_roots2;
@@ -236,7 +236,7 @@ legendre_weights(int const degree, P const lower_bound, P const upper_bound,
   // while max(abs(x_roots-x_roots_initial))>eps
   fk::vector<P> diff(num_points);
   auto const abs_diff = [&](P const &y_elem, P const &y0_elem) {
-    return std::fabs(y_elem - y0_elem);
+    return fabs(y_elem - y0_elem);
   };
   std::transform(x_roots.begin(), x_roots.end(), x_roots_initial.begin(),
                  diff.begin(), abs_diff);

@@ -80,7 +80,7 @@ fk::vector<P> forward_transform(
   P const normalize         = (domain_max - domain_min) / n;
   fk::matrix<P> const basis = [&roots = roots, degree, normalize] {
     fk::matrix<P> legendre_ = legendre<P>(roots, degree)[0];
-    return legendre_.transpose() * (static_cast<P>(1.0) / std::sqrt(normalize));
+    return legendre_.transpose() * (static_cast<P>(1.0) / sqrt(normalize));
   }();
 
   // this will be our return vector
@@ -130,9 +130,15 @@ fk::vector<P> forward_transform(
                      {
                        return static_cast<P>(1e-12);
                      }
+#ifdef ASGARD_USE_SHAMAN
+                     if constexpr (std::is_same<P, Sdouble>::value)
+                     {
+                       return static_cast<P>(1e-12);
+                     }
+#endif
                      return static_cast<P>(1e-4);
                    }();
-                   return std::abs(elem) < compare ? static_cast<P>(0.0) : elem;
+                   return abs(elem) < compare ? static_cast<P>(0.0) : elem;
                  });
 
   return transformed;

@@ -26,18 +26,18 @@ private:
   static bool constexpr do_poisson_solve_  = false;
   static bool constexpr has_analytic_soln_ = true;
 
-  static P constexpr nu = 0.01;
+  static P constexpr nu = (P)0.01;
 
   static fk::vector<P>
   initial_condition_dim0(fk::vector<P> const &x, P const t = 0)
   {
-    static double const p = -2.0 * nu * nu;
-    P const coefficient   = std::exp(p * t);
+    static P const p = -2.0 * nu * nu;
+    P const coefficient   = exp(p * t);
 
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [coefficient](P const x_value) -> P {
-                     return coefficient * std::cos(nu * x_value);
+                     return coefficient * cos(nu * x_value);
                    });
 
     return fx;
@@ -60,7 +60,7 @@ private:
 
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
-                   [](P const x_value) -> P { return std::cos(nu * x_value); });
+                   [](P const x_value) -> P { return cos(nu * x_value); });
 
     return fx;
   }
@@ -68,8 +68,8 @@ private:
   static P bc_time_func(P const t)
   {
     /* e^(-2 * nu^2 * t )*/
-    static double const p = -2.0 * nu * nu;
-    return std::exp(p * t);
+    static P const p = -2.0 * nu * nu;
+    return exp(p * t);
   }
 
   inline static const partial_term<P> partial_term_1 = partial_term<P>(
@@ -91,11 +91,11 @@ private:
   static fk::vector<P> source_0_x(fk::vector<P> const x, P const t)
   {
     UNUSED(t);
-    static double const coefficient = -1.0 * nu * nu;
+    static P const coefficient = -1.0 * nu * nu;
 
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(), [](P const x_value) -> P {
-      return coefficient * std::cos(nu * x_value);
+      return coefficient * cos(nu * x_value);
     });
 
     return fx;
@@ -103,9 +103,9 @@ private:
 
   static P source_0_t(P const t)
   {
-    static double const coefficient = -2.0 * nu * nu;
+    static P const coefficient = -2.0 * nu * nu;
 
-    return std::exp(coefficient * t);
+    return exp(coefficient * t);
   }
 
   inline static source<P> const source_0 = source<P>({source_0_x}, source_0_t);
@@ -118,7 +118,7 @@ private:
     UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
-                   [](P const &x) { return std::cos(nu * x); });
+                   [](P const &x) { return cos(nu * x); });
     return fx;
   }
 
@@ -134,6 +134,6 @@ private:
   {
     /* (1/2^level)^2 = 1/4^level */
     /* return dx; this will be scaled by CFL from command line */
-    return std::pow(0.25, dim.get_level());
+    return pow(0.25, dim.get_level());
   }
 };

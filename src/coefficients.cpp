@@ -68,9 +68,9 @@ fk::matrix<P> generate_coefficients(
   auto const [quadrature_points, quadrature_weights] = legendre_values;
   auto const [legendre_poly_L, legendre_poly_R]      = [&]() {
     auto [lP_L, lPP_L] = legendre(fk::vector<P>{-1}, dim.get_degree());
-    lP_L               = lP_L * (1 / std::sqrt(grid_spacing));
+    lP_L               = lP_L * (1 / sqrt(grid_spacing));
     auto [lP_R, lPP_R] = legendre(fk::vector<P>{+1}, dim.get_degree());
-    lP_R               = lP_R * (1 / std::sqrt(grid_spacing));
+    lP_R               = lP_R * (1 / sqrt(grid_spacing));
     // this is to get around unused warnings (until c++20)
     UNUSED(lPP_L);
     UNUSED(lPP_R);
@@ -86,8 +86,8 @@ fk::matrix<P> generate_coefficients(
               legendre_prime] = [&, quadrature_points = quadrature_points]() {
     auto [lP, lPP] = legendre(quadrature_points, dim.get_degree());
 
-    lP  = lP * (1.0 / std::sqrt(grid_spacing));
-    lPP = lPP * (1.0 / std::sqrt(grid_spacing) * 2.0 / grid_spacing);
+    lP  = lP * (1.0 / sqrt(grid_spacing));
+    lPP = lPP * (1.0 / sqrt(grid_spacing) * 2.0 / grid_spacing);
 
     return std::array<fk::matrix<P>, 2>{lP, lPP};
   }();
@@ -203,19 +203,19 @@ fk::matrix<P> generate_coefficients(
       auto trace_value_1 =
           (legendre_poly_L_t * legendre_poly_R) * (-1 * flux_left / 2) +
           (legendre_poly_L_t * legendre_poly_R) *
-              (+1 * pterm.get_flux_scale() * std::abs(flux_left) / 2 * -1);
+              (+1 * pterm.get_flux_scale() * abs(flux_left) / 2 * -1);
       auto trace_value_2 =
           (legendre_poly_L_t * legendre_poly_L) * (-1 * flux_left / 2) +
           (legendre_poly_L_t * legendre_poly_L) *
-              (-1 * pterm.get_flux_scale() * std::abs(flux_left) / 2 * -1);
+              (-1 * pterm.get_flux_scale() * abs(flux_left) / 2 * -1);
       auto trace_value_3 =
           (legendre_poly_R_t * legendre_poly_R) * (+1 * flux_right / 2) +
           (legendre_poly_R_t * legendre_poly_R) *
-              (+1 * pterm.get_flux_scale() * std::abs(flux_right) / 2 * +1);
+              (+1 * pterm.get_flux_scale() * abs(flux_right) / 2 * +1);
       auto trace_value_4 =
           (legendre_poly_R_t * legendre_poly_L) * (+1 * flux_right / 2) +
           (legendre_poly_R_t * legendre_poly_L) *
-              (-1 * pterm.get_flux_scale() * std::abs(flux_right) / 2 * +1);
+              (-1 * pterm.get_flux_scale() * abs(flux_right) / 2 * +1);
 
       // If dirichelt
       // u^-_LEFT = g(LEFT)
@@ -232,11 +232,11 @@ fk::matrix<P> generate_coefficients(
           trace_value_3 =
               (legendre_poly_R_t * legendre_poly_R) * (+1 * flux_right / 2) +
               (legendre_poly_R_t * legendre_poly_R) *
-                  (+1 * pterm.get_flux_scale() * std::abs(flux_right) / 2 * +1);
+                  (+1 * pterm.get_flux_scale() * abs(flux_right) / 2 * +1);
           trace_value_4 =
               (legendre_poly_R_t * legendre_poly_L) * (+1 * flux_right / 2) +
               (legendre_poly_R_t * legendre_poly_L) *
-                  (-1 * pterm.get_flux_scale() * std::abs(flux_right) / 2 * +1);
+                  (-1 * pterm.get_flux_scale() * abs(flux_right) / 2 * +1);
         }
       }
 
@@ -247,11 +247,11 @@ fk::matrix<P> generate_coefficients(
           trace_value_1 =
               (legendre_poly_L_t * legendre_poly_R) * (-1 * flux_left / 2) +
               (legendre_poly_L_t * legendre_poly_R) *
-                  (+1 * pterm.get_flux_scale() * std::abs(flux_left) / 2 * -1);
+                  (+1 * pterm.get_flux_scale() * abs(flux_left) / 2 * -1);
           trace_value_2 =
               (legendre_poly_L_t * legendre_poly_L) * (-1 * flux_left / 2) +
               (legendre_poly_L_t * legendre_poly_L) *
-                  (-1 * pterm.get_flux_scale() * std::abs(flux_left) / 2 * -1);
+                  (-1 * pterm.get_flux_scale() * abs(flux_left) / 2 * -1);
           trace_value_3 =
               (legendre_poly_R_t * (legendre_poly_R - legendre_poly_R)) * (+1);
           trace_value_4 =
@@ -276,11 +276,11 @@ fk::matrix<P> generate_coefficients(
           trace_value_3 =
               (legendre_poly_R_t * legendre_poly_R) * (+1 * flux_right / 2) +
               (legendre_poly_R_t * legendre_poly_R) *
-                  (+1 * pterm.get_flux_scale() * std::abs(flux_right) / 2 * +1);
+                  (+1 * pterm.get_flux_scale() * abs(flux_right) / 2 * +1);
           trace_value_4 =
               (legendre_poly_R_t * legendre_poly_L) * (+1 * flux_right / 2) +
               (legendre_poly_R_t * legendre_poly_L) *
-                  (-1 * pterm.get_flux_scale() * std::abs(flux_right) / 2 * +1);
+                  (-1 * pterm.get_flux_scale() * abs(flux_right) / 2 * +1);
         }
       }
 
@@ -291,11 +291,11 @@ fk::matrix<P> generate_coefficients(
           trace_value_1 =
               (legendre_poly_L_t * legendre_poly_R) * (-1 * flux_left / 2) +
               (legendre_poly_L_t * legendre_poly_R) *
-                  (+1 * pterm.get_flux_scale() * std::abs(flux_left) / 2 * -1);
+                  (+1 * pterm.get_flux_scale() * abs(flux_left) / 2 * -1);
           trace_value_2 =
               (legendre_poly_L_t * legendre_poly_L) * (-1 * flux_left / 2) +
               (legendre_poly_L_t * legendre_poly_L) *
-                  (-1 * pterm.get_flux_scale() * std::abs(flux_left) / 2 * -1);
+                  (-1 * pterm.get_flux_scale() * abs(flux_left) / 2 * -1);
           trace_value_3 =
               (legendre_poly_R_t * legendre_poly_R) * (+1 * flux_right);
           trace_value_4 =

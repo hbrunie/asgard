@@ -83,8 +83,7 @@ int get_num_ranks()
 // even number of ranks will be used by the application. this is the
 // "effective" number of ranks returned by this lambda
 auto const num_effective_ranks = [](int const num_ranks) {
-  if (std::sqrt(num_ranks) == std::floor(std::sqrt(num_ranks)) ||
-      num_ranks % 2 == 0)
+  if (sqrt(num_ranks) == std::floor(sqrt(num_ranks)) || num_ranks % 2 == 0)
   {
     return num_ranks;
   }
@@ -158,7 +157,7 @@ element_subgrid get_subgrid(int const num_ranks, int const my_rank,
   expect(num_ranks > 0);
 
   expect(num_ranks % 2 == 0 || num_ranks == 1 ||
-         std::sqrt(num_ranks) == std::floor(std::sqrt(num_ranks)));
+         sqrt(num_ranks) == std::floor(sqrt(num_ranks)));
   expect(my_rank >= 0);
   expect(my_rank < num_ranks);
   expect(table.size() >= num_ranks);
@@ -286,6 +285,12 @@ void reduce_results(fk::vector<P> const &source, fk::vector<P> &dest,
 
   MPI_Datatype const mpi_type =
       std::is_same<P, double>::value ? MPI_DOUBLE : MPI_FLOAT;
+#ifdef ASGARD_USE_SHAMAN
+    if constexpr (std::is_same<P, Sdouble>::value)
+    {
+      MPI_Datatype const mpi_type = MPI_DOUBLE;
+    }
+#endif
   success = MPI_Allreduce((void *)source.data(), (void *)dest.data(),
                           source.size(), mpi_type, MPI_SUM, row_communicator);
   expect(success == 0);
@@ -486,6 +491,12 @@ static void dispatch_message(fk::vector<P> const &source, fk::vector<P> &dest,
 
   MPI_Datatype const mpi_type =
       std::is_same<P, double>::value ? MPI_DOUBLE : MPI_FLOAT;
+#ifdef ASGARD_USE_SHAMAN
+    if constexpr (std::is_same<P, Sdouble>::value)
+    {
+      MPI_Datatype const mpi_type = MPI_DOUBLE;
+    }
+#endif
   MPI_Comm const communicator = distro_handle.get_global_comm();
 
   auto const mpi_tag = 0;
@@ -594,6 +605,12 @@ gather_errors(P const root_mean_squared, P const relative)
 
   MPI_Datatype const mpi_type =
       std::is_same<P, double>::value ? MPI_DOUBLE : MPI_FLOAT;
+#ifdef ASGARD_USE_SHAMAN
+    if constexpr (std::is_same<P, Sdouble>::value)
+    {
+      MPI_Datatype const mpi_type = MPI_DOUBLE;
+    }
+#endif
 
   int local_rank;
   success = MPI_Comm_rank(local_comm, &local_rank);
@@ -693,6 +710,12 @@ gather_results(fk::vector<P> const &my_results, distribution_plan const &plan,
 
     MPI_Datatype const mpi_type =
         std::is_same<P, double>::value ? MPI_DOUBLE : MPI_FLOAT;
+#ifdef ASGARD_USE_SHAMAN
+    if constexpr (std::is_same<P, Sdouble>::value)
+    {
+      MPI_Datatype const mpi_type = MPI_DOUBLE;
+    }
+#endif
 
     if (my_rank == 0)
     {
@@ -747,6 +770,12 @@ P get_global_max(P const my_max, distribution_plan const &plan)
   // get max
   MPI_Datatype const mpi_type =
       std::is_same<P, double>::value ? MPI_DOUBLE : MPI_FLOAT;
+#ifdef ASGARD_USE_SHAMAN
+    if constexpr (std::is_same<P, Sdouble>::value)
+    {
+      MPI_Datatype const mpi_type = MPI_DOUBLE;
+    }
+#endif
 
   P global_max;
   success = MPI_Allreduce(&my_max, &global_max, 1, mpi_type, MPI_MAX,

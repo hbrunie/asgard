@@ -186,6 +186,10 @@ endif ()
 ###############################################################################
 if(ASGARD_USE_CUDA)
     set(USE_GPU 1)
+else ()
+    if (ASGARD_USE_SHAMAN)
+        set(USE_SHAMAN 1)
+    endif()
 endif()
 
 set(KRON_PATH "${CMAKE_CURRENT_BINARY_DIR}/contrib/kronmult/")

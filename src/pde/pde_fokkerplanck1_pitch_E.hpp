@@ -67,7 +67,7 @@ private:
 
   // analytic solution
 
-  static P phi(P const z, P const t) { return std::tanh(std::atanh(z) - t); }
+  static P phi(P const z, P const t) { return tanh(atanh(z) - t); }
   static P f0_case0(P const z) { return z * 0. + 1; }
   static P f0_case1(P const z) { return exp(-pow(z, 2) / pow(0.1, 2)); }
 
@@ -78,8 +78,8 @@ private:
     for (int i = 0; i < z.size(); ++i)
     {
       P p  = phi(z(i), t);
-      P t1 = 1 - std::pow(p, 2);
-      P t2 = 1 - std::pow(z(i), 2);
+      P t1 = 1 - pow(p, 2);
+      P t2 = 1 - pow(z(i), 2);
       P t3 = 0.;
       if constexpr (user_case == PDE_case_opts::case1)
       {
@@ -109,7 +109,7 @@ private:
   static P get_dt_(dimension<P> const &dim)
   {
     P const x_range = dim.domain_max - dim.domain_min;
-    P const dx      = x_range / std::pow(2, dim.get_level());
+    P const dx      = x_range / pow(2, dim.get_level());
     P const dt      = dx;
     // this will be scaled by CFL
     // from command line

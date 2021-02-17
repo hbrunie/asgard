@@ -125,7 +125,7 @@ fk::vector<P> distributed_grid<P>::get_initial_condition(
   {
     v_functions.push_back(dim.initial_condition);
   }
-  P const time             = 0;
+  P const time             = (P)0.;
   auto const initial_unref = [this, &v_functions, &pde, &transformer, time]() {
     auto const subgrid = this->get_subgrid(get_rank());
     // TODO temp add scalar time func to initial conditions with multi-D func PR
@@ -216,10 +216,9 @@ fk::vector<P>
 distributed_grid<P>::refine(fk::vector<P> const &x, options const &cli_opts)
 {
   auto const abs_compare = [](auto const a, auto const b) {
-    return (std::abs(a) < std::abs(b));
+    return (abs(a) < abs(b));
   };
-  auto const max_elem =
-      std::abs(*std::max_element(x.begin(), x.end(), abs_compare));
+  auto const max_elem = abs(*std::max_element(x.begin(), x.end(), abs_compare));
   auto const global_max = get_global_max(max_elem, this->plan_);
 
   auto const refine_threshold = cli_opts.adapt_threshold * global_max;
@@ -233,7 +232,7 @@ distributed_grid<P>::refine(fk::vector<P> const &x, options const &cli_opts)
           int64_t const, fk::vector<P, mem_type::const_view> const &element_x) {
         auto const max_elem =
             *std::max_element(element_x.begin(), element_x.end(), abs_compare);
-        return std::abs(max_elem) >= refine_threshold;
+        return abs(max_elem) >= refine_threshold;
       };
   auto const to_refine = filter_elements(refine_check, x);
   return this->refine_elements(to_refine, cli_opts, x);
@@ -244,10 +243,9 @@ fk::vector<P>
 distributed_grid<P>::coarsen(fk::vector<P> const &x, options const &cli_opts)
 {
   auto const abs_compare = [](auto const a, auto const b) {
-    return (std::abs(a) < std::abs(b));
+    return (abs(a) < abs(b));
   };
-  auto const max_elem =
-      std::abs(*std::max_element(x.begin(), x.end(), abs_compare));
+  auto const max_elem = abs(*std::max_element(x.begin(), x.end(), abs_compare));
   auto const global_max       = get_global_max(max_elem, this->plan_);
   auto const refine_threshold = cli_opts.adapt_threshold * global_max;
   if (refine_threshold <= 0.0)
@@ -266,7 +264,7 @@ distributed_grid<P>::coarsen(fk::vector<P> const &x, options const &cli_opts)
         auto const coords    = table.get_coords(elem_index);
         auto const min_level = *std::min_element(
             coords.begin(), coords.begin() + coords.size() / 2);
-        return std::abs(max_elem) <= coarsen_threshold && min_level >= 1;
+        return abs(max_elem) <= coarsen_threshold && min_level >= 1;
       };
 
   auto const to_coarsen = filter_elements(coarsen_check, x);

@@ -31,12 +31,12 @@ private:
   initial_condition_dim(fk::vector<P> const &x, P const t = 0)
   {
     static double p     = -2.0 * PI * PI;
-    P const coefficient = std::exp(p * t);
+    P const coefficient = exp(p * t);
 
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [coefficient](P const x_value) -> P {
-                     return coefficient * std::cos(PI * x_value);
+                     return coefficient * cos(PI * x_value);
                    });
 
     return fx;
@@ -80,7 +80,7 @@ private:
 
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
-                   [](P const x_value) -> P { return std::cos(PI * x_value); });
+                   [](P const x_value) -> P { return cos(PI * x_value); });
 
     return fx;
   }
@@ -89,7 +89,7 @@ private:
   {
     /* e^(-2 * pi^2 * t )*/
     static double const p = -2.0 * PI * PI;
-    return std::exp(p * t);
+    return exp(p * t);
   }
 
   inline static const partial_term<P> partial_term_1 = partial_term<P>(
@@ -121,7 +121,7 @@ private:
     UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
-                   [](P const &x) { return std::cos(PI * x); });
+                   [](P const &x) { return cos(PI * x); });
     return fx;
   }
 
@@ -129,7 +129,7 @@ private:
   {
     static double neg_two_pi_squared = -2.0 * PI * PI;
 
-    return std::exp(neg_two_pi_squared * time);
+    return exp(neg_two_pi_squared * time);
   }
 
   inline static std::vector<vector_func<P>> const exact_vector_funcs_ = {
@@ -140,7 +140,7 @@ private:
   {
     static double neg_two_pi_squared = -2.0 * PI * PI;
 
-    return std::exp(neg_two_pi_squared * t);
+    return exp(neg_two_pi_squared * t);
   }
 
   inline static scalar_func<P> const exact_scalar_func_ = exact_scalar_func;
@@ -149,7 +149,7 @@ private:
   {
     /* (1/2^level)^2 = 1/4^level */
     /* return dx; this will be scaled by CFL from command line */
-    return std::pow(0.25, dim.get_level());
+    return pow(0.25, dim.get_level());
   }
 
   /* problem contains no sources */

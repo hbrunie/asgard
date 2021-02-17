@@ -81,7 +81,7 @@ private:
     for (int i = 0; i < static_cast<int>(legendre_coeffs.size()); ++i)
     {
       fk::vector<P> const P_0 = P_m.extract_submatrix(0, i, x.size(), 1);
-      f = f + (P_0 * legendre_coeffs[i] * std::exp(-i * (i + 1) * time));
+      f = f + (P_0 * legendre_coeffs[i] * exp(-i * (i + 1) * time));
     }
 
     return f;
@@ -102,8 +102,8 @@ private:
   static P get_dt_(dimension<P> const &dim)
   {
     P const x_range = dim.domain_max - dim.domain_min;
-    P const dx      = x_range / std::pow(2, dim.get_level());
-    P const dt      = std::pow(dx, 2);
+    P const dx      = x_range / pow(2, dim.get_level());
+    P const dt      = pow(dx, 2);
     // this will be scaled by CFL
     // from command line
     return dt;

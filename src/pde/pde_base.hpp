@@ -57,7 +57,7 @@ enum class homogeneity
 // helper - single element size
 auto const element_segment_size = [](auto const &pde) {
   int const degree = pde.get_dimensions()[0].get_degree();
-  return static_cast<int>(std::pow(degree, pde.num_dims));
+  return static_cast<int>(pow(degree, pde.num_dims));
 };
 
 // ---------------------------------------------------------------------------

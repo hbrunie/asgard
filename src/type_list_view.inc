@@ -4,3 +4,7 @@ X(long double, host, owner)
 X(float, host, const_view)
 X(double, host, const_view)
 X(long double, host, const_view)
+#ifdef ASGARD_USE_SHAMAN
+X(Sdouble, host, const_view)
+X(Sdouble, host, owner)
+#endif

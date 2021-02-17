@@ -109,7 +109,7 @@ decompose(PDE<P> const &pde, elements::table const &elem_table,
 
   // max subgrid dimension (r or c)
   auto const subgrid_length =
-      static_cast<int>(std::floor(std::sqrt(max_elements_per_subgrid)));
+      static_cast<int>(std::floor(sqrt(max_elements_per_subgrid)));
 
   // square tile the assigned subgrid
   std::vector<element_subgrid> grids;

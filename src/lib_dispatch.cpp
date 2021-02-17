@@ -191,12 +191,12 @@ P nrm2(int *n, P *x, int *incx, resource const resrc)
   }
   else
   {
-    auto sum_square = 0.0;
+    P sum_square = 0.0;
     for (int i = 0; i < *n; ++i)
     {
-      sum_square += std::pow(x[i * (*incx)], 2);
+      sum_square += pow(x[i * (*incx)], 2);
     }
-    return std::sqrt(sum_square);
+    return sqrt(sum_square);
   }
 }
 

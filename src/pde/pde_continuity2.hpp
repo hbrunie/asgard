@@ -50,7 +50,7 @@ private:
     UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
-                   [](P const &x) { return std::cos(PI * x); });
+                   [](P const &x) { return cos(PI * x); });
     return fx;
   }
 
@@ -60,7 +60,7 @@ private:
     UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
-                   [](P const &x) { return std::sin(2.0 * PI * x); });
+                   [](P const &x) { return sin(2.0 * PI * x); });
 
     return fx;
   }
@@ -71,7 +71,7 @@ private:
     UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
-                   [](P const &x) { return std::cos(PI * x); });
+                   [](P const &x) { return cos(PI * x); });
     return fx;
   }
   static fk::vector<P> exact_solution_dim1(fk::vector<P> const x, P const t = 0)
@@ -79,11 +79,11 @@ private:
     UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
-                   [](P const &x) { return std::sin(2.0 * PI * x); });
+                   [](P const &x) { return sin(2.0 * PI * x); });
     return fx;
   }
 
-  static P exact_time(P const time) { return std::sin(2.0 * time); }
+  static P exact_time(P const time) { return sin(2.0 * time); }
 
   // specify source functions...
 
@@ -93,7 +93,7 @@ private:
     UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
-                   [](P const &x) { return std::cos(PI * x); });
+                   [](P const &x) { return cos(PI * x); });
     return fx;
   }
 
@@ -102,11 +102,11 @@ private:
     UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
-                   [](P const &x) { return std::sin(2.0 * PI * x); });
+                   [](P const &x) { return sin(2.0 * PI * x); });
     return fx;
   }
 
-  static P source_0_time(P const time) { return 2.0 * std::cos(2.0 * time); }
+  static P source_0_time(P const time) { return 2.0 * cos(2.0 * time); }
 
   // source 1
   static fk::vector<P> source_1_dim0(fk::vector<P> const x, P const t = 0)
@@ -114,7 +114,7 @@ private:
     UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
-                   [](P const &x) { return std::cos(PI * x); });
+                   [](P const &x) { return cos(PI * x); });
     return fx;
   }
 
@@ -123,13 +123,13 @@ private:
     UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
-                   [](P const &x) { return std::cos(2.0 * PI * x); });
+                   [](P const &x) { return cos(2.0 * PI * x); });
     return fx;
   }
 
   static P source_1_time(P const time)
   {
-    return 2.0 * PI * std::sin(2.0 * time);
+    return 2.0 * PI * sin(2.0 * time);
   }
 
   // source 2
@@ -138,7 +138,7 @@ private:
     UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
-                   [](P const &x) { return std::sin(PI * x); });
+                   [](P const &x) { return sin(PI * x); });
     return fx;
   }
 
@@ -147,16 +147,16 @@ private:
     UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
-                   [](P const &x) { return std::sin(2.0 * PI * x); });
+                   [](P const &x) { return sin(2.0 * PI * x); });
     return fx;
   }
 
-  static P source_2_time(P const time) { return -PI * std::sin(2.0 * time); }
+  static P source_2_time(P const time) { return -PI * sin(2.0 * time); }
 
   static P get_dt_(dimension<P> const &dim)
   {
     P const x_range = dim.domain_max - dim.domain_min;
-    P const dx      = x_range / std::pow(2, dim.get_level());
+    P const dx      = x_range / pow(2, dim.get_level());
     // return dx; this will be scaled by CFL
     // from command line
     return dx;

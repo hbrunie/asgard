@@ -169,19 +169,16 @@ P l2_norm(fk::vector<P> const &vec)
   {
     accum += vec(i) * vec(i);
   }
-  return std::sqrt(accum);
+  return sqrt(accum);
 }
 
 // norm( , 'inf') function, only for real vectors (infinity-norm)
 template<typename P>
 P inf_norm(fk::vector<P> const &vec)
 {
-  auto abs_compare = [](P const a, P const b) {
-    return (std::abs(a) < std::abs(b));
-  };
+  auto abs_compare = [](P const a, P const b) { return (abs(a) < abs(b)); };
 
-  P const result =
-      std::abs(*std::max_element(vec.begin(), vec.end(), abs_compare));
+  P const result = abs(*max_element(vec.begin(), vec.end(), abs_compare));
   return result;
 }
 

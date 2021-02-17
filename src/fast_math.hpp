@@ -69,18 +69,18 @@ P frobenius(fk::matrix<P, mem, resrc> const &m)
   {
     fk::matrix<P, mem_type::owner, resource::host> m_host = m.clone_onto_host();
 
-    return std::sqrt(std::accumulate(m_host.begin(), m_host.end(), 0,
-                                     [](P const sum_of_squares, P const value) {
-                                       return sum_of_squares + value * value;
-                                     }));
+    return sqrt(std::accumulate(m_host.begin(), m_host.end(), 0,
+                                [](P const sum_of_squares, P const value) {
+                                  return sum_of_squares + value * value;
+                                }));
   }
 
   else if constexpr (resrc == resource::host)
   {
-    return std::sqrt(std::accumulate(m.begin(), m.end(), 0,
-                                     [](P const sum_of_squares, P const value) {
-                                       return sum_of_squares + value * value;
-                                     }));
+    return sqrt(std::accumulate(m.begin(), m.end(), 0,
+                                [](P const sum_of_squares, P const value) {
+                                  return sum_of_squares + value * value;
+                                }));
   }
 }
 

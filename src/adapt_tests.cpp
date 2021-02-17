@@ -53,7 +53,7 @@ void test_adapt(parser const &problem, std::string const &gold_base)
     {
       // matlab stores new refined coefficients as 1e-15 (0 deletes from sparse
       // vect)
-      if (std::abs(gold(i)) < 1e-14)
+      if (abs(gold(i)) < 1e-14)
       {
         gold(i) = 0.0;
       }
@@ -192,7 +192,7 @@ void test_initial(parser const &problem, std::string const &gold_filepath)
     {
       // matlab stores new refined coefficients as 1e-15 (0 deletes from sparse
       // vect)
-      if (std::abs(gold(i)) < 1e-14)
+      if (abs(gold(i)) < 1e-14)
       {
         gold(i) = 0.0;
       }

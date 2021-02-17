@@ -15,7 +15,7 @@ value "t" to generate the complete boundary condition vector at time "t".
 
 // FIXME refactor this component. the whole thing.
 template<typename P>
-std::array<unscaled_bc_parts<P>, 2> boundary_conditions::make_unscaled_bc_parts(
+array<unscaled_bc_parts<P>, 2> boundary_conditions::make_unscaled_bc_parts(
     PDE<P> const &pde, elements::table const &table,
     basis::wavelet_transform<P, resource::host> const &transformer,
     int const start_element, int const stop_element, P const t_init)
@@ -29,15 +29,15 @@ std::array<unscaled_bc_parts<P>, 2> boundary_conditions::make_unscaled_bc_parts(
 
   term_set<P> const &terms_vec_vec = pde.get_terms();
 
-  std::vector<dimension<P>> const &dimensions = pde.get_dimensions();
+  vector<dimension<P>> const &dimensions = pde.get_dimensions();
 
   for (int term_num = 0; term_num < static_cast<int>(terms_vec_vec.size());
        ++term_num)
   {
-    std::vector<term<P>> const &terms_vec = terms_vec_vec[term_num];
+    vector<term<P>> const &terms_vec = terms_vec_vec[term_num];
 
-    std::vector<std::vector<fk::vector<P>>> left_dim_pvecs;
-    std::vector<std::vector<fk::vector<P>>> right_dim_pvecs;
+    vector<vector<fk::vector<P>>> left_dim_pvecs;
+    vector<vector<fk::vector<P>>> right_dim_pvecs;
 
     for (int dim_num = 0; dim_num < static_cast<int>(dimensions.size());
          ++dim_num)
@@ -107,7 +107,7 @@ fk::vector<P> boundary_conditions::generate_scaled_bc(
 {
   fk::vector<P> bc(
       (stop_element - start_element + 1) *
-      std::pow(pde.get_dimensions()[0].get_degree(), pde.num_dims));
+      pow(pde.get_dimensions()[0].get_degree(), pde.num_dims));
 
   term_set<P> const &terms_vec_vec = pde.get_terms();
 
@@ -161,30 +161,30 @@ fk::vector<P> boundary_conditions::compute_left_boundary_condition(
   int const level  = dim.get_level();
   int const degree = dim.get_degree();
 
-  P const total_cells = std::pow(2, level);
+  int const total_cells = pow(2, level);
 
-  P const domain_per_cell = domain_extent / total_cells;
+  P const domain_per_cell = (double)domain_extent / total_cells;
 
-  P const dof = degree * total_cells;
+  int const dof = degree * total_cells;
 
   fk::vector<P> bc(dof);
 
   P g = g_func(domain_min, time);
-  if (!std::isfinite(g))
+  if (!isfinite(g))
   {
     P const small_dx = domain_per_cell * 1e-7;
     g                = g_func(domain_min + small_dx, time);
 
     /* If the above modification was not enough, the choice of g_function
        should be re-evaluated */
-    expect(std::isfinite(g));
+    expect(isfinite(g));
   }
 
   /* legendre() returns a 1D matrix - must be converted into a vector */
   fk::vector<P> legendre_polys_at_value = fk::vector<P>(
       legendre(fk::vector<P>{-1}, degree, legendre_normalization::lin)[0]);
 
-  P const scale_factor = (1.0 / std::sqrt(domain_per_cell)) *
+  P const scale_factor = (1.0 / sqrt(domain_per_cell)) *
                          bc_func(fk::vector<P>({domain_min}), time)(0) * g *
                          -1.0;
 
@@ -213,29 +213,29 @@ fk::vector<P> boundary_conditions::compute_right_boundary_condition(
   int const level  = dim.get_level();
   int const degree = dim.get_degree();
 
-  P const total_cells = std::pow(2, level);
+  int const total_cells = pow(2, level);
 
-  P const domain_per_cell = domain_extent / total_cells;
+  P const domain_per_cell = (P) domain_extent / total_cells;
 
-  P const dof = degree * total_cells;
+  int const dof = degree * total_cells;
 
   fk::vector<P> bc(dof);
 
   P g = g_func(domain_max, time);
-  if (!std::isfinite(g))
+  if (!isfinite(g))
   {
     P const small_dx = domain_per_cell * 1e-7;
     g                = g_func(domain_max - small_dx, time);
 
     /* If the above modification was not enough, the choice of g_function
        should be re-evaluated */
-    expect(std::isfinite(g));
+    expect(isfinite(g));
   }
 
   fk::vector<P> legendre_polys_at_value = fk::vector<P>(
       legendre(fk::vector<P>{1}, degree, legendre_normalization::lin)[0]);
 
-  P const scale_factor = (1.0 / std::sqrt(domain_per_cell)) *
+  P const scale_factor = (1.0 / sqrt(domain_per_cell)) *
                          bc_func(fk::vector<P>({domain_max}), time)(0) * g;
 
   legendre_polys_at_value.scale(scale_factor);

@@ -79,7 +79,7 @@ std::array<fk::matrix<P>, 6> generate_multi_wavelets(int const degree)
   {
     fk::vector<P> const row =
         legendre.extract_submatrix(row_pos, 0, 1, size_legendre);
-    legendre.update_row(row_pos, row * std::sqrt(2.0 * (row_pos) + 1));
+    legendre.update_row(row_pos, row * sqrt(2.0 * (row_pos) + 1));
   }
 
   // Roots and weights of Legendre polynomials on (-1,0), (0,1), and (-1,1)
@@ -231,8 +231,8 @@ std::array<fk::matrix<P>, 6> generate_multi_wavelets(int const degree)
 
     for (int i = 0; i < row.size(); ++i)
     {
-      row(i) /= std::sqrt(sum);
-      row_2(i) /= std::sqrt(sum);
+      row(i) /= sqrt(sum);
+      row_2(i) /= sqrt(sum);
     }
 
     phi_co.update_row(row_pos, row);
@@ -313,22 +313,22 @@ std::array<fk::matrix<P>, 6> generate_multi_wavelets(int const degree)
           polyval(get_row(scalet_coefficients, col), roots_neg1to1);
       h0(row, col) = 2.0 *
                      weighted_sum_products(elem_1, elem_2, weights_neg1to0) /
-                     std::sqrt(2.0);
+                     sqrt(2.0);
 
       fk::vector<P> const elem_3 =
           polyval(get_row(scalet_coefficients, row), roots_0to1);
-      h1(row, col) = 2.0 * weighted_sum_products(elem_3, elem_2, weights_0to1) /
-                     std::sqrt(2.0);
+      h1(row, col) =
+          2.0 * weighted_sum_products(elem_3, elem_2, weights_0to1) / sqrt(2.0);
 
       fk::vector<P> const elem_4 = polyval(get_row(phi_co, row), roots_neg1to0);
       g0(row, col)               = 2.0 *
                      weighted_sum_products(elem_4, elem_2, weights_neg1to0) /
-                     std::sqrt(2.0);
+                     sqrt(2.0);
 
       fk::vector<P> const elem_5 =
           polyval(get_row(phi_co, row + degree), roots_0to1);
-      g1(row, col) = 2.0 * weighted_sum_products(elem_5, elem_2, weights_0to1) /
-                     std::sqrt(2.0);
+      g1(row, col) =
+          2.0 * weighted_sum_products(elem_5, elem_2, weights_0to1) / sqrt(2.0);
     }
   }
 
@@ -337,12 +337,18 @@ std::array<fk::matrix<P>, 6> generate_multi_wavelets(int const degree)
     {
       return static_cast<P>(1e-12);
     }
+#ifdef ASGARD_USE_SHAMAN
+    if constexpr (std::is_same<P, Sdouble>::value)
+    {
+      return static_cast<P>(1e-12);
+    }
+#endif
     return static_cast<P>(1e-4);
   }();
   auto const normalize = [compare](fk::matrix<P> &matrix) {
     std::transform(
         matrix.begin(), matrix.end(), matrix.begin(),
-        [compare](P &elem) { return std::abs(elem) < compare ? 0.0 : elem; });
+        [compare](P &elem) { return abs(elem) < compare ? 0.0 : elem; });
   };
   normalize(h0);
   normalize(h1);
@@ -414,7 +420,7 @@ fk::matrix<R> operator_two_scale(int const degree, int const num_levels)
     fmwt_comp = cfmwt * fmwt_comp;
   }
   std::transform(fmwt_comp.begin(), fmwt_comp.end(), fmwt_comp.begin(),
-                 [](R &elem) { return std::abs(elem) < 1e-12 ? 0.0 : elem; });
+                 [](R &elem) { return abs(elem) < 1e-12 ? 0.0 : elem; });
   return fmwt_comp;
 }
 

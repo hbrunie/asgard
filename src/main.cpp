@@ -21,11 +21,20 @@
 #include "transformations.hpp"
 #include <numeric>
 
+#ifdef ASGARD_USE_SHAMAN
+#include "shaman.h"
+#ifdef ASGARD_USE_DOUBLE_PREC
+using prec = Sdouble;
+#else //ASGARD_USE_DOUBLE_PREC
+using prec = Sfloat;
+#endif //ASGARD_USE_DOUBLE_PREC
+#else //ASGARD_USE_SHAMAN
 #ifdef ASGARD_USE_DOUBLE_PREC
 using prec = double;
-#else
+#else //ASGARD_USE_DOUBLE_PREC
 using prec = float;
-#endif
+#endif //ASGARD_USE_DOUBLE_PREC
+#endif //ASGARD_USE_SHAMAN
 
 int main(int argc, char **argv)
 {
@@ -90,7 +99,7 @@ int main(int argc, char **argv)
   adapt::distributed_grid adaptive_grid(*pde, opts);
   node_out() << "  degrees of freedom: "
              << adaptive_grid.size() *
-                    static_cast<uint64_t>(std::pow(degree, pde->num_dims))
+                    static_cast<uint64_t>(pow(degree, pde->num_dims))
              << '\n';
 
   node_out() << "  generating: basis operator..." << '\n';
@@ -103,7 +112,7 @@ int main(int argc, char **argv)
       adaptive_grid.get_initial_condition(*pde, transformer, opts);
   node_out() << "  degrees of freedom (post initial adapt): "
              << adaptive_grid.size() *
-                    static_cast<uint64_t>(std::pow(degree, pde->num_dims))
+                    static_cast<uint64_t>(pow(degree, pde->num_dims))
              << '\n';
 
   // -- generate and store coefficient matrices.

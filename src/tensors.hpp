@@ -1241,7 +1241,7 @@ bool fk::vector<P, mem, resrc>::operator==(vector<P, omem> const &other) const
   for (auto i = 0; i < size(); ++i)
     if constexpr (std::is_floating_point<P>::value)
     {
-      if (std::abs((*this)(i)-other(i)) > TOL)
+      if (abs((*this)(i)-other(i)) > TOL)
       {
         return false;
       }
@@ -2047,7 +2047,7 @@ bool fk::matrix<P, mem, resrc>::operator==(matrix<P, omem> const &other) const
     for (auto i = 0; i < nrows(); ++i)
       if constexpr (std::is_floating_point<P>::value)
       {
-        if (std::abs((*this)(i, j) - other(i, j)) > TOL)
+        if (abs((*this)(i, j) - other(i, j)) > TOL)
         {
           return false;
         }
@@ -2738,7 +2738,7 @@ void debug_compare(fk::matrix<P, left_mem> const &left,
     {
       if constexpr (std::is_floating_point<P>::value)
       {
-        if (std::abs(left(i, j) - right(i, j)) > TOL)
+        if (abs(left(i, j) - right(i, j)) > TOL)
         {
           std::cout << red;
         }

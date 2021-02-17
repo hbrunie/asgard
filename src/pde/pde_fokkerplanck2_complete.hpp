@@ -69,12 +69,12 @@ private:
   //
   // ------------------------------------------------
 
-  static auto constexpr phi = [](P x) { return std::erf(x); };
+  static auto constexpr phi = [](P x) { return erf(x); };
 
   static auto constexpr psi = [](P x) {
-    auto const dphi_dx = 2.0 / std::sqrt(M_PI) * std::exp(-std::pow(x, 2));
-    auto ret           = 1.0 / (2 * std::pow(x, 2)) * (phi(x) - x * dphi_dx);
-    if (std::abs(x) < 1e-5)
+    auto const dphi_dx = 2.0 / sqrt(M_PI) * exp(-pow(x, 2));
+    auto ret           = 1.0 / (2 * pow(x, 2)) * (phi(x) - x * dphi_dx);
+    if (abs(x) < 1e-5)
       ret = 0;
     return ret;
   };
@@ -86,18 +86,18 @@ private:
   static P constexpr E        = 0.4;
   static P constexpr tau      = 1e5;
   static auto constexpr gamma = [](P p) {
-    return std::sqrt(1 + std::pow(delta * p, 2));
+    return sqrt(1 + pow(delta * p, 2));
   };
   static auto constexpr vx = [](P p) { return 1.0 / vT * (p / gamma(p)); };
 
   static auto constexpr Ca = [](P p) {
-    return nuEE * std::pow(vT, 2) * (psi(vx(p)) / vx(p));
+    return nuEE * pow(vT, 2) * (psi(vx(p)) / vx(p));
   };
 
   static auto constexpr Cb = [](P p) {
-    return 1.0 / 2.0 * nuEE * std::pow(vT, 2) * 1.0 / vx(p) *
+    return 1.0 / 2.0 * nuEE * pow(vT, 2) * 1.0 / vx(p) *
            (Z + phi(vx(p)) - psi(vx(p)) +
-            std::pow(delta, 4) * std::pow(vx(p), 2) / 2.0);
+            pow(delta, 4) * pow(vx(p), 2) / 2.0);
   };
 
   static auto constexpr Cf = [](P p) { return 2.0 * nuEE * vT * psi(vx(p)); };
@@ -122,12 +122,11 @@ private:
 
     auto const function = [](fk::vector<P> const &p) -> fk::vector<P> {
       fk::vector<P> transformed(p);
-      std::transform(p.begin(), p.end(), transformed.begin(),
-                     [](P const p_elem) -> P {
-                       return std::exp(-2 / std::pow(delta, 2) *
-                                       std::sqrt(1 + std::pow(delta, 2) *
-                                                         std::pow(p_elem, 2)));
-                     });
+      std::transform(
+          p.begin(), p.end(), transformed.begin(), [](P const p_elem) -> P {
+            return exp(-2 / pow(delta, 2) *
+                            sqrt(1 + pow(delta, 2) * pow(p_elem, 2)));
+          });
 
       return transformed;
     };
@@ -147,7 +146,7 @@ private:
       std::transform(rw[0].begin(), rw[0].end(), transformed.begin(),
                      transformed.begin(),
                      [](P const root, P const t_elem) -> P {
-                       return std::pow(root, 2) * t_elem;
+                       return pow(root, 2) * t_elem;
                      });
 
       std::transform(
@@ -562,7 +561,7 @@ private:
   static P get_dt_(dimension<P> const &dim)
   {
     P const x_range = dim.domain_max - dim.domain_min;
-    P const dx      = x_range / std::pow(2, dim.get_level());
+    P const dx      = x_range / pow(2, dim.get_level());
     P const dt      = dx;
     // this will be scaled by CFL from command line
     return dt;
