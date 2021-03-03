@@ -116,8 +116,8 @@ private:
   {
     UNUSED(t);
 
-    P N = 1000.0;
-    P h = 20.0 / N;
+    P N = (P) 1000.0;
+    P h = (P) 20.0 / N;
     P Q = 0;
 
     auto const function = [](fk::vector<P> const &p) -> fk::vector<P> {
@@ -154,7 +154,7 @@ private:
           rw[1].begin(), rw[1].end(), transformed.begin(), transformed.begin(),
           [](P const weight, P const t_elem) -> P { return weight * t_elem; });
 
-      Q += std::accumulate(transformed.begin(), transformed.end(), 0.0);
+      Q += std::accumulate(transformed.begin(), transformed.end(), (P) 0.0);
     }
 
     fk::vector<P> ret = function(x);

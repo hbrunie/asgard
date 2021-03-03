@@ -97,7 +97,7 @@ fk::vector<P> forward_transform(
       fk::vector<P> mapped_roots(roots.size());
       std::transform(mapped_roots.begin(), mapped_roots.end(), roots.begin(),
                      mapped_roots.begin(), [&](P &elem, P const &root) {
-                       return elem + (normalize * (root / 2.0 + 1.0 / 2.0 + i) +
+                       return elem + (normalize * (root / (P) 2.0 + (P) 1.0 / (P) 2.0 + i) +
                                       domain_min);
                      });
       return mapped_roots;
@@ -115,7 +115,7 @@ fk::vector<P> forward_transform(
 
     transformed.set_subvector(i * degree, coeffs);
   }
-  transformed = transformed * (normalize / 2.0);
+  transformed = transformed * (normalize / (P) 2.0);
 
   // transfer to multi-DG bases
   transformed =

@@ -682,22 +682,22 @@ private:
                                                      f0,   // initial condition
                                                      "z"); // name
 
-  inline static dimension<P> const vx_ = dimension<P>(-10.0, // domain min
-                                                      10.0,  // domain max
+  inline static dimension<P> const vx_ = dimension<P>((P)-10.0, // domain min
+                                                      (P) 10.0,  // domain max
                                                       2,     // levels
                                                       2,     // degree
                                                       f0, // initial condition
                                                       "vx"); // name
 
-  inline static dimension<P> const vy_ = dimension<P>(-20.0, // domain min
-                                                      20.0,  // domain max
+  inline static dimension<P> const vy_ = dimension<P>((P) -20.0, // domain min
+                                                      (P) 20.0,  // domain max
                                                       2,     // levels
                                                       2,     // degree
                                                       f0, // initial condition
                                                       "vy"); // name
 
-  inline static dimension<P> const vz_ = dimension<P>(-30.0, // domain min
-                                                      30.0,  // domain max
+  inline static dimension<P> const vz_ = dimension<P>((P) -30.0, // domain min
+                                                      (P) 30.0,  // domain max
                                                       2,     // levels
                                                       2,     // degree
                                                       f0,   // initial condition

@@ -137,13 +137,12 @@ enum class flux_type
 // do dimensions own terms? need dimension info in
 // term construction...
 
-using g_func_type = std::function<double(double const, double const)>;
-
 template<typename P>
 class partial_term
 {
+using g_func_type = std::function<P(P const, P const)>;
 public:
-  static double null_gfunc(double const x, double const t)
+  static P null_gfunc(P const x, P const t)
   {
     UNUSED(x);
     UNUSED(t);
@@ -171,7 +170,7 @@ public:
         right_bc_time_func(right_bc_time_func)
   {}
 
-  P get_flux_scale() const { return static_cast<P>(flux); };
+  P get_flux_scale() const { return static_cast<P>((double)flux); };
 
   coefficient_type const coeff_type;
 
@@ -523,7 +522,7 @@ public:
 
   void set_dt(P const dt)
   {
-    expect(dt > 0.0);
+    expect(dt > (P) 0.0);
     dt_ = dt;
   }
 

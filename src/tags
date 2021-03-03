@@ -1,0 +1,1481 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	Development	//
+C	pde/pde_fokkerplanck1_4p4.hpp	/^  static double constexpr C   = 1.0;$/;"	m	class:PDE_fokkerplanck_1d_4p4
+C	pde/pde_fokkerplanck1_4p5.hpp	/^  static double constexpr C   = 1.0;$/;"	m	class:PDE_fokkerplanck_1d_4p5
+Ca	pde/pde_fokkerplanck2_complete.hpp	/^  static auto constexpr Ca = [](P p) {$/;"	m	class:PDE_fokkerplanck_2d_complete
+Cb	pde/pde_fokkerplanck2_complete.hpp	/^  static auto constexpr Cb = [](P p) {$/;"	m	class:PDE_fokkerplanck_2d_complete
+Cf	pde/pde_fokkerplanck2_complete.hpp	/^  static auto constexpr Cf = [](P p) { return 2.0 * nuEE * vT * psi(vx(p)); };$/;"	m	class:PDE_fokkerplanck_2d_complete
+DEFAULT_ADAPT_THRESH	program_options.hpp	/^  static auto constexpr DEFAULT_ADAPT_THRESH      = 1e-3;$/;"	m	class:parser
+DEFAULT_CFL	program_options.hpp	/^  static auto constexpr DEFAULT_CFL               = 0.01;$/;"	m	class:parser
+DEFAULT_DO_ADAPT	program_options.hpp	/^  static auto constexpr DEFAULT_DO_ADAPT          = false;$/;"	m	class:parser
+DEFAULT_DO_POISSON	program_options.hpp	/^  static auto constexpr DEFAULT_DO_POISSON        = false;$/;"	m	class:parser
+DEFAULT_MAX_LEVEL	program_options.hpp	/^  static auto constexpr DEFAULT_MAX_LEVEL         = 8;$/;"	m	class:parser
+DEFAULT_PDE_OPT	program_options.hpp	/^  static auto constexpr DEFAULT_PDE_OPT           = PDE_opts::continuity_2;$/;"	m	class:parser
+DEFAULT_PDE_SELECTED_CASE	program_options.hpp	/^  static auto constexpr DEFAULT_PDE_SELECTED_CASE = PDE_case_opts::case0;$/;"	m	class:parser
+DEFAULT_PDE_STR	program_options.hpp	/^  static auto constexpr DEFAULT_PDE_STR           = "continuity_2";$/;"	m	class:parser
+DEFAULT_SOLVER	program_options.hpp	/^  static auto constexpr DEFAULT_SOLVER            = solve_opts::direct;$/;"	m	class:parser
+DEFAULT_TIME_STEPS	program_options.hpp	/^  static auto constexpr DEFAULT_TIME_STEPS        = 10;$/;"	m	class:parser
+DEFAULT_USE_FG	program_options.hpp	/^  static auto constexpr DEFAULT_USE_FG            = false;$/;"	m	class:parser
+DEFAULT_USE_IMPLICIT	program_options.hpp	/^  static auto constexpr DEFAULT_USE_IMPLICIT      = false;$/;"	m	class:parser
+DEFAULT_WRITE_FREQ	program_options.hpp	/^  static auto constexpr DEFAULT_WRITE_FREQ        = 0;$/;"	m	class:parser
+DEVICE_FUNCTION	device/kronmult_cuda.cpp	12;"	d	file:
+DEVICE_FUNCTION	device/kronmult_cuda.cpp	18;"	d	file:
+E	pde/pde_fokkerplanck1_4p4.hpp	/^  static double constexpr E   = 4.0;$/;"	m	class:PDE_fokkerplanck_1d_4p4
+E	pde/pde_fokkerplanck1_4p5.hpp	/^  static double constexpr E   = 2.0;$/;"	m	class:PDE_fokkerplanck_1d_4p5
+E	pde/pde_fokkerplanck2_complete.hpp	/^  static double constexpr E     = 0.4;$/;"	m	class:PDE_fokkerplanck_2d_complete
+GLOBAL_FUNCTION	device/kronmult_cuda.cpp	15;"	d	file:
+GLOBAL_FUNCTION	device/kronmult_cuda.cpp	9;"	d	file:
+HOST_FUNCTION	device/kronmult_cuda.cpp	13;"	d	file:
+HOST_FUNCTION	device/kronmult_cuda.cpp	19;"	d	file:
+I_	pde/pde_continuity3.hpp	/^  inline static term<P> const I_ =$/;"	m	class:PDE_continuity_3d
+I_	pde/pde_continuity6.hpp	/^  inline static term<P> const I_ =$/;"	m	class:PDE_continuity_6d
+I_	pde/pde_fokkerplanck2_complete.hpp	/^  inline static term<P> const I_ =$/;"	m	class:PDE_fokkerplanck_2d_complete
+I_0	pde/pde_diffusion2.hpp	/^  inline static term<P> const I_0 =$/;"	m	class:PDE_diffusion_2d
+I_1	pde/pde_diffusion2.hpp	/^  inline static term<P> const I_1 =$/;"	m	class:PDE_diffusion_2d
+NO_USER_VALUE	program_options.hpp	/^  static auto constexpr NO_USER_VALUE     = -1;$/;"	m	class:parser
+NO_USER_VALUE_FP	program_options.hpp	/^  static auto constexpr NO_USER_VALUE_FP  = std::numeric_limits<double>::min();$/;"	m	class:parser
+NO_USER_VALUE_STR	program_options.hpp	/^  static auto constexpr NO_USER_VALUE_STR = "none";$/;"	m	class:parser
+PDE	pde/pde_base.hpp	/^  PDE(parser const &cli_input, int const num_dims, int const num_sources,$/;"	f	class:PDE
+PDE	pde/pde_base.hpp	/^class PDE$/;"	c
+PDE_case_opts	program_options.hpp	/^enum class PDE_case_opts$/;"	g
+PDE_continuity_1d	pde/pde_continuity1.hpp	/^  PDE_continuity_1d(parser const &cli_input)$/;"	f	class:PDE_continuity_1d
+PDE_continuity_1d	pde/pde_continuity1.hpp	/^class PDE_continuity_1d : public PDE<P>$/;"	c
+PDE_continuity_2d	pde/pde_continuity2.hpp	/^  PDE_continuity_2d(parser const &cli_input)$/;"	f	class:PDE_continuity_2d
+PDE_continuity_2d	pde/pde_continuity2.hpp	/^class PDE_continuity_2d : public PDE<P>$/;"	c
+PDE_continuity_3d	pde/pde_continuity3.hpp	/^  PDE_continuity_3d(parser const &cli_input)$/;"	f	class:PDE_continuity_3d
+PDE_continuity_3d	pde/pde_continuity3.hpp	/^class PDE_continuity_3d : public PDE<P>$/;"	c
+PDE_continuity_6d	pde/pde_continuity6.hpp	/^  PDE_continuity_6d(parser const &cli_input)$/;"	f	class:PDE_continuity_6d
+PDE_continuity_6d	pde/pde_continuity6.hpp	/^class PDE_continuity_6d : public PDE<P>$/;"	c
+PDE_descriptor	program_options.hpp	/^  PDE_descriptor(std::string const info, PDE_opts const pde_choice)$/;"	f	class:PDE_descriptor
+PDE_descriptor	program_options.hpp	/^class PDE_descriptor$/;"	c
+PDE_diffusion_1d	pde/pde_diffusion1.hpp	/^  PDE_diffusion_1d(parser const &cli_input)$/;"	f	class:PDE_diffusion_1d
+PDE_diffusion_1d	pde/pde_diffusion1.hpp	/^class PDE_diffusion_1d : public PDE<P>$/;"	c
+PDE_diffusion_2d	pde/pde_diffusion2.hpp	/^  PDE_diffusion_2d(parser const &cli_input)$/;"	f	class:PDE_diffusion_2d
+PDE_diffusion_2d	pde/pde_diffusion2.hpp	/^class PDE_diffusion_2d : public PDE<P>$/;"	c
+PDE_fokkerplanck_1d_4p3	pde/pde_fokkerplanck1_4p3.hpp	/^  PDE_fokkerplanck_1d_4p3(parser const &cli_input)$/;"	f	class:PDE_fokkerplanck_1d_4p3
+PDE_fokkerplanck_1d_4p3	pde/pde_fokkerplanck1_4p3.hpp	/^class PDE_fokkerplanck_1d_4p3 : public PDE<P>$/;"	c
+PDE_fokkerplanck_1d_4p4	pde/pde_fokkerplanck1_4p4.hpp	/^  PDE_fokkerplanck_1d_4p4(parser const &cli_input)$/;"	f	class:PDE_fokkerplanck_1d_4p4
+PDE_fokkerplanck_1d_4p4	pde/pde_fokkerplanck1_4p4.hpp	/^class PDE_fokkerplanck_1d_4p4 : public PDE<P>$/;"	c
+PDE_fokkerplanck_1d_4p5	pde/pde_fokkerplanck1_4p5.hpp	/^  PDE_fokkerplanck_1d_4p5(parser const &cli_input)$/;"	f	class:PDE_fokkerplanck_1d_4p5
+PDE_fokkerplanck_1d_4p5	pde/pde_fokkerplanck1_4p5.hpp	/^class PDE_fokkerplanck_1d_4p5 : public PDE<P>$/;"	c
+PDE_fokkerplanck_1d_pitch_C	pde/pde_fokkerplanck1_pitch_C.hpp	/^  PDE_fokkerplanck_1d_pitch_C(parser const &cli_input)$/;"	f	class:PDE_fokkerplanck_1d_pitch_C
+PDE_fokkerplanck_1d_pitch_C	pde/pde_fokkerplanck1_pitch_C.hpp	/^class PDE_fokkerplanck_1d_pitch_C : public PDE<P>$/;"	c
+PDE_fokkerplanck_1d_pitch_E	pde/pde_fokkerplanck1_pitch_E.hpp	/^  PDE_fokkerplanck_1d_pitch_E(parser const &cli_input)$/;"	f	class:PDE_fokkerplanck_1d_pitch_E
+PDE_fokkerplanck_1d_pitch_E	pde/pde_fokkerplanck1_pitch_E.hpp	/^class PDE_fokkerplanck_1d_pitch_E : public PDE<P>$/;"	c
+PDE_fokkerplanck_2d_complete	pde/pde_fokkerplanck2_complete.hpp	/^  PDE_fokkerplanck_2d_complete(parser const &cli_input)$/;"	f	class:PDE_fokkerplanck_2d_complete
+PDE_fokkerplanck_2d_complete	pde/pde_fokkerplanck2_complete.hpp	/^class PDE_fokkerplanck_2d_complete : public PDE<P>$/;"	c
+PDE_opts	program_options.hpp	/^enum class PDE_opts$/;"	g
+PI	pde/pde_base.hpp	/^static double const PI = 3.141592653589793;$/;"	v
+R	pde/pde_fokkerplanck1_4p5.hpp	/^  static double constexpr R   = 2.0;$/;"	m	class:PDE_fokkerplanck_1d_4p5
+SHARED_MEMORY	device/kronmult_cuda.cpp	11;"	d	file:
+SHARED_MEMORY	device/kronmult_cuda.cpp	17;"	d	file:
+SYNCTHREADS	device/kronmult_cuda.cpp	10;"	d	file:
+SYNCTHREADS	device/kronmult_cuda.cpp	16;"	d	file:
+TOL	tensors.hpp	16;"	d
+UNUSED	tools.hpp	21;"	d
+USE_GPU	device/kronmult_cuda.cpp	8;"	d	file:
+USE_GPU	kronmult.hpp	3;"	d
+X	adapt.cpp	343;"	d	file:
+X	adapt.cpp	345;"	d	file:
+X	basis.cpp	690;"	d	file:
+X	basis.cpp	692;"	d	file:
+X	basis.cpp	695;"	d	file:
+X	basis.cpp	702;"	d	file:
+X	basis.cpp	705;"	d	file:
+X	basis.cpp	712;"	d	file:
+X	batch.cpp	621;"	d	file:
+X	batch.cpp	623;"	d	file:
+X	batch.cpp	625;"	d	file:
+X	batch.cpp	627;"	d	file:
+X	batch.cpp	629;"	d	file:
+X	batch.cpp	634;"	d	file:
+X	batch.cpp	636;"	d	file:
+X	batch.cpp	641;"	d	file:
+X	batch.cpp	643;"	d	file:
+X	batch.cpp	647;"	d	file:
+X	batch.cpp	649;"	d	file:
+X	batch.cpp	654;"	d	file:
+X	batch.cpp	656;"	d	file:
+X	batch.cpp	660;"	d	file:
+X	batch.cpp	662;"	d	file:
+X	batch.cpp	667;"	d	file:
+X	batch.cpp	669;"	d	file:
+X	batch.cpp	673;"	d	file:
+X	batch.cpp	675;"	d	file:
+X	batch.cpp	678;"	d	file:
+X	batch.cpp	680;"	d	file:
+X	batch.cpp	683;"	d	file:
+X	batch.cpp	685;"	d	file:
+X	batch.cpp	693;"	d	file:
+X	boundary_conditions.cpp	304;"	d	file:
+X	boundary_conditions.cpp	311;"	d	file:
+X	boundary_conditions.cpp	313;"	d	file:
+X	boundary_conditions.cpp	319;"	d	file:
+X	boundary_conditions.cpp	321;"	d	file:
+X	boundary_conditions.cpp	326;"	d	file:
+X	boundary_conditions.cpp	328;"	d	file:
+X	boundary_conditions.cpp	334;"	d	file:
+X	boundary_conditions.cpp	336;"	d	file:
+X	boundary_conditions.cpp	345;"	d	file:
+X	coefficients.cpp	386;"	d	file:
+X	coefficients.cpp	393;"	d	file:
+X	coefficients.cpp	395;"	d	file:
+X	coefficients.cpp	401;"	d	file:
+X	device/kronmult_cuda.cpp	381;"	d	file:
+X	device/kronmult_cuda.cpp	386;"	d	file:
+X	device/kronmult_cuda.cpp	388;"	d	file:
+X	device/kronmult_cuda.cpp	398;"	d	file:
+X	device/kronmult_cuda.cpp	400;"	d	file:
+X	device/kronmult_cuda.cpp	406;"	d	file:
+X	distribution.cpp	1037;"	d	file:
+X	distribution.cpp	1042;"	d	file:
+X	distribution.cpp	1044;"	d	file:
+X	distribution.cpp	1050;"	d	file:
+X	distribution.cpp	1052;"	d	file:
+X	distribution.cpp	1056;"	d	file:
+X	distribution.cpp	1058;"	d	file:
+X	distribution.cpp	1063;"	d	file:
+X	distribution.cpp	1065;"	d	file:
+X	distribution.cpp	1068;"	d	file:
+X	distribution.cpp	1070;"	d	file:
+X	distribution.cpp	1076;"	d	file:
+X	elements.cpp	365;"	d	file:
+X	elements.cpp	368;"	d	file:
+X	kronmult.cpp	391;"	d	file:
+X	kronmult.cpp	396;"	d	file:
+X	kronmult.cpp	398;"	d	file:
+X	kronmult.cpp	405;"	d	file:
+X	lib_dispatch.cpp	1028;"	d	file:
+X	lib_dispatch.cpp	1030;"	d	file:
+X	lib_dispatch.cpp	1032;"	d	file:
+X	lib_dispatch.cpp	1034;"	d	file:
+X	lib_dispatch.cpp	1036;"	d	file:
+X	lib_dispatch.cpp	1040;"	d	file:
+X	lib_dispatch.cpp	1042;"	d	file:
+X	lib_dispatch.cpp	1046;"	d	file:
+X	lib_dispatch.cpp	1048;"	d	file:
+X	lib_dispatch.cpp	1052;"	d	file:
+X	lib_dispatch.cpp	1054;"	d	file:
+X	lib_dispatch.cpp	1057;"	d	file:
+X	lib_dispatch.cpp	1059;"	d	file:
+X	lib_dispatch.cpp	1064;"	d	file:
+X	lib_dispatch.cpp	1066;"	d	file:
+X	lib_dispatch.cpp	1071;"	d	file:
+X	lib_dispatch.cpp	1073;"	d	file:
+X	lib_dispatch.cpp	1077;"	d	file:
+X	lib_dispatch.cpp	1079;"	d	file:
+X	lib_dispatch.cpp	1083;"	d	file:
+X	lib_dispatch.cpp	1085;"	d	file:
+X	lib_dispatch.cpp	1091;"	d	file:
+X	lib_dispatch.cpp	1093;"	d	file:
+X	lib_dispatch.cpp	1099;"	d	file:
+X	lib_dispatch.cpp	1101;"	d	file:
+X	lib_dispatch.cpp	1105;"	d	file:
+X	lib_dispatch.cpp	1107;"	d	file:
+X	lib_dispatch.cpp	1114;"	d	file:
+X	lib_dispatch.cpp	1118;"	d	file:
+X	lib_dispatch.cpp	1120;"	d	file:
+X	lib_dispatch.cpp	1124;"	d	file:
+X	matlab_utilities.cpp	470;"	d	file:
+X	matlab_utilities.cpp	474;"	d	file:
+X	matlab_utilities.cpp	476;"	d	file:
+X	matlab_utilities.cpp	478;"	d	file:
+X	matlab_utilities.cpp	480;"	d	file:
+X	matlab_utilities.cpp	482;"	d	file:
+X	matlab_utilities.cpp	484;"	d	file:
+X	matlab_utilities.cpp	486;"	d	file:
+X	matlab_utilities.cpp	488;"	d	file:
+X	matlab_utilities.cpp	490;"	d	file:
+X	matlab_utilities.cpp	492;"	d	file:
+X	matlab_utilities.cpp	494;"	d	file:
+X	matlab_utilities.cpp	496;"	d	file:
+X	matlab_utilities.cpp	499;"	d	file:
+X	matlab_utilities.cpp	501;"	d	file:
+X	matlab_utilities.cpp	505;"	d	file:
+X	matlab_utilities.cpp	507;"	d	file:
+X	matlab_utilities.cpp	511;"	d	file:
+X	quadrature.cpp	359;"	d	file:
+X	quadrature.cpp	364;"	d	file:
+X	quadrature.cpp	366;"	d	file:
+X	quadrature.cpp	371;"	d	file:
+X	solver.cpp	168;"	d	file:
+X	solver.cpp	174;"	d	file:
+X	time_advance.cpp	342;"	d	file:
+X	time_advance.cpp	350;"	d	file:
+X	time_advance.cpp	352;"	d	file:
+X	time_advance.cpp	360;"	d	file:
+X	time_advance.cpp	362;"	d	file:
+X	time_advance.cpp	370;"	d	file:
+X	transformations.cpp	248;"	d	file:
+X	transformations.cpp	253;"	d	file:
+X	transformations.cpp	255;"	d	file:
+X	transformations.cpp	260;"	d	file:
+X	transformations.cpp	262;"	d	file:
+X	transformations.cpp	271;"	d	file:
+X	transformations.cpp	273;"	d	file:
+X	transformations.cpp	278;"	d	file:
+Z	pde/pde_fokkerplanck2_complete.hpp	/^  static double constexpr Z     = 5;$/;"	m	class:PDE_fokkerplanck_2d_complete
+access_badge	tensors.hpp	/^  access_badge(){};$/;"	f	class:access_badge
+access_badge	tensors.hpp	/^class access_badge$/;"	c
+active_element_ids_	elements.hpp	/^  std::vector<int64_t> active_element_ids_;$/;"	m	class:elements::table
+active_table_d_	elements.hpp	/^  fk::vector<int, mem_type::owner, resource::device> active_table_d_;$/;"	m	class:elements::table
+adapt	adapt.cpp	/^namespace adapt$/;"	n	file:
+adapt	adapt.hpp	/^namespace adapt$/;"	n
+adapt_thresh	adapt_tests.cpp	/^static auto constexpr adapt_thresh = 1e-4;$/;"	v	file:
+adapt_threshold	program_options.hpp	/^  double adapt_threshold = DEFAULT_ADAPT_THRESH;$/;"	m	class:parser
+adapt_threshold	program_options.hpp	/^  double const adapt_threshold;$/;"	m	class:options
+adaptive_advance	time_advance.cpp	/^adaptive_advance(method const step_method, PDE<P> &pde,$/;"	f	namespace:time_advance
+add_elements	elements.cpp	/^table::add_elements(std::vector<int64_t> const &ids, int const max_level)$/;"	f	class:elements::table
+advance	batch.hpp	/^  advance \/\/ for time advance \/\/FIXME deprecated. once realspace is refactored,$/;"	e	enum:chain_method
+allocate_device	tensors.hpp	/^allocate_device(P *&ptr, int const num_elems, bool const initialize = true)$/;"	f	namespace:fk
+analytic_solution_dim0	pde/pde_fokkerplanck1_4p3.hpp	/^  analytic_solution_dim0(fk::vector<P> const z, P const t = 0)$/;"	f	class:PDE_fokkerplanck_1d_4p3
+analytic_solution_dim0	pde/pde_fokkerplanck1_4p4.hpp	/^  analytic_solution_dim0(fk::vector<P> const z, P const t = 0)$/;"	f	class:PDE_fokkerplanck_1d_4p4
+analytic_solution_dim0	pde/pde_fokkerplanck1_4p5.hpp	/^  analytic_solution_dim0(fk::vector<P> const z, P const t = 0)$/;"	f	class:PDE_fokkerplanck_1d_4p5
+analytic_solution_dim0	pde/pde_fokkerplanck1_pitch_C.hpp	/^  analytic_solution_dim0(fk::vector<P> const x, P const time = 0)$/;"	f	class:PDE_fokkerplanck_1d_pitch_C
+analytic_solution_dim0	pde/pde_fokkerplanck1_pitch_E.hpp	/^  analytic_solution_dim0(fk::vector<P> const z, P const t = 0)$/;"	f	class:PDE_fokkerplanck_1d_pitch_E
+analytic_solution_time	pde/pde_fokkerplanck1_4p3.hpp	/^  static P analytic_solution_time(P const time)$/;"	f	class:PDE_fokkerplanck_1d_4p3
+analytic_solution_time	pde/pde_fokkerplanck1_4p4.hpp	/^  static P analytic_solution_time(P const time)$/;"	f	class:PDE_fokkerplanck_1d_4p4
+analytic_solution_time	pde/pde_fokkerplanck1_4p5.hpp	/^  static P analytic_solution_time(P const time)$/;"	f	class:PDE_fokkerplanck_1d_4p5
+analytic_solution_time	pde/pde_fokkerplanck1_pitch_C.hpp	/^  static P analytic_solution_time(P const time)$/;"	f	class:PDE_fokkerplanck_1d_pitch_C
+analytic_solution_time	pde/pde_fokkerplanck1_pitch_E.hpp	/^  static P analytic_solution_time(P const time)$/;"	f	class:PDE_fokkerplanck_1d_pitch_E
+apply	basis.cpp	/^fk::matrix<P, mem_type::owner, resrc> wavelet_transform<P, resrc>::apply($/;"	f	class:basis::wavelet_transform
+apply	basis.cpp	/^fk::vector<P, mem_type::owner, resrc> wavelet_transform<P, resrc>::apply($/;"	f	class:basis::wavelet_transform
+assign_entry	batch.cpp	/^void batch<P, resrc>::assign_entry(fk::matrix<P, mem, resrc> const &a,$/;"	f	class:batch
+assign_raw	batch.cpp	/^void batch<P, resrc>::assign_raw(P *const a, int const position)$/;"	f	class:batch
+ax	pde/pde_continuity6.hpp	/^  static double constexpr ax = 4;$/;"	m	class:PDE_continuity_6d
+axpy	fast_math.hpp	/^axpy(fk::vector<P, omem, resrc> const &x, fk::vector<P, mem, resrc> &y,$/;"	f	class:fm::fk
+axpy	lib_dispatch.cpp	/^void axpy(int *n, P *alpha, P *x, int *incx, P *y, int *incy,$/;"	f	namespace:lib_dispatch
+ay	pde/pde_continuity6.hpp	/^  static double constexpr ay = 3;$/;"	m	class:PDE_continuity_6d
+az	pde/pde_continuity6.hpp	/^  static double constexpr az = 2;$/;"	m	class:PDE_continuity_6d
+basic_gemm	lib_dispatch.cpp	/^basic_gemm(P const *A, bool const trans_A, int const lda, P *B, bool trans_B,$/;"	f	namespace:lib_dispatch
+basic_gemv	lib_dispatch.cpp	/^static void basic_gemv(P const *A, bool const trans_A, int const lda,$/;"	f	namespace:lib_dispatch
+basis	basis.cpp	/^namespace basis$/;"	n	file:
+basis	basis.hpp	/^namespace basis$/;"	n
+batch	batch.cpp	/^batch<P, resrc>::batch(batch<P, resrc> &&other)$/;"	f	class:batch
+batch	batch.cpp	/^batch<P, resrc>::batch(batch<P, resrc> const &other)$/;"	f	class:batch
+batch	batch.cpp	/^batch<P, resrc>::batch(int const num_entries, int const nrows, int const ncols,$/;"	f	class:batch
+batch	batch.hpp	/^class batch$/;"	c
+batch_	batch.hpp	/^  P **batch_; \/\/ array of pointers to pass into blas call$/;"	m	class:batch
+batch_chain	batch.cpp	/^batch_chain<P, resrc, method>::batch_chain($/;"	f	class:batch_chain
+batch_chain	batch.hpp	/^class batch_chain$/;"	c
+batched_gemm	batch.cpp	/^void batched_gemm(batch<P, resrc> const &a, batch<P, resrc> const &b,$/;"	f
+batched_gemm	lib_dispatch.cpp	/^void batched_gemm(P **const &a, int *lda, char const *transa, P **const &b,$/;"	f	namespace:lib_dispatch
+batched_gemv	batch.cpp	/^void batched_gemv(batch<P, resrc> const &a, batch<P, resrc> const &b,$/;"	f
+batched_gemv	lib_dispatch.cpp	/^void batched_gemv(P **const &a, int *lda, char const *trans, P **const &x,$/;"	f	namespace:lib_dispatch
+bc_func	pde/pde_diffusion1.hpp	/^  static fk::vector<P> bc_func(fk::vector<P> const x, P const t)$/;"	f	class:PDE_diffusion_1d
+bc_func	pde/pde_diffusion2.hpp	/^  static fk::vector<P> bc_func(fk::vector<P> const x, P const t)$/;"	f	class:PDE_diffusion_2d
+bc_time_func	pde/pde_diffusion1.hpp	/^  static P bc_time_func(P const t)$/;"	f	class:PDE_diffusion_1d
+bc_time_func	pde/pde_diffusion2.hpp	/^  static P bc_time_func(P const t)$/;"	f	class:PDE_diffusion_2d
+begin	batch.hpp	/^  const_iterator begin() const { return batch_; }$/;"	f	class:batch
+begin	batch.hpp	/^  iterator begin() { return batch_; }$/;"	f	class:batch
+begin	tensors.hpp	/^  const_iterator begin() const { return data(); }$/;"	f	class:fk::vector
+begin	tensors.hpp	/^  const_iterator begin() const$/;"	f	class:fk::matrix
+begin	tensors.hpp	/^  iterator begin()$/;"	f	class:fk::matrix
+begin	tensors.hpp	/^  iterator begin()$/;"	f	class:fk::vector
+boundary_condition	pde/pde_base.hpp	/^enum class boundary_condition$/;"	g
+boundary_conditions	boundary_conditions.hpp	/^namespace boundary_conditions$/;"	n
+build_system_matrix	batch.cpp	/^void build_system_matrix(PDE<P> const &pde, elements::table const &elem_table,$/;"	f
+bx	pde/pde_continuity6.hpp	/^  static double constexpr bx = 1;$/;"	m	class:PDE_continuity_6d
+by	pde/pde_continuity6.hpp	/^  static double constexpr by = 1;$/;"	m	class:PDE_continuity_6d
+bz	pde/pde_continuity6.hpp	/^  static double constexpr bz = 3;$/;"	m	class:PDE_continuity_6d
+c1_g1	pde/pde_fokkerplanck2_complete.hpp	/^  static P c1_g1(P const x, P const time = 0)$/;"	f	class:PDE_fokkerplanck_2d_complete
+c1_g2	pde/pde_fokkerplanck2_complete.hpp	/^  static P c1_g2(P const x, P const time = 0)$/;"	f	class:PDE_fokkerplanck_2d_complete
+c1_g3	pde/pde_fokkerplanck2_complete.hpp	/^  static P c1_g3(P const x, P const time = 0)$/;"	f	class:PDE_fokkerplanck_2d_complete
+c1_pterm1	pde/pde_fokkerplanck2_complete.hpp	/^  inline static partial_term<P> const c1_pterm1 =$/;"	m	class:PDE_fokkerplanck_2d_complete
+c1_pterm2	pde/pde_fokkerplanck2_complete.hpp	/^  inline static partial_term<P> const c1_pterm2 = partial_term<P>($/;"	m	class:PDE_fokkerplanck_2d_complete
+c1_pterm3	pde/pde_fokkerplanck2_complete.hpp	/^  inline static partial_term<P> const c1_pterm3 =$/;"	m	class:PDE_fokkerplanck_2d_complete
+c1_term_p	pde/pde_fokkerplanck2_complete.hpp	/^  inline static term<P> const c1_term_p =$/;"	m	class:PDE_fokkerplanck_2d_complete
+c2_g1	pde/pde_fokkerplanck2_complete.hpp	/^  static P c2_g1(P const x, P const time = 0)$/;"	f	class:PDE_fokkerplanck_2d_complete
+c2_g2	pde/pde_fokkerplanck2_complete.hpp	/^  static P c2_g2(P const x, P const time = 0)$/;"	f	class:PDE_fokkerplanck_2d_complete
+c2_pterm1	pde/pde_fokkerplanck2_complete.hpp	/^  inline static partial_term<P> const c2_pterm1 =$/;"	m	class:PDE_fokkerplanck_2d_complete
+c2_pterm2	pde/pde_fokkerplanck2_complete.hpp	/^  inline static partial_term<P> const c2_pterm2 =$/;"	m	class:PDE_fokkerplanck_2d_complete
+c2_term_p	pde/pde_fokkerplanck2_complete.hpp	/^  inline static term<P> const c2_term_p =$/;"	m	class:PDE_fokkerplanck_2d_complete
+c3_g1	pde/pde_fokkerplanck2_complete.hpp	/^  static P c3_g1(P const x, P const time = 0)$/;"	f	class:PDE_fokkerplanck_2d_complete
+c3_g2	pde/pde_fokkerplanck2_complete.hpp	/^  static P c3_g2(P const x, P const time = 0)$/;"	f	class:PDE_fokkerplanck_2d_complete
+c3_g3	pde/pde_fokkerplanck2_complete.hpp	/^  static P c3_g3(P const x, P const time = 0)$/;"	f	class:PDE_fokkerplanck_2d_complete
+c3_pterm1	pde/pde_fokkerplanck2_complete.hpp	/^  inline static partial_term<P> const c3_pterm1 =$/;"	m	class:PDE_fokkerplanck_2d_complete
+c3_pterm2	pde/pde_fokkerplanck2_complete.hpp	/^  inline static partial_term<P> const c3_pterm2 = partial_term<P>($/;"	m	class:PDE_fokkerplanck_2d_complete
+c3_pterm3	pde/pde_fokkerplanck2_complete.hpp	/^  inline static partial_term<P> const c3_pterm3 =$/;"	m	class:PDE_fokkerplanck_2d_complete
+c3_term_p	pde/pde_fokkerplanck2_complete.hpp	/^  inline static term<P> const c3_term_p =$/;"	m	class:PDE_fokkerplanck_2d_complete
+c3_term_z	pde/pde_fokkerplanck2_complete.hpp	/^  inline static term<P> const c3_term_z =$/;"	m	class:PDE_fokkerplanck_2d_complete
+calculate_workspace_length	batch.hpp	/^inline int calculate_workspace_length($/;"	f
+call_kronmult	device/kronmult_cuda.cpp	/^void call_kronmult(int const n, P *x_ptrs[], P *output_ptrs[], P *work_ptrs[],$/;"	f
+case0	program_options.hpp	/^  case0,$/;"	e	enum:PDE_case_opts
+case1	program_options.hpp	/^  case1,$/;"	e	enum:PDE_case_opts
+case2	program_options.hpp	/^  case2,$/;"	e	enum:PDE_case_opts
+case_count	program_options.hpp	/^  case_count$/;"	e	enum:PDE_case_opts
+central	pde/pde_base.hpp	/^  central       = 0,$/;"	e	enum:flux_type
+cfl	program_options.hpp	/^  double cfl = NO_USER_VALUE_FP;$/;"	m	class:parser
+chain_method	batch.hpp	/^enum class chain_method$/;"	g
+check_coverage	distribution_tests.cpp	/^void check_coverage(elements::table const &table,$/;"	f
+check_even_sizing	distribution_tests.cpp	/^void check_even_sizing(elements::table const &table,$/;"	f
+check_overlap	distribution.cpp	/^static bool check_overlap(std::map<int64_t, grid_limits> const &elem_remap)$/;"	f	file:
+check_rowmaj_layout	distribution_tests.cpp	/^void check_rowmaj_layout(distribution_plan const &to_test, int const num_cols)$/;"	f
+clear_all	batch.cpp	/^batch<P, resrc> &batch<P, resrc>::clear_all()$/;"	f	class:batch
+clear_and_resize	tensors.hpp	/^fk::matrix<P, mem, resrc>::clear_and_resize(int const rows, int const cols)$/;"	f	class:fk::fk::matrix
+clear_entry	batch.cpp	/^bool batch<P, resrc>::clear_entry(int const position)$/;"	f	class:batch
+clone_onto_device	tensors.hpp	/^fk::matrix<P, mem, resrc>::clone_onto_device() const$/;"	f	class:fk::matrix
+clone_onto_device	tensors.hpp	/^fk::vector<P, mem, resrc>::clone_onto_device() const$/;"	f	class:fk::vector
+clone_onto_host	tensors.hpp	/^fk::matrix<P, mem, resrc>::clone_onto_host() const$/;"	f	class:fk::matrix
+clone_onto_host	tensors.hpp	/^fk::vector<P, mem, resrc>::clone_onto_host() const$/;"	f	class:fk::vector
+coarsen	adapt.cpp	/^distributed_grid<P>::coarsen(fk::vector<P> const &x, options const &cli_opts)$/;"	f	class:adapt::distributed_grid
+coarsen_solution	adapt.cpp	/^distributed_grid<P>::coarsen_solution(PDE<P> &pde, fk::vector<P> const &x,$/;"	f	class:adapt::distributed_grid
+coeff_type	pde/pde_base.hpp	/^  coefficient_type const coeff_type;$/;"	m	class:partial_term
+coefficient_type	pde/pde_base.hpp	/^enum class coefficient_type$/;"	g
+coefficients_	pde/pde_base.hpp	/^  fk::matrix<P, mem_type::owner, resource::device> coefficients_;$/;"	m	class:term
+coefficients_	pde/pde_base.hpp	/^  fk::matrix<P> coefficients_;$/;"	m	class:partial_term
+col_start	distribution.hpp	/^  int const col_start;$/;"	m	class:element_subgrid
+col_stop	distribution.hpp	/^  int const col_stop;$/;"	m	class:element_subgrid
+combine_dimensions	transformations.cpp	/^combine_dimensions(int const degree, elements::table const &table,$/;"	f
+compute_left_boundary_condition	boundary_conditions.cpp	/^fk::vector<P> boundary_conditions::compute_left_boundary_condition($/;"	f	class:boundary_conditions
+compute_right_boundary_condition	boundary_conditions.cpp	/^fk::vector<P> boundary_conditions::compute_right_boundary_condition($/;"	f	class:boundary_conditions
+concat	tensors.hpp	/^fk::vector<P, mem, resrc>::concat(vector<P, omem> const &right)$/;"	f	class:fk::fk::vector
+const_iterator	tensors.hpp	/^  typedef const P *const_iterator;$/;"	t	class:fk::vector
+const_view	tensors.hpp	/^  const_view$/;"	e	enum:mem_type
+continuity_1	program_options.hpp	/^  continuity_1,$/;"	e	enum:PDE_opts
+continuity_2	program_options.hpp	/^  continuity_2,$/;"	e	enum:PDE_opts
+continuity_3	program_options.hpp	/^  continuity_3,$/;"	e	enum:PDE_opts
+continuity_6	program_options.hpp	/^  continuity_6,$/;"	e	enum:PDE_opts
+copy	fast_math.hpp	/^copy(fk::vector<P, omem, resrc> const &x, fk::vector<P, mem, resrc> &y)$/;"	f	class:fm::fk
+copy	lib_dispatch.cpp	/^void copy(int *n, P *x, int *incx, P *y, int *incy, resource const resrc)$/;"	f	namespace:lib_dispatch
+copy_matrix_on_device	tensors.hpp	/^copy_matrix_on_device(fk::matrix<P, mem, resource::device> &dest,$/;"	f	namespace:fk
+copy_matrix_to_device	tensors.hpp	/^copy_matrix_to_device(fk::matrix<P, mem, resource::device> &dest,$/;"	f	namespace:fk
+copy_matrix_to_host	tensors.hpp	/^copy_matrix_to_host(fk::matrix<P, mem, resource::host> &dest,$/;"	f	namespace:fk
+copy_on_device	tensors.hpp	/^copy_on_device(P *const dest, P const *const source, int const num_elems)$/;"	f	namespace:fk
+copy_to_device	tensors.hpp	/^copy_to_device(P *const dest, P const *const source, int const num_elems)$/;"	f	namespace:fk
+copy_to_host	tensors.hpp	/^copy_to_host(P *const dest, P const *const source, int const num_elems)$/;"	f	namespace:fk
+copy_to_input	distribution.cpp	/^copy_to_input(fk::vector<P> const &source, fk::vector<P> &dest,$/;"	f	file:
+count_equal	permutations.cpp	/^int count_equal(int const num_dims, int const limit)$/;"	f	namespace:permutations
+count_equal_multi	permutations.cpp	/^int count_equal_multi(fk::vector<int> const &levels, int const num_dims,$/;"	f	namespace:permutations
+count_leq_max_indices	permutations.cpp	/^int count_leq_max_indices(list_set const &lists, int const num_dims,$/;"	f	namespace:permutations
+count_lequal	permutations.cpp	/^int count_lequal(int const num_dims, int const limit)$/;"	f	namespace:permutations
+count_lequal_multi	permutations.cpp	/^int count_lequal_multi(fk::vector<int> const &levels, int num_dims, int limit)$/;"	f	namespace:permutations
+count_max	permutations.cpp	/^int count_max(int const num_dims, int const limit)$/;"	f	namespace:permutations
+cublas_trans	lib_dispatch.cpp	/^inline cublasOperation_t cublas_trans(char trans)$/;"	f
+current_index	distribution.cpp	/^  int current_index;$/;"	m	class:round_robin_wheel	file:
+data	tensors.hpp	/^  P *data(int const elem = 0) const { return &data_[elem]; }$/;"	f	class:fk::vector
+data	tensors.hpp	/^  P *data(int const i = 0, int const j = 0) const$/;"	f	class:fk::matrix
+data_	pde/pde_base.hpp	/^  fk::vector<P> data_;$/;"	m	class:term
+data_	tensors.hpp	/^  P *data_;    \/\/< pointer to elements$/;"	m	class:fk::matrix
+data_	tensors.hpp	/^  P *data_;  \/\/< pointer to elements$/;"	m	class:fk::vector
+debug_compare	tensors.hpp	/^void debug_compare(fk::matrix<P, left_mem> const &left,$/;"	f
+decompose	kronmult.cpp	/^decompose(PDE<P> const &pde, elements::table const &elem_table,$/;"	f	namespace:kronmult
+default_degree	pde/pde_diffusion2.hpp	/^  static int constexpr default_degree      = 2;$/;"	m	class:PDE_diffusion_2d
+default_level	pde/pde_diffusion2.hpp	/^  static int constexpr default_level       = 2;$/;"	m	class:PDE_diffusion_2d
+degree	basis.hpp	/^  int const degree;$/;"	m	class:basis::wavelet_transform
+degree	program_options.hpp	/^  int degree = NO_USER_VALUE;$/;"	m	class:parser
+degree_	pde/pde_base.hpp	/^  int degree_;$/;"	m	class:dimension
+delete_device	tensors.hpp	/^inline void delete_device(P *const ptr)$/;"	f	namespace:fk
+delta	pde/pde_fokkerplanck2_complete.hpp	/^  static double constexpr delta = 0.3;$/;"	m	class:PDE_fokkerplanck_2d_complete
+dense_blocks_	basis.hpp	/^      dense_blocks_; \/\/ FIXME may eventually change to$/;"	m	class:basis::wavelet_transform
+dependencies_to_messages	distribution.cpp	/^std::vector<std::vector<message>> const static dependencies_to_messages($/;"	f	file:
+dest_range	distribution.hpp	/^  grid_limits const dest_range;$/;"	m	struct:message
+determinant	tensors.hpp	/^P fk::matrix<P, mem, resrc>::determinant() const$/;"	f	class:fk::matrix
+device	lib_dispatch.cpp	/^static device_handler device;$/;"	v	file:
+device	lib_dispatch.hpp	/^  device$/;"	e	enum:resource
+device_handler	lib_dispatch.cpp	/^  device_handler()$/;"	f	struct:device_handler
+device_handler	lib_dispatch.cpp	/^struct device_handler$/;"	s	file:
+diff	pde/pde_base.hpp	/^  diff$/;"	e	enum:coefficient_type
+diffusion_1	program_options.hpp	/^  diffusion_1,$/;"	e	enum:PDE_opts
+diffusion_2	program_options.hpp	/^  diffusion_2,$/;"	e	enum:PDE_opts
+dim0_	pde/pde_continuity1.hpp	/^  inline static dimension<P> const dim0_ =$/;"	m	class:PDE_continuity_1d
+dim0_	pde/pde_continuity2.hpp	/^  inline static dimension<P> const dim0_ =$/;"	m	class:PDE_continuity_2d
+dim0_	pde/pde_continuity3.hpp	/^  inline static dimension<P> const dim0_ =$/;"	m	class:PDE_continuity_3d
+dim0_	pde/pde_fokkerplanck1_4p3.hpp	/^  inline static dimension<P> const dim0_ =$/;"	m	class:PDE_fokkerplanck_1d_4p3
+dim0_	pde/pde_fokkerplanck1_4p4.hpp	/^  inline static dimension<P> const dim0_ =$/;"	m	class:PDE_fokkerplanck_1d_4p4
+dim0_	pde/pde_fokkerplanck1_4p5.hpp	/^  inline static dimension<P> const dim0_ =$/;"	m	class:PDE_fokkerplanck_1d_4p5
+dim0_	pde/pde_fokkerplanck1_pitch_C.hpp	/^  inline static dimension<P> const dim0_ =$/;"	m	class:PDE_fokkerplanck_1d_pitch_C
+dim0_	pde/pde_fokkerplanck1_pitch_E.hpp	/^  inline static dimension<P> const dim0_ =$/;"	m	class:PDE_fokkerplanck_1d_pitch_E
+dim1_	pde/pde_continuity2.hpp	/^  inline static dimension<P> const dim1_ =$/;"	m	class:PDE_continuity_2d
+dim1_	pde/pde_continuity3.hpp	/^  inline static dimension<P> const dim1_ =$/;"	m	class:PDE_continuity_3d
+dim2_	pde/pde_continuity3.hpp	/^  inline static dimension<P> const dim2_ =$/;"	m	class:PDE_continuity_3d
+dim_0	pde/pde_diffusion1.hpp	/^  inline static dimension<P> const dim_0 =$/;"	m	class:PDE_diffusion_1d
+dim_0	pde/pde_diffusion2.hpp	/^  inline static dimension<P> const dim_0 =$/;"	m	class:PDE_diffusion_2d
+dim_1	pde/pde_diffusion2.hpp	/^  inline static dimension<P> const dim_1 =$/;"	m	class:PDE_diffusion_2d
+dim_p	pde/pde_fokkerplanck2_complete.hpp	/^  inline static dimension<P> const dim_p =$/;"	m	class:PDE_fokkerplanck_2d_complete
+dim_to_max_level	elements.cpp	/^static std::map<int, int> const dim_to_max_level = {$/;"	m	class:elements::std	file:
+dim_z	pde/pde_fokkerplanck2_complete.hpp	/^  inline static dimension<P> const dim_z =$/;"	m	class:PDE_fokkerplanck_2d_complete
+dimension	pde/pde_base.hpp	/^  dimension(P const domain_min, P const domain_max, int const level,$/;"	f	class:dimension
+dimension	pde/pde_base.hpp	/^class dimension$/;"	c
+dimensions_	pde/pde_base.hpp	/^  std::vector<dimension<P>> dimensions_;$/;"	m	class:PDE
+dimensions_	pde/pde_continuity1.hpp	/^  inline static std::vector<dimension<P>> const dimensions_ = {dim0_};$/;"	m	class:PDE_continuity_1d::std
+dimensions_	pde/pde_continuity2.hpp	/^  inline static std::vector<dimension<P>> const dimensions_ = {dim0_, dim1_};$/;"	m	class:PDE_continuity_2d::std
+dimensions_	pde/pde_continuity3.hpp	/^  inline static std::vector<dimension<P>> const dimensions_ = {dim0_, dim1_,$/;"	m	class:PDE_continuity_3d::std
+dimensions_	pde/pde_continuity6.hpp	/^  inline static std::vector<dimension<P>> const dimensions_ = {x_,  y_,  z_,$/;"	m	class:PDE_continuity_6d::std
+dimensions_	pde/pde_diffusion1.hpp	/^  inline static std::vector<dimension<P>> const dimensions_ = {dim_0};$/;"	m	class:PDE_diffusion_1d::std
+dimensions_	pde/pde_diffusion2.hpp	/^  inline static std::vector<dimension<P>> const dimensions_ = {dim_0, dim_1};$/;"	m	class:PDE_diffusion_2d::std
+dimensions_	pde/pde_fokkerplanck1_4p3.hpp	/^  inline static std::vector<dimension<P>> const dimensions_ = {dim0_};$/;"	m	class:PDE_fokkerplanck_1d_4p3::std
+dimensions_	pde/pde_fokkerplanck1_4p4.hpp	/^  inline static std::vector<dimension<P>> const dimensions_ = {dim0_};$/;"	m	class:PDE_fokkerplanck_1d_4p4::std
+dimensions_	pde/pde_fokkerplanck1_4p5.hpp	/^  inline static std::vector<dimension<P>> const dimensions_ = {dim0_};$/;"	m	class:PDE_fokkerplanck_1d_4p5::std
+dimensions_	pde/pde_fokkerplanck1_pitch_C.hpp	/^  inline static std::vector<dimension<P>> const dimensions_ = {dim0_};$/;"	m	class:PDE_fokkerplanck_1d_pitch_C::std
+dimensions_	pde/pde_fokkerplanck1_pitch_E.hpp	/^  inline static std::vector<dimension<P>> const dimensions_ = {dim0_};$/;"	m	class:PDE_fokkerplanck_1d_pitch_E::std
+dimensions_	pde/pde_fokkerplanck2_complete.hpp	/^  inline static std::vector<dimension<P>> const dimensions_ = {dim_p, dim_z};$/;"	m	class:PDE_fokkerplanck_2d_complete::std
+direct	program_options.hpp	/^  direct,$/;"	e	enum:solve_opts
+dirichlet	pde/pde_base.hpp	/^  dirichlet,$/;"	e	enum:boundary_condition
+dispatch_message	distribution.cpp	/^static void dispatch_message(fk::vector<P> const &source, fk::vector<P> &dest,$/;"	f	file:
+distrib_test_info	adapt_tests.cpp	/^static distribution_test_init const distrib_test_info;$/;"	v	file:
+distrib_test_info	basis_tests.cpp	/^static distribution_test_init const distrib_test_info;$/;"	v	file:
+distrib_test_info	distribution_tests.cpp	/^static distribution_test_init const distrib_test_info;$/;"	v	file:
+distrib_test_info	kronmult_tests.cpp	/^static distribution_test_init const distrib_test_info;$/;"	v	file:
+distrib_test_info	program_options_tests.cpp	/^static distribution_test_init const distrib_test_info;$/;"	v	file:
+distrib_test_info	time_advance_tests.cpp	/^static distribution_test_init const distrib_test_info;$/;"	v	file:
+distribute_table_changes	distribution.cpp	/^distribute_table_changes(std::vector<int64_t> const &my_changes,$/;"	f
+distributed_grid	adapt.cpp	/^distributed_grid<P>::distributed_grid(PDE<P> const &pde,$/;"	f	class:adapt::distributed_grid
+distributed_grid	adapt.hpp	/^class distributed_grid$/;"	c	namespace:adapt
+distribution_handler	distribution.cpp	/^  distribution_handler() {}$/;"	f	struct:distribution_handler
+distribution_handler	distribution.cpp	/^struct distribution_handler$/;"	s	file:
+distribution_test_init	adapt_tests.cpp	/^  distribution_test_init()$/;"	f	struct:distribution_test_init
+distribution_test_init	adapt_tests.cpp	/^struct distribution_test_init$/;"	s	file:
+distribution_test_init	basis_tests.cpp	/^  distribution_test_init() { initialize_distribution(); }$/;"	f	struct:distribution_test_init
+distribution_test_init	basis_tests.cpp	/^struct distribution_test_init$/;"	s	file:
+distribution_test_init	distribution_tests.cpp	/^  distribution_test_init()$/;"	f	struct:distribution_test_init
+distribution_test_init	distribution_tests.cpp	/^struct distribution_test_init$/;"	s	file:
+distribution_test_init	kronmult_tests.cpp	/^  distribution_test_init() { initialize_distribution(); }$/;"	f	struct:distribution_test_init
+distribution_test_init	kronmult_tests.cpp	/^struct distribution_test_init$/;"	s	file:
+distribution_test_init	program_options_tests.cpp	/^  distribution_test_init() { initialize_distribution(); }$/;"	f	struct:distribution_test_init
+distribution_test_init	program_options_tests.cpp	/^struct distribution_test_init$/;"	s	file:
+distribution_test_init	time_advance_tests.cpp	/^  distribution_test_init() { initialize_distribution(); }$/;"	f	struct:distribution_test_init
+distribution_test_init	time_advance_tests.cpp	/^struct distribution_test_init$/;"	s	file:
+distro_handle	distribution.cpp	/^static distribution_handler distro_handle;$/;"	v	file:
+do_adapt	program_options.hpp	/^  bool do_adapt   = DEFAULT_DO_ADAPT;   \/\/ adapt number of basis levels$/;"	m	class:parser
+do_adapt_levels	program_options.cpp	/^bool parser::do_adapt_levels() const { return do_adapt; }$/;"	f	class:parser
+do_adapt_levels	program_options.hpp	/^  bool const do_adapt_levels;$/;"	m	class:options
+do_poisson	program_options.hpp	/^  bool do_poisson = DEFAULT_DO_POISSON; \/\/ do poisson solve for electric field$/;"	m	class:parser
+do_poisson_solve	pde/pde_base.hpp	/^  bool const do_poisson_solve;$/;"	m	class:PDE
+do_poisson_solve	program_options.cpp	/^bool parser::do_poisson_solve() const { return do_poisson; }$/;"	f	class:parser
+do_poisson_solve	program_options.hpp	/^  bool const do_poisson_solve;$/;"	m	class:options
+do_poisson_solve_	pde/pde_continuity1.hpp	/^  static bool constexpr do_poisson_solve_  = false;$/;"	m	class:PDE_continuity_1d
+do_poisson_solve_	pde/pde_continuity2.hpp	/^  static bool constexpr do_poisson_solve_  = false;$/;"	m	class:PDE_continuity_2d
+do_poisson_solve_	pde/pde_continuity3.hpp	/^  static bool constexpr do_poisson_solve_  = false;$/;"	m	class:PDE_continuity_3d
+do_poisson_solve_	pde/pde_continuity6.hpp	/^  static bool constexpr do_poisson_solve_  = false;$/;"	m	class:PDE_continuity_6d
+do_poisson_solve_	pde/pde_diffusion1.hpp	/^  static bool constexpr do_poisson_solve_  = false;$/;"	m	class:PDE_diffusion_1d
+do_poisson_solve_	pde/pde_diffusion2.hpp	/^  static bool constexpr do_poisson_solve_  = false;$/;"	m	class:PDE_diffusion_2d
+do_poisson_solve_	pde/pde_fokkerplanck1_4p3.hpp	/^  static bool constexpr do_poisson_solve_  = false;$/;"	m	class:PDE_fokkerplanck_1d_4p3
+do_poisson_solve_	pde/pde_fokkerplanck1_4p4.hpp	/^  static bool constexpr do_poisson_solve_  = false;$/;"	m	class:PDE_fokkerplanck_1d_4p4
+do_poisson_solve_	pde/pde_fokkerplanck1_4p5.hpp	/^  static bool constexpr do_poisson_solve_  = false;$/;"	m	class:PDE_fokkerplanck_1d_4p5
+do_poisson_solve_	pde/pde_fokkerplanck1_pitch_C.hpp	/^  static bool constexpr do_poisson_solve_  = false;$/;"	m	class:PDE_fokkerplanck_1d_pitch_C
+do_poisson_solve_	pde/pde_fokkerplanck1_pitch_E.hpp	/^  static bool constexpr do_poisson_solve_  = false;$/;"	m	class:PDE_fokkerplanck_1d_pitch_E
+do_poisson_solve_	pde/pde_fokkerplanck2_complete.hpp	/^  static bool constexpr do_poisson_solve_  = false;$/;"	m	class:PDE_fokkerplanck_2d_complete
+do_trans_	batch.hpp	/^  bool const do_trans_; \/\/ transpose passed into BLAS call for matrices$/;"	m	class:batch
+domain_max	pde/pde_base.hpp	/^  P const domain_max;$/;"	m	class:dimension
+domain_max	pde/pde_diffusion2.hpp	/^  static int constexpr domain_max          = 1;$/;"	m	class:PDE_diffusion_2d
+domain_min	pde/pde_base.hpp	/^  P const domain_min;$/;"	m	class:dimension
+domain_min	pde/pde_diffusion2.hpp	/^  static int constexpr domain_min          = 0;$/;"	m	class:PDE_diffusion_2d
+dot	lib_dispatch.cpp	/^P dot(int *n, P *x, int *incx, P *y, int *incy, resource const resrc)$/;"	f	namespace:lib_dispatch
+downwind	pde/pde_base.hpp	/^  downwind      = -1,$/;"	e	enum:flux_type
+dt	program_options.hpp	/^  double dt = NO_USER_VALUE_FP;$/;"	m	class:parser
+dt_	pde/pde_base.hpp	/^  P dt_;$/;"	m	class:PDE
+dump_to_octave	tensors.hpp	/^void fk::matrix<P, mem, resrc>::dump_to_octave(char const *filename) const$/;"	f	class:fk::matrix
+dump_to_octave	tensors.hpp	/^void fk::vector<P, mem, resrc>::dump_to_octave(char const *filename) const$/;"	f	class:fk::vector
+e1_g1	pde/pde_fokkerplanck2_complete.hpp	/^  static P e1_g1(P const x, P const time = 0)$/;"	f	class:PDE_fokkerplanck_2d_complete
+e1_g2	pde/pde_fokkerplanck2_complete.hpp	/^  static P e1_g2(P const x, P const time = 0)$/;"	f	class:PDE_fokkerplanck_2d_complete
+e1_g3	pde/pde_fokkerplanck2_complete.hpp	/^  static P e1_g3(P const x, P const time = 0)$/;"	f	class:PDE_fokkerplanck_2d_complete
+e1_pterm1	pde/pde_fokkerplanck2_complete.hpp	/^  inline static partial_term<P> const e1_pterm1 =$/;"	m	class:PDE_fokkerplanck_2d_complete
+e1_pterm2	pde/pde_fokkerplanck2_complete.hpp	/^  inline static partial_term<P> const e1_pterm2 =$/;"	m	class:PDE_fokkerplanck_2d_complete
+e1_pterm3	pde/pde_fokkerplanck2_complete.hpp	/^  inline static partial_term<P> const e1_pterm3 =$/;"	m	class:PDE_fokkerplanck_2d_complete
+e1_term_p	pde/pde_fokkerplanck2_complete.hpp	/^  inline static term<P> const e1_term_p =$/;"	m	class:PDE_fokkerplanck_2d_complete
+e1_term_z	pde/pde_fokkerplanck2_complete.hpp	/^  inline static term<P> const e1_term_z =$/;"	m	class:PDE_fokkerplanck_2d_complete
+e2_g1	pde/pde_fokkerplanck2_complete.hpp	/^  static P e2_g1(P const x, P const time = 0)$/;"	f	class:PDE_fokkerplanck_2d_complete
+e2_g2	pde/pde_fokkerplanck2_complete.hpp	/^  static P e2_g2(P const x, P const time = 0)$/;"	f	class:PDE_fokkerplanck_2d_complete
+e2_pterm1	pde/pde_fokkerplanck2_complete.hpp	/^  inline static partial_term<P> const e2_pterm1 =$/;"	m	class:PDE_fokkerplanck_2d_complete
+e2_pterm2	pde/pde_fokkerplanck2_complete.hpp	/^  inline static partial_term<P> const e2_pterm2 =$/;"	m	class:PDE_fokkerplanck_2d_complete
+e2_term_p	pde/pde_fokkerplanck2_complete.hpp	/^  inline static term<P> const e2_term_p =$/;"	m	class:PDE_fokkerplanck_2d_complete
+e2_term_z	pde/pde_fokkerplanck2_complete.hpp	/^  inline static term<P> const e2_term_z =$/;"	m	class:PDE_fokkerplanck_2d_complete
+element_segment_size	pde/pde_base.hpp	/^auto const element_segment_size = [](auto const &pde) {$/;"	v
+element_subgrid	distribution.hpp	/^  element_subgrid(element_subgrid const &&e)$/;"	f	class:element_subgrid
+element_subgrid	distribution.hpp	/^  element_subgrid(element_subgrid const &e)$/;"	f	class:element_subgrid
+element_subgrid	distribution.hpp	/^  element_subgrid(int const row_start, int const row_stop, int const col_start,$/;"	f	class:element_subgrid
+element_subgrid	distribution.hpp	/^class element_subgrid$/;"	c
+element_work	kronmult.cpp	/^  P *element_work;$/;"	m	class:kronmult::kronmult_workspace	file:
+element_x	kronmult.cpp	/^  P *element_x;$/;"	m	class:kronmult::kronmult_workspace	file:
+elements	elements.cpp	/^namespace elements$/;"	n	file:
+elements	elements.hpp	/^namespace elements$/;"	n
+end	batch.hpp	/^  const_iterator end() const { return batch_ + num_entries(); }$/;"	f	class:batch
+end	batch.hpp	/^  iterator end() { return batch_ + num_entries(); }$/;"	f	class:batch
+end	tensors.hpp	/^  const_iterator end() const { return data() + size(); }$/;"	f	class:fk::vector
+end	tensors.hpp	/^  const_iterator end() const$/;"	f	class:fk::matrix
+end	tensors.hpp	/^  iterator end()$/;"	f	class:fk::matrix
+end	tensors.hpp	/^  iterator end()$/;"	f	class:fk::vector
+exact_scalar_func	pde/pde_diffusion2.hpp	/^  static P exact_scalar_func(P const t)$/;"	f	class:PDE_diffusion_2d
+exact_scalar_func_	pde/pde_continuity1.hpp	/^  inline static scalar_func<P> const exact_scalar_func_ = exact_time;$/;"	m	class:PDE_continuity_1d
+exact_scalar_func_	pde/pde_continuity2.hpp	/^  inline static scalar_func<P> const exact_scalar_func_ = exact_time;$/;"	m	class:PDE_continuity_2d
+exact_scalar_func_	pde/pde_continuity3.hpp	/^  inline static scalar_func<P> const exact_scalar_func_ = exact_time;$/;"	m	class:PDE_continuity_3d
+exact_scalar_func_	pde/pde_continuity6.hpp	/^  inline static scalar_func<P> const exact_scalar_func_ = exact_time;$/;"	m	class:PDE_continuity_6d
+exact_scalar_func_	pde/pde_diffusion1.hpp	/^  inline static scalar_func<P> const exact_scalar_func_ = source_0_t;$/;"	m	class:PDE_diffusion_1d
+exact_scalar_func_	pde/pde_diffusion2.hpp	/^  inline static scalar_func<P> const exact_scalar_func_ = exact_scalar_func;$/;"	m	class:PDE_diffusion_2d
+exact_scalar_func_	pde/pde_fokkerplanck1_4p3.hpp	/^  inline static scalar_func<P> const exact_scalar_func_ =$/;"	m	class:PDE_fokkerplanck_1d_4p3
+exact_scalar_func_	pde/pde_fokkerplanck1_4p4.hpp	/^  inline static scalar_func<P> const exact_scalar_func_ =$/;"	m	class:PDE_fokkerplanck_1d_4p4
+exact_scalar_func_	pde/pde_fokkerplanck1_4p5.hpp	/^  inline static scalar_func<P> const exact_scalar_func_ =$/;"	m	class:PDE_fokkerplanck_1d_4p5
+exact_scalar_func_	pde/pde_fokkerplanck1_pitch_C.hpp	/^  inline static scalar_func<P> const exact_scalar_func_ =$/;"	m	class:PDE_fokkerplanck_1d_pitch_C
+exact_scalar_func_	pde/pde_fokkerplanck1_pitch_E.hpp	/^  inline static scalar_func<P> const exact_scalar_func_ =$/;"	m	class:PDE_fokkerplanck_1d_pitch_E
+exact_scalar_func_	pde/pde_fokkerplanck2_complete.hpp	/^  inline static scalar_func<P> const exact_scalar_func_               = {};$/;"	m	class:PDE_fokkerplanck_2d_complete
+exact_solution	pde/pde_diffusion2.hpp	/^  static fk::vector<P> exact_solution(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_diffusion_2d
+exact_solution_0	pde/pde_diffusion1.hpp	/^  static fk::vector<P> exact_solution_0(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_diffusion_1d
+exact_solution_dim0	pde/pde_continuity1.hpp	/^  static fk::vector<P> exact_solution_dim0(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_1d
+exact_solution_dim0	pde/pde_continuity2.hpp	/^  static fk::vector<P> exact_solution_dim0(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_2d
+exact_solution_dim0	pde/pde_continuity3.hpp	/^  static fk::vector<P> exact_solution_dim0(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_3d
+exact_solution_dim1	pde/pde_continuity2.hpp	/^  static fk::vector<P> exact_solution_dim1(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_2d
+exact_solution_dim1	pde/pde_continuity3.hpp	/^  static fk::vector<P> exact_solution_dim1(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_3d
+exact_solution_dim2	pde/pde_continuity3.hpp	/^  static fk::vector<P> exact_solution_dim2(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_3d
+exact_solution_vx	pde/pde_continuity6.hpp	/^  static fk::vector<P> exact_solution_vx(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+exact_solution_vy	pde/pde_continuity6.hpp	/^  static fk::vector<P> exact_solution_vy(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+exact_solution_vz	pde/pde_continuity6.hpp	/^  static fk::vector<P> exact_solution_vz(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+exact_solution_x	pde/pde_continuity6.hpp	/^  static fk::vector<P> exact_solution_x(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+exact_solution_y	pde/pde_continuity6.hpp	/^  static fk::vector<P> exact_solution_y(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+exact_solution_z	pde/pde_continuity6.hpp	/^  static fk::vector<P> exact_solution_z(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+exact_time	pde/pde_base.hpp	/^  scalar_func<P> const exact_time;$/;"	m	class:PDE
+exact_time	pde/pde_continuity1.hpp	/^  static P exact_time(P const time) { return sin(time); }$/;"	f	class:PDE_continuity_1d
+exact_time	pde/pde_continuity2.hpp	/^  static P exact_time(P const time) { return sin(2.0 * time); }$/;"	f	class:PDE_continuity_2d
+exact_time	pde/pde_continuity3.hpp	/^  static P exact_time(P const time) { return sin(2.0 * time); }$/;"	f	class:PDE_continuity_3d
+exact_time	pde/pde_continuity6.hpp	/^  static P exact_time(P const time) { return sin(targ * time); }$/;"	f	class:PDE_continuity_6d
+exact_time	pde/pde_diffusion1.hpp	/^  static P exact_time(P const time) { return source_0_t(time); }$/;"	f	class:PDE_diffusion_1d
+exact_time	pde/pde_diffusion2.hpp	/^  static P exact_time(P const time)$/;"	f	class:PDE_diffusion_2d
+exact_vector_funcs	pde/pde_base.hpp	/^  std::vector<vector_func<P>> const exact_vector_funcs;$/;"	m	class:PDE::std
+exact_vector_funcs_	pde/pde_continuity1.hpp	/^  inline static std::vector<vector_func<P>> const exact_vector_funcs_ = {$/;"	m	class:PDE_continuity_1d::std
+exact_vector_funcs_	pde/pde_continuity2.hpp	/^  inline static std::vector<vector_func<P>> const exact_vector_funcs_ = {$/;"	m	class:PDE_continuity_2d::std
+exact_vector_funcs_	pde/pde_continuity3.hpp	/^  inline static std::vector<vector_func<P>> const exact_vector_funcs_ = {$/;"	m	class:PDE_continuity_3d::std
+exact_vector_funcs_	pde/pde_continuity6.hpp	/^  inline static std::vector<vector_func<P>> const exact_vector_funcs_ = {$/;"	m	class:PDE_continuity_6d::std
+exact_vector_funcs_	pde/pde_diffusion1.hpp	/^  inline static std::vector<vector_func<P>> const exact_vector_funcs_ = {$/;"	m	class:PDE_diffusion_1d::std
+exact_vector_funcs_	pde/pde_diffusion2.hpp	/^  inline static std::vector<vector_func<P>> const exact_vector_funcs_ = {$/;"	m	class:PDE_diffusion_2d::std
+exact_vector_funcs_	pde/pde_fokkerplanck1_4p3.hpp	/^  inline static std::vector<vector_func<P>> const exact_vector_funcs_ = {$/;"	m	class:PDE_fokkerplanck_1d_4p3::std
+exact_vector_funcs_	pde/pde_fokkerplanck1_4p4.hpp	/^  inline static std::vector<vector_func<P>> const exact_vector_funcs_ = {$/;"	m	class:PDE_fokkerplanck_1d_4p4::std
+exact_vector_funcs_	pde/pde_fokkerplanck1_4p5.hpp	/^  inline static std::vector<vector_func<P>> const exact_vector_funcs_ = {$/;"	m	class:PDE_fokkerplanck_1d_4p5::std
+exact_vector_funcs_	pde/pde_fokkerplanck1_pitch_C.hpp	/^  inline static std::vector<vector_func<P>> const exact_vector_funcs_ = {$/;"	m	class:PDE_fokkerplanck_1d_pitch_C::std
+exact_vector_funcs_	pde/pde_fokkerplanck1_pitch_E.hpp	/^  inline static std::vector<vector_func<P>> const exact_vector_funcs_ = {$/;"	m	class:PDE_fokkerplanck_1d_pitch_E::std
+exact_vector_funcs_	pde/pde_fokkerplanck2_complete.hpp	/^  inline static std::vector<vector_func<P>> const exact_vector_funcs_ = {};$/;"	m	class:PDE_fokkerplanck_2d_complete::std
+exchange_results	distribution.cpp	/^void exchange_results(fk::vector<P> const &source, fk::vector<P> &dest,$/;"	f
+execute	batch.cpp	/^void batch_chain<P, resrc, method>::execute() const$/;"	f	class:batch_chain
+execute	kronmult.cpp	/^execute(PDE<P> const &pde, elements::table const &elem_table,$/;"	f	namespace:kronmult
+exp	time_advance.hpp	/^  exp \/\/ explicit is reserved keyword$/;"	e	enum:time_advance::method
+expect	tools.hpp	33;"	d
+explicit_advance	time_advance.cpp	/^explicit_advance(PDE<P> const &pde,$/;"	f	namespace:time_advance
+extract	tensors.hpp	/^fk::vector<P, mem, resrc>::extract(int const start, int const stop) const$/;"	f	class:fk::vector
+extract_submatrix	tensors.hpp	/^fk::matrix<P, mem, resrc>::extract_submatrix(int const row_idx,$/;"	f	class:fk::matrix
+eye	matlab_utilities.cpp	/^fk::matrix<P> eye(int const M)$/;"	f
+eye	matlab_utilities.cpp	/^fk::matrix<P> eye(int const M, int const N)$/;"	f
+f0	pde/pde_continuity6.hpp	/^  static fk::vector<P> f0(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+f0	pde/pde_fokkerplanck1_4p3.hpp	/^  static P f0(P const z)$/;"	f	class:PDE_fokkerplanck_1d_4p3
+f0	pde/pde_fokkerplanck1_4p4.hpp	/^  static P f0(P const z)$/;"	f	class:PDE_fokkerplanck_1d_4p4
+f0	pde/pde_fokkerplanck1_4p5.hpp	/^  static P f0(P const z) { return exp(-pow(z, 2) \/ pow(sig, 2)); }$/;"	f	class:PDE_fokkerplanck_1d_4p5
+f0_case0	pde/pde_fokkerplanck1_pitch_E.hpp	/^  static P f0_case0(P const z) { return z * 0. + 1; }$/;"	f	class:PDE_fokkerplanck_1d_pitch_E
+f0_case1	pde/pde_fokkerplanck1_pitch_E.hpp	/^  static P f0_case1(P const z) { return exp(-pow(z, 2) \/ pow(0.1, 2)); }$/;"	f	class:PDE_fokkerplanck_1d_pitch_E
+f0_vec	pde/pde_fokkerplanck1_4p4.hpp	/^  static fk::vector<P> f0_vec(fk::vector<P> const z, P const t = 0)$/;"	f	class:PDE_fokkerplanck_1d_4p4
+f0_vec	pde/pde_fokkerplanck1_4p5.hpp	/^  static fk::vector<P> f0_vec(fk::vector<P> const z, P const t = 0)$/;"	f	class:PDE_fokkerplanck_1d_4p5
+filter_elements	adapt.hpp	/^  filter_elements(F const condition, fk::vector<P> const &x)$/;"	f	class:adapt::distributed_grid
+finalize_distribution	distribution.cpp	/^void finalize_distribution()$/;"	f
+find	matlab_utilities.hpp	/^fk::matrix<int> find(fk::matrix<P> const matrix, Func pred)$/;"	f
+find	matlab_utilities.hpp	/^fk::vector<int> find(fk::vector<P> const vect, Func pred)$/;"	f
+find_column_dependencies	distribution.cpp	/^find_column_dependencies(std::vector<int> const &row_boundaries,$/;"	f	file:
+fk	tensors.hpp	/^namespace fk$/;"	n
+flux	pde/pde_base.hpp	/^  flux_type const flux;$/;"	m	class:partial_term
+flux_type	pde/pde_base.hpp	/^enum class flux_type$/;"	g
+fm	fast_math.hpp	/^namespace fm$/;"	n
+fokkerplanck_1d_4p3	program_options.hpp	/^  fokkerplanck_1d_4p3,$/;"	e	enum:PDE_opts
+fokkerplanck_1d_4p4	program_options.hpp	/^  fokkerplanck_1d_4p4,$/;"	e	enum:PDE_opts
+fokkerplanck_1d_4p5	program_options.hpp	/^  fokkerplanck_1d_4p5,$/;"	e	enum:PDE_opts
+fokkerplanck_1d_pitch_C	program_options.hpp	/^  fokkerplanck_1d_pitch_C,$/;"	e	enum:PDE_opts
+fokkerplanck_1d_pitch_E_case1	program_options.hpp	/^  fokkerplanck_1d_pitch_E_case1,$/;"	e	enum:PDE_opts
+fokkerplanck_1d_pitch_E_case2	program_options.hpp	/^  fokkerplanck_1d_pitch_E_case2,$/;"	e	enum:PDE_opts
+fokkerplanck_2d_complete	program_options.hpp	/^  fokkerplanck_2d_complete,$/;"	e	enum:PDE_opts
+forward_transform	transformations.hpp	/^fk::vector<P> forward_transform($/;"	f
+frobenius	fast_math.hpp	/^P frobenius(fk::matrix<P, mem, resrc> const &m)$/;"	f	namespace:fm
+frobenius	fast_math.hpp	/^P frobenius(fk::matrix<P, mem_type::owner, resrc> const &m)$/;"	f	namespace:fm
+gI	pde/pde_fokkerplanck2_complete.hpp	/^  static P gI(P const x, P const time = 0)$/;"	f	class:PDE_fokkerplanck_2d_complete
+g_func	pde/pde_base.hpp	/^  g_func_type const g_func;$/;"	m	class:partial_term
+g_func_0	pde/pde_continuity1.hpp	/^  static P g_func_0(P const x, P const time)$/;"	f	class:PDE_continuity_1d
+g_func_0	pde/pde_fokkerplanck1_4p4.hpp	/^  static P g_func_0(P const x, P const time)$/;"	f	class:PDE_fokkerplanck_1d_4p4
+g_func_0	pde/pde_fokkerplanck1_4p5.hpp	/^  static P g_func_0(P const x, P const time)$/;"	f	class:PDE_fokkerplanck_1d_4p5
+g_func_0	pde/pde_fokkerplanck1_pitch_C.hpp	/^  static P g_func_0(P const x, P const time)$/;"	f	class:PDE_fokkerplanck_1d_pitch_C
+g_func_0	pde/pde_fokkerplanck1_pitch_E.hpp	/^  static P g_func_0(P const x, P const time)$/;"	f	class:PDE_fokkerplanck_1d_pitch_E
+g_func_1	pde/pde_fokkerplanck1_4p3.hpp	/^  static P g_func_1(P const x, P const time)$/;"	f	class:PDE_fokkerplanck_1d_4p3
+g_func_1	pde/pde_fokkerplanck1_pitch_C.hpp	/^  static P g_func_1(P const x, P const time)$/;"	f	class:PDE_fokkerplanck_1d_pitch_C
+g_func_1	pde/pde_fokkerplanck1_pitch_E.hpp	/^  static P g_func_1(P const x, P const time)$/;"	f	class:PDE_fokkerplanck_1d_pitch_E
+g_func_2	pde/pde_fokkerplanck1_pitch_C.hpp	/^  static P g_func_2(P const x, P const time)$/;"	f	class:PDE_fokkerplanck_1d_pitch_C
+g_func_2	pde/pde_fokkerplanck1_pitch_E.hpp	/^  static P g_func_2(P const x, P const time)$/;"	f	class:PDE_fokkerplanck_1d_pitch_E
+g_func_default	pde/pde_base.hpp	/^  static P g_func_default(P const x, P const time)$/;"	f	class:term
+g_func_identity	pde/pde_continuity2.hpp	/^  static P g_func_identity(P const x, P const time)$/;"	f	class:PDE_continuity_2d
+g_func_identity	pde/pde_continuity3.hpp	/^  static P g_func_identity(P const x, P const time)$/;"	f	class:PDE_continuity_3d
+g_func_identity	pde/pde_continuity6.hpp	/^  static P g_func_identity(P const x, P const time)$/;"	f	class:PDE_continuity_6d
+g_func_t0_d0	pde/pde_continuity2.hpp	/^  static P g_func_t0_d0(P const x, P const time)$/;"	f	class:PDE_continuity_2d
+g_func_t0_d0	pde/pde_continuity3.hpp	/^  static P g_func_t0_d0(P const x, P const time)$/;"	f	class:PDE_continuity_3d
+g_func_t1_d1	pde/pde_continuity2.hpp	/^  static P g_func_t1_d1(P const x, P const time)$/;"	f	class:PDE_continuity_2d
+g_func_t1_d1	pde/pde_continuity3.hpp	/^  static P g_func_t1_d1(P const x, P const time)$/;"	f	class:PDE_continuity_3d
+g_func_t1_z	pde/pde_fokkerplanck1_4p4.hpp	/^  static P g_func_t1_z(P const x, P const time)$/;"	f	class:PDE_fokkerplanck_1d_4p4
+g_func_t1_z	pde/pde_fokkerplanck1_4p5.hpp	/^  static P g_func_t1_z(P const x, P const time)$/;"	f	class:PDE_fokkerplanck_1d_4p5
+g_func_t2_d2	pde/pde_continuity3.hpp	/^  static P g_func_t2_d2(P const x, P const time)$/;"	f	class:PDE_continuity_3d
+g_func_t2_z1	pde/pde_fokkerplanck1_4p4.hpp	/^  static P g_func_t2_z1(P const x, P const time)$/;"	f	class:PDE_fokkerplanck_1d_4p4
+g_func_t2_z1	pde/pde_fokkerplanck1_4p5.hpp	/^  static P g_func_t2_z1(P const x, P const time)$/;"	f	class:PDE_fokkerplanck_1d_4p5
+g_func_t2_z2	pde/pde_fokkerplanck1_4p4.hpp	/^  static P g_func_t2_z2(P const x, P const time)$/;"	f	class:PDE_fokkerplanck_1d_4p4
+g_func_t2_z2	pde/pde_fokkerplanck1_4p5.hpp	/^  static P g_func_t2_z2(P const x, P const time)$/;"	f	class:PDE_fokkerplanck_1d_4p5
+g_func_t3_z	pde/pde_fokkerplanck1_4p5.hpp	/^  static P g_func_t3_z(P const x, P const time)$/;"	f	class:PDE_fokkerplanck_1d_4p5
+gamma	pde/pde_fokkerplanck2_complete.hpp	/^  static auto constexpr gamma = [](P p) { return sqrt(1 + pow(delta * p, 2)); };$/;"	m	class:PDE_fokkerplanck_2d_complete
+gather_errors	distribution.cpp	/^gather_errors(P const root_mean_squared, P const relative)$/;"	f
+gather_results	distribution.cpp	/^gather_results(fk::vector<P> const &my_results, distribution_plan const &plan,$/;"	f
+gemm	fast_math.hpp	/^gemm(fk::matrix<P, amem, resrc> const &A, fk::matrix<P, bmem, resrc> const &B,$/;"	f	class:fm::fk
+gemm	lib_dispatch.cpp	/^void gemm(char const *transa, char const *transb, int *m, int *n, int *k,$/;"	f	namespace:lib_dispatch
+gemv	fast_math.hpp	/^gemv(fk::matrix<P, amem, resrc> const &A, fk::vector<P, xmem, resrc> const &x,$/;"	f	class:fm::fk
+gemv	lib_dispatch.cpp	/^void gemv(char const *trans, int *m, int *n, P *alpha, P *A, int *lda, P *x,$/;"	f	namespace:lib_dispatch
+gen_realspace_transform	transformations.cpp	/^std::vector<fk::matrix<P>> gen_realspace_transform($/;"	f
+generate_all_coefficients	coefficients.cpp	/^void generate_all_coefficients($/;"	f
+generate_coefficients	coefficients.cpp	/^fk::matrix<P> generate_coefficients($/;"	f
+generate_messages	distribution.cpp	/^generate_messages(distribution_plan const &plan)$/;"	f	class:std
+generate_messages_remap	distribution.cpp	/^generate_messages_remap(distribution_plan const &old_plan,$/;"	f
+generate_messages_remap_test	distribution_tests.cpp	/^void generate_messages_remap_test($/;"	f
+generate_messages_test	distribution_tests.cpp	/^void generate_messages_test(int const num_ranks, elements::table const &table)$/;"	f
+generate_multi_wavelets	basis.cpp	/^std::array<fk::matrix<P>, 6> generate_multi_wavelets(int const degree)$/;"	f
+generate_partial_bcs	boundary_conditions.cpp	/^std::vector<fk::vector<P>> boundary_conditions::generate_partial_bcs($/;"	f	class:boundary_conditions
+generate_scaled_bc	boundary_conditions.cpp	/^fk::vector<P> boundary_conditions::generate_scaled_bc($/;"	f	class:boundary_conditions
+gesv	fast_math.hpp	/^void gesv(fk::matrix<P, amem> const &A, fk::vector<P, bmem> &B,$/;"	f	namespace:fm
+gesv	lib_dispatch.cpp	/^void gesv(int *n, int *nrhs, P *A, int *lda, int *ipiv, P *b, int *ldb,$/;"	f	namespace:lib_dispatch
+get_1d_index	device/kronmult_cuda.cpp	/^inline int get_1d_index(int const level, int const cell)$/;"	f
+get_1d_index	elements.cpp	/^int64_t get_1d_index(int const level, int const cell)$/;"	f	namespace:elements
+get_MB	distribution.hpp	/^double get_MB(int64_t const num_elems)$/;"	f
+get_active_table	elements.hpp	/^  get_active_table() const$/;"	f	class:elements::table::fk
+get_adapt_thresh	program_options.cpp	/^double parser::get_adapt_thresh() const { return adapt_threshold; }$/;"	f	class:parser
+get_blocks	basis.hpp	/^  std::vector<fk::matrix<P, mem_type::owner, resrc>> const &get_blocks() const$/;"	f	class:basis::wavelet_transform::std
+get_cell_index_set	elements.cpp	/^fk::matrix<int> table::get_cell_index_set(fk::vector<int> const &level_tuple)$/;"	f	class:elements::table
+get_cfl	program_options.cpp	/^double parser::get_cfl() const { return cfl; }$/;"	f	class:parser
+get_child_elements	elements.cpp	/^table::get_child_elements(int64_t const index, options const &opts) const$/;"	f	class:elements::table
+get_coefficients	pde/pde_base.hpp	/^  fk::matrix<P> const &get_coefficients() const { return coefficients_; }$/;"	f	class:partial_term::fk
+get_coefficients	pde/pde_base.hpp	/^  get_coefficients() const$/;"	f	class:term::fk
+get_coefficients	pde/pde_base.hpp	/^  get_coefficients(int const term, int const dim) const$/;"	f	class:PDE::fk
+get_coords	elements.hpp	/^  fk::vector<int> const &get_coords(int64_t const index) const$/;"	f	class:elements::table::fk
+get_data	pde/pde_base.hpp	/^  fk::vector<P> get_data() const & { return data_; };$/;"	f	class:term
+get_degree	pde/pde_base.hpp	/^  int get_degree() const { return degree_; }$/;"	f	class:dimension
+get_degree	program_options.cpp	/^int parser::get_degree() const { return degree; }$/;"	f	class:parser
+get_dimensions	pde/pde_base.hpp	/^  std::vector<dimension<P>> const &get_dimensions() const$/;"	f	class:PDE::std
+get_distrib_plan	adapt.hpp	/^  distribution_plan const &get_distrib_plan() const { return plan_; }$/;"	f	class:adapt::distributed_grid
+get_dt	pde/pde_base.hpp	/^  P get_dt() const { return dt_; };$/;"	f	class:PDE
+get_dt	program_options.cpp	/^double parser::get_dt() const { return dt; }$/;"	f	class:parser
+get_dt_	pde/pde_continuity1.hpp	/^  static P get_dt_(dimension<P> const &dim)$/;"	f	class:PDE_continuity_1d
+get_dt_	pde/pde_continuity2.hpp	/^  static P get_dt_(dimension<P> const &dim)$/;"	f	class:PDE_continuity_2d
+get_dt_	pde/pde_continuity3.hpp	/^  static P get_dt_(dimension<P> const &dim)$/;"	f	class:PDE_continuity_3d
+get_dt_	pde/pde_continuity6.hpp	/^  static P get_dt_(dimension<P> const &dim)$/;"	f	class:PDE_continuity_6d
+get_dt_	pde/pde_diffusion1.hpp	/^  static P get_dt_(dimension<P> const &dim)$/;"	f	class:PDE_diffusion_1d
+get_dt_	pde/pde_diffusion2.hpp	/^  static P get_dt_(dimension<P> const &dim)$/;"	f	class:PDE_diffusion_2d
+get_dt_	pde/pde_fokkerplanck1_4p3.hpp	/^  static P get_dt_(dimension<P> const &dim)$/;"	f	class:PDE_fokkerplanck_1d_4p3
+get_dt_	pde/pde_fokkerplanck1_4p4.hpp	/^  static P get_dt_(dimension<P> const &dim)$/;"	f	class:PDE_fokkerplanck_1d_4p4
+get_dt_	pde/pde_fokkerplanck1_4p5.hpp	/^  static P get_dt_(dimension<P> const &dim)$/;"	f	class:PDE_fokkerplanck_1d_4p5
+get_dt_	pde/pde_fokkerplanck1_pitch_C.hpp	/^  static P get_dt_(dimension<P> const &dim)$/;"	f	class:PDE_fokkerplanck_1d_pitch_C
+get_dt_	pde/pde_fokkerplanck1_pitch_E.hpp	/^  static P get_dt_(dimension<P> const &dim)$/;"	f	class:PDE_fokkerplanck_1d_pitch_E
+get_dt_	pde/pde_fokkerplanck2_complete.hpp	/^  static P get_dt_(dimension<P> const &dim)$/;"	f	class:PDE_fokkerplanck_2d_complete
+get_element_id	elements.hpp	/^  int64_t get_element_id(int64_t const index) const$/;"	f	class:elements::table
+get_element_size_MB	kronmult.cpp	/^inline double get_element_size_MB(PDE<P> const &pde)$/;"	f	namespace:kronmult
+get_element_work	kronmult.cpp	/^  P *get_element_work() const { return element_work; }$/;"	f	class:kronmult::kronmult_workspace
+get_element_x	kronmult.cpp	/^  P *get_element_x() const { return element_x; }$/;"	f	class:kronmult::kronmult_workspace
+get_equal	permutations.cpp	/^get_equal(int const num_dims, int const limit, bool const order_by_n)$/;"	f	namespace:permutations
+get_equal_multi	permutations.cpp	/^fk::matrix<int> get_equal_multi(fk::vector<int> const &levels,$/;"	f	namespace:permutations
+get_flux_scale	pde/pde_base.hpp	/^  P get_flux_scale() const { return static_cast<P>((double)flux); };$/;"	f	class:partial_term
+get_global_comm	distribution.cpp	/^  MPI_Comm get_global_comm() const { return global_comm; }$/;"	f	struct:distribution_handler
+get_global_max	distribution.cpp	/^P get_global_max(P const my_max, distribution_plan const &plan)$/;"	f
+get_handle	lib_dispatch.cpp	/^  cublasHandle_t const &get_handle() const { return handle; }$/;"	f	struct:device_handler
+get_indices	device/kronmult_cuda.cpp	/^void get_indices(int const *const coords, int indices[], int const degree,$/;"	f
+get_initial_condition	adapt.cpp	/^fk::vector<P> distributed_grid<P>::get_initial_condition($/;"	f	class:adapt::distributed_grid
+get_input_ptrs	kronmult.cpp	/^  P **get_input_ptrs() const { return input_ptrs; }$/;"	f	class:kronmult::kronmult_workspace
+get_leq_max_indices	permutations.cpp	/^fk::matrix<int> get_leq_max_indices(list_set const &lists, int const num_dims,$/;"	f	namespace:permutations
+get_lequal	permutations.cpp	/^get_lequal(int const num_dims, int const limit, bool const order_by_n)$/;"	f	namespace:permutations
+get_lequal_multi	permutations.cpp	/^fk::matrix<int> get_lequal_multi(fk::vector<int> const &levels,$/;"	f	namespace:permutations
+get_level	pde/pde_base.hpp	/^  int get_level() const { return level_; }$/;"	f	class:dimension
+get_level_cell	elements.cpp	/^std::array<int64_t, 2> get_level_cell(int64_t const single_dim_id)$/;"	f	namespace:elements
+get_level_string	time_advance_tests.cpp	/^static std::string get_level_string(fk::vector<int> const &levels)$/;"	f	file:
+get_levels	adapt.cpp	/^get_levels(elements::table const &adapted_table, int const num_dims)$/;"	f	namespace:adapt
+get_list	batch.cpp	/^P **batch<P, resrc>::get_list() const$/;"	f	class:batch
+get_local_col_map	distribution.hpp	/^  index_mapper get_local_col_map() const$/;"	f	class:element_subgrid
+get_local_rank	distribution.cpp	/^int get_local_rank()$/;"	f
+get_local_row_map	distribution.hpp	/^  index_mapper get_local_row_map() const$/;"	f	class:element_subgrid
+get_max	permutations.cpp	/^get_max(int const num_dims, int const limit, bool const last_index_decreasing)$/;"	f	namespace:permutations
+get_max_level	program_options.cpp	/^int parser::get_max_level() const { return max_level; }$/;"	f	class:parser
+get_max_multi	permutations.cpp	/^fk::matrix<int> get_max_multi(fk::vector<int> const &levels, int const num_dims,$/;"	f	namespace:permutations
+get_my_rank	adapt_tests.cpp	/^  int get_my_rank() const { return my_rank; }$/;"	f	struct:distribution_test_init
+get_my_rank	distribution_tests.cpp	/^  int get_my_rank() const { return my_rank; }$/;"	f	struct:distribution_test_init
+get_num_ranks	adapt_tests.cpp	/^  int get_num_ranks() const { return num_ranks; }$/;"	f	struct:distribution_test_init
+get_num_ranks	distribution.cpp	/^int get_num_ranks()$/;"	f
+get_num_ranks	distribution_tests.cpp	/^  int get_num_ranks() const { return num_ranks; }$/;"	f	struct:distribution_test_init
+get_num_subgrid_cols	distribution.hpp	/^inline int get_num_subgrid_cols(int const num_ranks)$/;"	f
+get_num_subgrids	kronmult.cpp	/^get_num_subgrids(PDE<P> const &pde, elements::table const &elem_table,$/;"	f	namespace:kronmult
+get_num_views	tensors.hpp	/^int fk::matrix<P, mem, resrc>::get_num_views() const$/;"	f	class:fk::matrix
+get_num_views	tensors.hpp	/^int fk::vector<P, mem, resrc>::get_num_views() const$/;"	f	class:fk::vector
+get_operator_ptrs	kronmult.cpp	/^  P **get_operator_ptrs() const { return operator_ptrs; }$/;"	f	class:kronmult::kronmult_workspace
+get_output_ptrs	kronmult.cpp	/^  P **get_output_ptrs() const { return output_ptrs; }$/;"	f	class:kronmult::kronmult_workspace
+get_partial_terms	pde/pde_base.hpp	/^  std::vector<partial_term<P>> const &get_partial_terms() const$/;"	f	class:term::std
+get_pde_string	program_options.cpp	/^std::string parser::get_pde_string() const { return pde_str; }$/;"	f	class:parser
+get_plan	distribution.cpp	/^distribution_plan get_plan(int const num_ranks, elements::table const &table)$/;"	f
+get_rank	distribution.cpp	/^int get_rank()$/;"	f
+get_realspace_output_freq	program_options.cpp	/^int parser::get_realspace_output_freq() const { return realspace_output_freq; }$/;"	f	class:parser
+get_ref_count	tensors.hpp	/^  get_ref_count(access_badge<matrix<P, mem_type::view, resrc>> const)$/;"	f	class:fk::vector
+get_ref_count	tensors.hpp	/^  get_ref_count(access_badge<vector<P, mem_type::view, resrc>> const)$/;"	f	class:fk::matrix
+get_ref_count	tensors.hpp	/^  std::shared_ptr<int> get_ref_count($/;"	f	class:fk::matrix
+get_ref_count	tensors.hpp	/^  std::shared_ptr<int> get_ref_count($/;"	f	class:fk::vector
+get_selected_pde	program_options.cpp	/^PDE_opts parser::get_selected_pde() const { return pde_choice; }$/;"	f	class:parser
+get_selected_solver	program_options.cpp	/^solve_opts parser::get_selected_solver() const { return solver; }$/;"	f	class:parser
+get_solver_string	program_options.cpp	/^std::string parser::get_solver_string() const { return solver_str; }$/;"	f	class:parser
+get_sources	time_advance.cpp	/^get_sources(PDE<P> const &pde, adapt::distributed_grid<P> const &grid,$/;"	f	namespace:time_advance
+get_starting_levels	program_options.cpp	/^fk::vector<int> parser::get_starting_levels() const { return starting_levels; }$/;"	f	class:parser
+get_stride	batch.hpp	/^  int get_stride() const { return stride_; }$/;"	f	class:batch
+get_subgrid	adapt.hpp	/^  element_subgrid const &get_subgrid(int const rank) const$/;"	f	class:adapt::distributed_grid
+get_subgrid	distribution.cpp	/^element_subgrid get_subgrid(int const num_ranks, int const my_rank,$/;"	f
+get_table	adapt.hpp	/^  elements::table const &get_table() const { return table_; }$/;"	f	class:adapt::distributed_grid::elements
+get_terms	pde/pde_base.hpp	/^  term_set<P> const &get_terms() const { return terms_; }$/;"	f	class:PDE
+get_time_steps	program_options.cpp	/^int parser::get_time_steps() const { return num_time_steps; }$/;"	f	class:parser
+get_times	tools.hpp	/^  std::vector<double> const &get_times(std::string const &id)$/;"	f	class:tools::simple_timer::std
+get_trans	batch.hpp	/^  bool get_trans() const { return do_trans_; }$/;"	f	class:batch
+get_wavelet_output_freq	program_options.cpp	/^int parser::get_wavelet_output_freq() const { return wavelet_output_freq; }$/;"	f	class:parser
+get_work_ptrs	kronmult.cpp	/^  P **get_work_ptrs() const { return work_ptrs; }$/;"	f	class:kronmult::kronmult_workspace
+get_workspace	kronmult.cpp	/^  static kronmult_workspace &get_workspace(PDE<P> const &pde,$/;"	f	class:kronmult::kronmult_workspace
+getrf	lib_dispatch.cpp	/^void getrf(int *m, int *n, P *A, int *lda, int *ipiv, int *info,$/;"	f	namespace:lib_dispatch
+getri	lib_dispatch.cpp	/^void getri(int *n, P *A, int *lda, int *ipiv, P *work, int *lwork, int *info,$/;"	f	namespace:lib_dispatch
+getrs	fast_math.hpp	/^void getrs(fk::matrix<P, amem> const &A, fk::vector<P, bmem> &B,$/;"	f	namespace:fm
+getrs	lib_dispatch.cpp	/^void getrs(char *trans, int *n, int *nrhs, P *A, int *lda, int *ipiv, P *b,$/;"	f	namespace:lib_dispatch
+global_comm	distribution.cpp	/^  MPI_Comm global_comm = MPI_COMM_WORLD;$/;"	m	struct:distribution_handler	file:
+gmres	program_options.hpp	/^  gmres,$/;"	e	enum:solve_opts
+grad	pde/pde_base.hpp	/^  grad,$/;"	e	enum:coefficient_type
+grid_limits	distribution.hpp	/^  grid_limits(grid_limits const &&l) : start(l.start), stop(l.stop){};$/;"	f	struct:grid_limits
+grid_limits	distribution.hpp	/^  grid_limits(grid_limits const &l) : start(l.start), stop(l.stop){};$/;"	f	struct:grid_limits
+grid_limits	distribution.hpp	/^  grid_limits(int const start, int const stop) : start(start), stop(stop){};$/;"	f	struct:grid_limits
+grid_limits	distribution.hpp	/^struct grid_limits$/;"	s
+gvx	pde/pde_continuity6.hpp	/^  static P gvx(P const x, P const time)$/;"	f	class:PDE_continuity_6d
+gvy	pde/pde_continuity6.hpp	/^  static P gvy(P const x, P const time)$/;"	f	class:PDE_continuity_6d
+gvz	pde/pde_continuity6.hpp	/^  static P gvz(P const x, P const time)$/;"	f	class:PDE_continuity_6d
+gx	pde/pde_continuity6.hpp	/^  static P gx(P const x, P const time)$/;"	f	class:PDE_continuity_6d
+gy	pde/pde_continuity6.hpp	/^  static P gy(P const x, P const time)$/;"	f	class:PDE_continuity_6d
+gz	pde/pde_continuity6.hpp	/^  static P gz(P const x, P const time)$/;"	f	class:PDE_continuity_6d
+handle	lib_dispatch.cpp	/^  cublasHandle_t handle;$/;"	m	struct:device_handler	file:
+has_analytic_soln	pde/pde_base.hpp	/^  bool const has_analytic_soln;$/;"	m	class:PDE
+has_analytic_soln_	pde/pde_continuity1.hpp	/^  static bool constexpr has_analytic_soln_ = true;$/;"	m	class:PDE_continuity_1d
+has_analytic_soln_	pde/pde_continuity2.hpp	/^  static bool constexpr has_analytic_soln_ = true;$/;"	m	class:PDE_continuity_2d
+has_analytic_soln_	pde/pde_continuity3.hpp	/^  static bool constexpr has_analytic_soln_ = true;$/;"	m	class:PDE_continuity_3d
+has_analytic_soln_	pde/pde_continuity6.hpp	/^  static bool constexpr has_analytic_soln_ = true;$/;"	m	class:PDE_continuity_6d
+has_analytic_soln_	pde/pde_diffusion1.hpp	/^  static bool constexpr has_analytic_soln_ = true;$/;"	m	class:PDE_diffusion_1d
+has_analytic_soln_	pde/pde_diffusion2.hpp	/^  static bool constexpr has_analytic_soln_ = true;$/;"	m	class:PDE_diffusion_2d
+has_analytic_soln_	pde/pde_fokkerplanck1_4p3.hpp	/^  static bool constexpr has_analytic_soln_ = true;$/;"	m	class:PDE_fokkerplanck_1d_4p3
+has_analytic_soln_	pde/pde_fokkerplanck1_4p4.hpp	/^  static bool constexpr has_analytic_soln_ = true;$/;"	m	class:PDE_fokkerplanck_1d_4p4
+has_analytic_soln_	pde/pde_fokkerplanck1_4p5.hpp	/^  static bool constexpr has_analytic_soln_ = true;$/;"	m	class:PDE_fokkerplanck_1d_4p5
+has_analytic_soln_	pde/pde_fokkerplanck1_pitch_C.hpp	/^  static bool constexpr has_analytic_soln_ = true;$/;"	m	class:PDE_fokkerplanck_1d_pitch_C
+has_analytic_soln_	pde/pde_fokkerplanck1_pitch_E.hpp	/^  static bool constexpr has_analytic_soln_ = true;$/;"	m	class:PDE_fokkerplanck_1d_pitch_E
+has_analytic_soln_	pde/pde_fokkerplanck2_complete.hpp	/^  static bool constexpr has_analytic_soln_ = false;$/;"	m	class:PDE_fokkerplanck_2d_complete
+homogeneity	pde/pde_base.hpp	/^enum class homogeneity$/;"	g
+homogeneous	pde/pde_base.hpp	/^  homogeneous,$/;"	e	enum:homogeneity
+horz_matrix_concat	matlab_utilities.cpp	/^fk::matrix<P> horz_matrix_concat(std::vector<fk::matrix<P>> const matrices)$/;"	f
+host	lib_dispatch.hpp	/^  host,$/;"	e	enum:resource
+id_to_coords_	elements.hpp	/^  std::unordered_map<int64_t, fk::vector<int>> id_to_coords_;$/;"	m	class:elements::table
+id_to_flops_	tools.hpp	/^  std::map<std::string, std::vector<double>> id_to_flops_;$/;"	m	class:tools::simple_timer
+id_to_start_	tools.hpp	/^      id_to_start_;$/;"	m	class:tools::simple_timer
+id_to_times_	tools.hpp	/^  std::map<std::string, std::vector<double>> id_to_times_;$/;"	m	class:tools::simple_timer
+imp	time_advance.hpp	/^  imp,$/;"	e	enum:time_advance::method
+implicit_advance	time_advance.cpp	/^implicit_advance(PDE<P> const &pde,$/;"	f	namespace:time_advance
+increment	tensors.hpp	/^  difference_type increment()$/;"	f	class:fk::matrix::matrix_iterator
+inf_norm	matlab_utilities.cpp	/^P inf_norm(fk::vector<P> const &vec)$/;"	f
+info	program_options.hpp	/^  std::string const info;$/;"	m	class:PDE_descriptor::std
+inhomogeneous	pde/pde_base.hpp	/^  inhomogeneous$/;"	e	enum:homogeneity
+initial_condition	pde/pde_base.hpp	/^  vector_func<P> const initial_condition;$/;"	m	class:dimension
+initial_condition_dim	pde/pde_diffusion2.hpp	/^  initial_condition_dim(fk::vector<P> const &x, P const t = 0)$/;"	f	class:PDE_diffusion_2d
+initial_condition_dim0	pde/pde_continuity1.hpp	/^  initial_condition_dim0(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_1d
+initial_condition_dim0	pde/pde_continuity2.hpp	/^  initial_condition_dim0(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_2d
+initial_condition_dim0	pde/pde_continuity3.hpp	/^  initial_condition_dim0(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_3d
+initial_condition_dim0	pde/pde_diffusion1.hpp	/^  initial_condition_dim0(fk::vector<P> const &x, P const t = 0)$/;"	f	class:PDE_diffusion_1d
+initial_condition_dim0	pde/pde_fokkerplanck1_4p3.hpp	/^  initial_condition_dim0(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_fokkerplanck_1d_4p3
+initial_condition_dim0	pde/pde_fokkerplanck1_4p4.hpp	/^  initial_condition_dim0(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_fokkerplanck_1d_4p4
+initial_condition_dim0	pde/pde_fokkerplanck1_4p5.hpp	/^  initial_condition_dim0(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_fokkerplanck_1d_4p5
+initial_condition_dim0	pde/pde_fokkerplanck1_pitch_C.hpp	/^  initial_condition_dim0(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_fokkerplanck_1d_pitch_C
+initial_condition_dim0	pde/pde_fokkerplanck1_pitch_E.hpp	/^  initial_condition_dim0(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_fokkerplanck_1d_pitch_E
+initial_condition_dim1	pde/pde_continuity2.hpp	/^  initial_condition_dim1(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_2d
+initial_condition_dim1	pde/pde_continuity3.hpp	/^  initial_condition_dim1(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_3d
+initial_condition_dim2	pde/pde_continuity3.hpp	/^  initial_condition_dim2(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_3d
+initial_condition_p	pde/pde_fokkerplanck2_complete.hpp	/^  static fk::vector<P> initial_condition_p(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_fokkerplanck_2d_complete
+initial_condition_z	pde/pde_fokkerplanck2_complete.hpp	/^  static fk::vector<P> initial_condition_z(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_fokkerplanck_2d_complete
+initialize_distribution	distribution.cpp	/^std::array<int, 2> initialize_distribution()$/;"	f
+initialize_libraries	lib_dispatch.cpp	/^void initialize_libraries(int const local_rank)$/;"	f
+initialize_output_file	io.hpp	/^initialize_output_file(fk::vector<P> const &vec,$/;"	f
+input_ptrs	kronmult.cpp	/^  P **input_ptrs;$/;"	m	class:kronmult::kronmult_workspace	file:
+insert	tools.hpp	/^  void insert(std::map<std::string, std::vector<double>> &mapping,$/;"	f	class:tools::simple_timer
+ints_from_string	program_options.hpp	/^  fk::vector<int> ints_from_string(std::string const &number_string)$/;"	f	class:parser
+invert	tensors.hpp	/^fk::matrix<P, mem> &fk::matrix<P, mem, resrc>::invert()$/;"	f	class:fk::fk::matrix
+is_filled	batch.cpp	/^bool batch<P, resrc>::is_filled() const$/;"	f	class:batch
+is_valid	program_options.cpp	/^bool parser::is_valid() const { return valid; }$/;"	f	class:parser
+iterator	tensors.hpp	/^  typedef P *iterator;$/;"	t	class:fk::vector
+kron	tensors.hpp	/^fk::matrix<P> fk::matrix<P, mem, resrc>::kron(matrix<P, omem> const &B) const$/;"	f	class:fk::matrix
+kron_d	transformations.cpp	/^kron_d(std::vector<fk::vector<P>> const &operands, int const num_prods)$/;"	f
+kron_matrix_MB	transformations.cpp	/^int kron_matrix_MB($/;"	f
+kronmult	kronmult.cpp	/^namespace kronmult$/;"	n	file:
+kronmult	kronmult.hpp	/^namespace kronmult$/;"	n
+kronmult_workspace	kronmult.cpp	/^  kronmult_workspace(PDE<P> const &pde, elements::table const &elem_table,$/;"	f	class:kronmult::kronmult_workspace	file:
+kronmult_workspace	kronmult.cpp	/^class kronmult_workspace$/;"	c	namespace:kronmult	file:
+l2_norm	matlab_utilities.cpp	/^P l2_norm(fk::vector<P> const &vec)$/;"	f
+lax_friedrich	pde/pde_base.hpp	/^  lax_friedrich = 0$/;"	e	enum:flux_type
+left	basis.hpp	/^  left,$/;"	e	enum:basis::side
+left	pde/pde_base.hpp	/^  boundary_condition const left;$/;"	m	class:partial_term
+left_	batch.hpp	/^  std::vector<batch<P, resrc>> left_;$/;"	m	class:batch_chain
+left_bc_funcs	pde/pde_base.hpp	/^  std::vector<vector_func<P>> const left_bc_funcs;$/;"	m	class:partial_term::std
+left_bc_time_func	pde/pde_base.hpp	/^  scalar_func<P> const left_bc_time_func;$/;"	m	class:partial_term
+left_homo	pde/pde_base.hpp	/^  homogeneity const left_homo;$/;"	m	class:partial_term
+legendre	quadrature.cpp	/^legendre(fk::vector<P> const domain, int const degree,$/;"	f
+legendre_normalization	quadrature.hpp	/^enum legendre_normalization$/;"	g
+legendre_weights	quadrature.cpp	/^legendre_weights(int const degree, P const lower_bound, P const upper_bound,$/;"	f
+level_	pde/pde_base.hpp	/^  int level_;$/;"	m	class:dimension
+lib_dispatch	lib_dispatch.cpp	/^namespace lib_dispatch$/;"	n	file:
+lib_dispatch	lib_dispatch.hpp	/^namespace lib_dispatch$/;"	n
+lin	quadrature.hpp	/^  lin,$/;"	e	enum:legendre_normalization
+linear_coords_to_indices	batch.cpp	/^linear_coords_to_indices(PDE<P> const &pde, int const degree,$/;"	f
+linearize	batch.cpp	/^inline fk::vector<int> linearize(fk::vector<int> const &coords)$/;"	f
+linspace	matlab_utilities.cpp	/^linspace(P const start, P const end, unsigned int const num_elems)$/;"	f
+local_expect	device/kronmult_cuda.cpp	/^HOST_FUNCTION DEVICE_FUNCTION inline void local_expect(bool const condition)$/;"	f
+main	main.cpp	/^int main(int argc, char **argv)$/;"	f
+make_PDE	pde.hpp	/^make_PDE(PDE_opts const pde_choice, fk::vector<int> levels,$/;"	f
+make_PDE	pde.hpp	/^make_PDE(PDE_opts const pde_choice, int const level = parser::NO_USER_VALUE,$/;"	f
+make_PDE	pde.hpp	/^std::unique_ptr<PDE<P>> make_PDE(parser const &cli_input)$/;"	f
+make_unscaled_bc_parts	boundary_conditions.cpp	/^array<unscaled_bc_parts<P>, 2> boundary_conditions::make_unscaled_bc_parts($/;"	f	class:boundary_conditions
+map_to_coords	elements.cpp	/^map_to_coords(int64_t const id, int const max_level, int const num_dims)$/;"	f	namespace:elements
+map_to_id	elements.cpp	/^int64_t map_to_id(fk::vector<int> const &coords, int const max_level,$/;"	f	namespace:elements
+mass	pde/pde_base.hpp	/^  mass,$/;"	e	enum:coefficient_type
+matlab	quadrature.hpp	/^  matlab$/;"	e	enum:legendre_normalization
+matrix	tensors.hpp	/^class matrix$/;"	c	namespace:fk
+matrix	tensors.hpp	/^fk::matrix<P, mem, resrc>::matrix($/;"	f	class:fk::matrix
+matrix	tensors.hpp	/^fk::matrix<P, mem, resrc>::matrix()$/;"	f	class:fk::matrix
+matrix	tensors.hpp	/^fk::matrix<P, mem, resrc>::matrix(fk::matrix<P, omem, resrc> &owner)$/;"	f	class:fk::matrix
+matrix	tensors.hpp	/^fk::matrix<P, mem, resrc>::matrix(fk::matrix<P, omem, resrc> &owner,$/;"	f	class:fk::matrix
+matrix	tensors.hpp	/^fk::matrix<P, mem, resrc>::matrix(fk::matrix<P, omem, resrc> const &owner)$/;"	f	class:fk::matrix
+matrix	tensors.hpp	/^fk::matrix<P, mem, resrc>::matrix(fk::matrix<P, omem, resrc> const &owner,$/;"	f	class:fk::matrix
+matrix	tensors.hpp	/^fk::matrix<P, mem, resrc>::matrix(fk::vector<P, omem, resrc> &source,$/;"	f	class:fk::matrix
+matrix	tensors.hpp	/^fk::matrix<P, mem, resrc>::matrix(fk::vector<P, omem, resrc> const &source,$/;"	f	class:fk::matrix
+matrix	tensors.hpp	/^fk::matrix<P, mem, resrc>::matrix(int const m, int const n)$/;"	f	class:fk::matrix
+matrix	tensors.hpp	/^fk::matrix<P, mem, resrc>::matrix(matrix<P, mem, resrc> &&a)$/;"	f	class:fk::matrix
+matrix	tensors.hpp	/^fk::matrix<P, mem, resrc>::matrix(matrix<P, mem, resrc> const &a)$/;"	f	class:fk::matrix
+matrix	tensors.hpp	/^fk::matrix<P, mem, resrc>::matrix(matrix<P, omem, resrc> const &a)$/;"	f	class:fk::matrix
+matrix	tensors.hpp	/^fk::matrix<P, mem, resrc>::matrix(matrix<PP, omem> const &a)$/;"	f	class:fk::matrix
+matrix_iterator	tensors.hpp	/^  matrix_iterator(pointer ptr, int const stride, int const rows)$/;"	f	class:fk::matrix::matrix_iterator
+matrix_iterator	tensors.hpp	/^class fk::matrix<P, mem, resrc>::matrix_iterator$/;"	c	class:fk::matrix
+max_level	basis.hpp	/^  int const max_level;$/;"	m	class:basis::wavelet_transform
+max_level	program_options.hpp	/^  int const max_level;$/;"	m	class:options
+max_level	program_options.hpp	/^  int max_level = DEFAULT_MAX_LEVEL;$/;"	m	class:parser
+mem_type	tensors.hpp	/^enum class mem_type$/;"	g
+meshgrid	matlab_utilities.cpp	/^fk::matrix<int> meshgrid(int const start, int const length)$/;"	f
+message	distribution.hpp	/^  message(message_direction const message_dir, int const target,$/;"	f	struct:message
+message	distribution.hpp	/^struct message$/;"	s
+message_dir	distribution.hpp	/^  message_direction const message_dir;$/;"	m	struct:message
+message_direction	distribution.hpp	/^enum class message_direction$/;"	g
+method	time_advance.hpp	/^enum class method$/;"	g	namespace:time_advance
+my_rank	adapt_tests.cpp	/^  int my_rank;$/;"	m	struct:distribution_test_init	file:
+my_rank	distribution_tests.cpp	/^  int my_rank;$/;"	m	struct:distribution_test_init	file:
+name	pde/pde_base.hpp	/^  std::string const name;$/;"	m	class:dimension::std
+name	pde/pde_base.hpp	/^  std::string const name;$/;"	m	class:term::std
+ncols	batch.hpp	/^  int ncols() const { return ncols_; }$/;"	f	class:batch
+ncols	distribution.hpp	/^  int ncols() const { return col_stop - col_start + 1; }$/;"	f	class:element_subgrid
+ncols	tensors.hpp	/^  int ncols() const { return ncols_; }$/;"	f	class:fk::matrix
+ncols_	batch.hpp	/^  int const ncols_;  \/\/ number of cols in matrices (1 for vectors) in this batch$/;"	m	class:batch
+ncols_	tensors.hpp	/^  int ncols_;  \/\/< column dimension$/;"	m	class:fk::matrix
+neumann	pde/pde_base.hpp	/^  neumann$/;"	e	enum:boundary_condition
+no_trans	basis.hpp	/^  no_trans,$/;"	e	enum:basis::transpose
+node_out	distribution.hpp	/^struct node_out$/;"	s
+nrm2	fast_math.hpp	/^P nrm2(fk::vector<P, mem, resrc> const &x)$/;"	f	namespace:fm
+nrm2	lib_dispatch.cpp	/^P nrm2(int *n, P *x, int *incx, resource const resrc)$/;"	f	namespace:lib_dispatch
+nrows	batch.hpp	/^  int nrows() const { return nrows_; }$/;"	f	class:batch
+nrows	distribution.hpp	/^  int nrows() const { return row_stop - row_start + 1; }$/;"	f	class:element_subgrid
+nrows	tensors.hpp	/^  int nrows() const { return nrows_; }$/;"	f	class:fk::matrix
+nrows_	batch.hpp	/^  int const nrows_;  \/\/ number of rows in matrices\/size of vectors in this batch$/;"	m	class:batch
+nrows_	tensors.hpp	/^  int nrows_;  \/\/< row dimension$/;"	m	class:fk::matrix
+nu	pde/pde_diffusion1.hpp	/^  static double constexpr nu = 0.01;$/;"	m	class:PDE_diffusion_1d
+nuEE	pde/pde_fokkerplanck2_complete.hpp	/^  static double constexpr nuEE  = 1;$/;"	m	class:PDE_fokkerplanck_2d_complete
+null_gfunc	pde/pde_base.hpp	/^  static P null_gfunc(P const x, P const t)$/;"	f	class:partial_term
+null_scalar_func	pde/pde_base.hpp	/^  static P null_scalar_func(P const p) { return p; }$/;"	f	class:partial_term
+num_dims	pde/pde_base.hpp	/^  int const num_dims;$/;"	m	class:PDE
+num_dims_	pde/pde_continuity1.hpp	/^  static int constexpr num_dims_           = 1;$/;"	m	class:PDE_continuity_1d
+num_dims_	pde/pde_continuity2.hpp	/^  static int constexpr num_dims_           = 2;$/;"	m	class:PDE_continuity_2d
+num_dims_	pde/pde_continuity3.hpp	/^  static int constexpr num_dims_           = 3;$/;"	m	class:PDE_continuity_3d
+num_dims_	pde/pde_continuity6.hpp	/^  static int constexpr num_dims_           = 6;$/;"	m	class:PDE_continuity_6d
+num_dims_	pde/pde_diffusion1.hpp	/^  static int constexpr num_dims_           = 1;$/;"	m	class:PDE_diffusion_1d
+num_dims_	pde/pde_diffusion2.hpp	/^  static int constexpr num_dims_           = 2;$/;"	m	class:PDE_diffusion_2d
+num_dims_	pde/pde_fokkerplanck1_4p3.hpp	/^  static int constexpr num_dims_           = 1;$/;"	m	class:PDE_fokkerplanck_1d_4p3
+num_dims_	pde/pde_fokkerplanck1_4p4.hpp	/^  static int constexpr num_dims_           = 1;$/;"	m	class:PDE_fokkerplanck_1d_4p4
+num_dims_	pde/pde_fokkerplanck1_4p5.hpp	/^  static int constexpr num_dims_           = 1;$/;"	m	class:PDE_fokkerplanck_1d_4p5
+num_dims_	pde/pde_fokkerplanck1_pitch_C.hpp	/^  static int constexpr num_dims_           = 1;$/;"	m	class:PDE_fokkerplanck_1d_pitch_C
+num_dims_	pde/pde_fokkerplanck1_pitch_E.hpp	/^  static int constexpr num_dims_           = 1;$/;"	m	class:PDE_fokkerplanck_1d_pitch_E
+num_dims_	pde/pde_fokkerplanck2_complete.hpp	/^  static int constexpr num_dims_           = 2;$/;"	m	class:PDE_fokkerplanck_2d_complete
+num_effective_ranks	distribution.cpp	/^auto const num_effective_ranks = [](int const num_ranks) {$/;"	v
+num_entries	batch.hpp	/^  int num_entries() const { return num_entries_; }$/;"	f	class:batch
+num_entries_	batch.hpp	/^  int const num_entries_; \/\/ number of matrices\/vectors for this chunk$/;"	m	class:batch
+num_ranks	adapt_tests.cpp	/^  int num_ranks;$/;"	m	struct:distribution_test_init	file:
+num_ranks	distribution_tests.cpp	/^  int num_ranks;$/;"	m	struct:distribution_test_init	file:
+num_sources	pde/pde_base.hpp	/^  int const num_sources;$/;"	m	class:PDE
+num_sources_	pde/pde_continuity1.hpp	/^  static int constexpr num_sources_        = 2;$/;"	m	class:PDE_continuity_1d
+num_sources_	pde/pde_continuity2.hpp	/^  static int constexpr num_sources_        = 3;$/;"	m	class:PDE_continuity_2d
+num_sources_	pde/pde_continuity3.hpp	/^  static int constexpr num_sources_        = 4;$/;"	m	class:PDE_continuity_3d
+num_sources_	pde/pde_continuity6.hpp	/^  static int constexpr num_sources_        = 7;$/;"	m	class:PDE_continuity_6d
+num_sources_	pde/pde_diffusion1.hpp	/^  static int constexpr num_sources_        = 1;$/;"	m	class:PDE_diffusion_1d
+num_sources_	pde/pde_diffusion2.hpp	/^  static int constexpr num_sources_        = 0;$/;"	m	class:PDE_diffusion_2d
+num_sources_	pde/pde_fokkerplanck1_4p3.hpp	/^  static int constexpr num_sources_        = 0;$/;"	m	class:PDE_fokkerplanck_1d_4p3
+num_sources_	pde/pde_fokkerplanck1_4p4.hpp	/^  static int constexpr num_sources_        = 0;$/;"	m	class:PDE_fokkerplanck_1d_4p4
+num_sources_	pde/pde_fokkerplanck1_4p5.hpp	/^  static int constexpr num_sources_        = 0;$/;"	m	class:PDE_fokkerplanck_1d_4p5
+num_sources_	pde/pde_fokkerplanck1_pitch_C.hpp	/^  static int constexpr num_sources_        = 0;$/;"	m	class:PDE_fokkerplanck_1d_pitch_C
+num_sources_	pde/pde_fokkerplanck1_pitch_E.hpp	/^  static int constexpr num_sources_        = 0;$/;"	m	class:PDE_fokkerplanck_1d_pitch_E
+num_sources_	pde/pde_fokkerplanck2_complete.hpp	/^  static int constexpr num_sources_        = 0;$/;"	m	class:PDE_fokkerplanck_2d_complete
+num_steps	time_advance_tests.cpp	/^static auto constexpr num_steps = 5;$/;"	v	file:
+num_terms	pde/pde_base.hpp	/^  int const num_terms;$/;"	m	class:PDE
+num_terms_	pde/pde_continuity1.hpp	/^  static int constexpr num_terms_          = 1;$/;"	m	class:PDE_continuity_1d
+num_terms_	pde/pde_continuity2.hpp	/^  static int constexpr num_terms_          = 2;$/;"	m	class:PDE_continuity_2d
+num_terms_	pde/pde_continuity3.hpp	/^  static int constexpr num_terms_          = 3;$/;"	m	class:PDE_continuity_3d
+num_terms_	pde/pde_continuity6.hpp	/^  static int constexpr num_terms_          = 6;$/;"	m	class:PDE_continuity_6d
+num_terms_	pde/pde_diffusion1.hpp	/^  static int constexpr num_terms_          = 1;$/;"	m	class:PDE_diffusion_1d
+num_terms_	pde/pde_diffusion2.hpp	/^  static int constexpr num_terms_          = 2;$/;"	m	class:PDE_diffusion_2d
+num_terms_	pde/pde_fokkerplanck1_4p3.hpp	/^  static int constexpr num_terms_          = 1;$/;"	m	class:PDE_fokkerplanck_1d_4p3
+num_terms_	pde/pde_fokkerplanck1_4p4.hpp	/^  static int constexpr num_terms_          = 2;$/;"	m	class:PDE_fokkerplanck_1d_4p4
+num_terms_	pde/pde_fokkerplanck1_4p5.hpp	/^  static int constexpr num_terms_          = 3;$/;"	m	class:PDE_fokkerplanck_1d_4p5
+num_terms_	pde/pde_fokkerplanck1_pitch_C.hpp	/^  static int constexpr num_terms_          = 1;$/;"	m	class:PDE_fokkerplanck_1d_pitch_C
+num_terms_	pde/pde_fokkerplanck1_pitch_E.hpp	/^  static int constexpr num_terms_          = 1;$/;"	m	class:PDE_fokkerplanck_1d_pitch_E
+num_terms_	pde/pde_fokkerplanck2_complete.hpp	/^  static int constexpr num_terms_          = 7;$/;"	m	class:PDE_fokkerplanck_2d_complete
+num_time_steps	program_options.hpp	/^  int const num_time_steps;$/;"	m	class:options
+num_time_steps	program_options.hpp	/^  int num_time_steps = DEFAULT_TIME_STEPS;$/;"	m	class:parser
+operator !=	tensors.hpp	/^  bool operator!=(const self_type &rhs) const { return ptr_ != rhs.ptr_; }$/;"	f	class:fk::matrix::matrix_iterator
+operator !=	tensors.hpp	/^bool fk::matrix<P, mem, resrc>::operator!=(matrix<P, omem> const &other) const$/;"	f	class:fk::matrix
+operator !=	tensors.hpp	/^bool fk::vector<P, mem, resrc>::operator!=(vector<P, omem> const &other) const$/;"	f	class:fk::vector
+operator ()	batch.cpp	/^P *batch<P, resrc>::operator()(int const position) const$/;"	f	class:batch
+operator ()	tensors.hpp	/^P &fk::matrix<P, mem, resrc>::operator()(int const i, int const j)$/;"	f	class:fk::matrix
+operator ()	tensors.hpp	/^P &fk::vector<P, mem, resrc>::operator()(int i)$/;"	f	class:fk::vector
+operator ()	tensors.hpp	/^P fk::matrix<P, mem, resrc>::operator()(int const i, int const j) const$/;"	f	class:fk::matrix
+operator ()	tensors.hpp	/^P fk::vector<P, mem, resrc>::operator()(int i) const$/;"	f	class:fk::vector
+operator *	tensors.hpp	/^    fk::matrix<P, mem, resrc>::operator*(fk::vector<P, omem> const &right) const$/;"	f	class:fk::matrix
+operator *	tensors.hpp	/^    fk::matrix<P, mem, resrc>::operator*(matrix<P, omem> const &B) const$/;"	f	class:fk::matrix
+operator *	tensors.hpp	/^    fk::vector<P, mem, resrc>::operator*(fk::matrix<P, omem> const &A) const$/;"	f	class:fk::vector
+operator *	tensors.hpp	/^  reference operator*() const { return *ptr_; }$/;"	f	class:fk::matrix::matrix_iterator
+operator *	tensors.hpp	/^P fk::vector<P, mem, resrc>::operator*(vector<P, omem> const &right) const$/;"	f	class:fk::vector
+operator *	tensors.hpp	/^fk::matrix<P> fk::matrix<P, mem, resrc>::operator*(P const right) const$/;"	f	class:fk::matrix
+operator *	tensors.hpp	/^fk::vector<P> fk::vector<P, mem, resrc>::operator*(P const x) const$/;"	f	class:fk::vector
+operator +	tensors.hpp	/^fk::matrix<P, mem, resrc>::operator+(matrix<P, omem> const &right) const$/;"	f	class:fk::matrix
+operator +	tensors.hpp	/^fk::vector<P, mem, resrc>::operator+(vector<P, omem> const &right) const$/;"	f	class:fk::vector
+operator ++	tensors.hpp	/^  self_type operator++()$/;"	f	class:fk::matrix::matrix_iterator
+operator ++	tensors.hpp	/^  self_type operator++(int)$/;"	f	class:fk::matrix::matrix_iterator
+operator -	tensors.hpp	/^fk::matrix<P, mem, resrc>::operator-(matrix<P, omem> const &right) const$/;"	f	class:fk::matrix
+operator -	tensors.hpp	/^fk::vector<P, mem, resrc>::operator-(vector<P, omem> const &right) const$/;"	f	class:fk::vector
+operator ->	tensors.hpp	/^  pointer operator->() const { return ptr_; }$/;"	f	class:fk::matrix::matrix_iterator
+operator <	distribution.hpp	/^  bool operator<(grid_limits const &rhs) const$/;"	f	struct:grid_limits
+operator <	tensors.hpp	/^bool fk::matrix<P, mem, resrc>::operator<(matrix<P, omem> const &other) const$/;"	f	class:fk::matrix
+operator <	tensors.hpp	/^bool fk::vector<P, mem, resrc>::operator<(vector<P, omem> const &other) const$/;"	f	class:fk::vector
+operator <<	distribution.hpp	/^  node_out &operator<<(T val)$/;"	f	struct:node_out
+operator =	batch.cpp	/^batch<P, resrc> &batch<P, resrc>::operator=(batch<P, resrc> &&other)$/;"	f	class:batch
+operator =	batch.cpp	/^batch<P, resrc> &batch<P, resrc>::operator=(batch<P, resrc> const &other)$/;"	f	class:batch
+operator =	tensors.hpp	/^fk::matrix<P, mem, resrc>::operator=(fk::vector<P, omem> const &v)$/;"	f	class:fk::fk::matrix
+operator =	tensors.hpp	/^fk::matrix<P, mem, resrc>::operator=(matrix<P, mem, resrc> &&a)$/;"	f	class:fk::fk::matrix
+operator =	tensors.hpp	/^fk::matrix<P, mem, resrc>::operator=(matrix<P, mem, resrc> const &a)$/;"	f	class:fk::fk::matrix
+operator =	tensors.hpp	/^fk::matrix<P, mem, resrc>::operator=(matrix<P, omem, resrc> const &a)$/;"	f	class:fk::fk::matrix
+operator =	tensors.hpp	/^fk::matrix<P, mem, resrc>::operator=(matrix<PP, omem> const &a)$/;"	f	class:fk::fk::matrix
+operator =	tensors.hpp	/^fk::vector<P, mem, resrc>::operator=(std::vector<P> const &v)$/;"	f	class:fk::fk::vector
+operator =	tensors.hpp	/^fk::vector<P, mem, resrc>::operator=(vector<P, mem, resrc> &&a)$/;"	f	class:fk::fk::vector
+operator =	tensors.hpp	/^fk::vector<P, mem, resrc>::operator=(vector<P, mem, resrc> const &a)$/;"	f	class:fk::fk::vector
+operator =	tensors.hpp	/^fk::vector<P, mem, resrc>::operator=(vector<P, omem, resrc> const &a)$/;"	f	class:fk::fk::vector
+operator =	tensors.hpp	/^fk::vector<P, mem, resrc>::operator=(vector<PP, omem> const &a)$/;"	f	class:fk::fk::vector
+operator ==	batch.cpp	/^bool batch<P, resrc>::operator==(batch<P, resrc> const &other) const$/;"	f	class:batch
+operator ==	distribution.hpp	/^  bool operator==(const element_subgrid &rhs) const$/;"	f	class:element_subgrid
+operator ==	distribution.hpp	/^  bool operator==(grid_limits const &rhs) const$/;"	f	struct:grid_limits
+operator ==	distribution.hpp	/^  bool operator==(message const &oth) const$/;"	f	struct:message
+operator ==	tensors.hpp	/^  bool operator==(const self_type &rhs) const { return ptr_ == rhs.ptr_; }$/;"	f	class:fk::matrix::matrix_iterator
+operator ==	tensors.hpp	/^bool fk::matrix<P, mem, resrc>::operator==(matrix<P, omem> const &other) const$/;"	f	class:fk::matrix
+operator ==	tensors.hpp	/^bool fk::vector<P, mem, resrc>::operator==(vector<P, omem> const &other) const$/;"	f	class:fk::vector
+operator_ptrs	kronmult.cpp	/^  P **operator_ptrs;$/;"	m	class:kronmult::kronmult_workspace	file:
+operator_two_scale	basis.cpp	/^fk::matrix<R> operator_two_scale(int const degree, int const num_levels)$/;"	f
+options	program_options.hpp	/^  options(parser const &user_vals)$/;"	f	class:options
+options	program_options.hpp	/^class options$/;"	c
+other	distribution.hpp	/^  message(message &&other)      = default;$/;"	m	struct:message
+other	distribution.hpp	/^  message(message const &other) = default;$/;"	m	struct:message
+other	kronmult.cpp	/^  kronmult_workspace &operator=(kronmult_workspace<P> &&other) = delete;$/;"	m	class:kronmult::kronmult_workspace	file:
+other	kronmult.cpp	/^  kronmult_workspace(kronmult_workspace<P> &&other) = delete;$/;"	m	class:kronmult::kronmult_workspace	file:
+output_ptrs	kronmult.cpp	/^  P **output_ptrs;$/;"	m	class:kronmult::kronmult_workspace	file:
+owner	tensors.hpp	/^  owner,$/;"	e	enum:mem_type
+p_domain_max	pde/pde_fokkerplanck2_complete.hpp	/^  inline static P const p_domain_max = 20;$/;"	m	class:PDE_fokkerplanck_2d_complete
+p_domain_min	pde/pde_fokkerplanck2_complete.hpp	/^  inline static P const p_domain_min = 1;$/;"	m	class:PDE_fokkerplanck_2d_complete
+parser	program_options.cpp	/^parser::parser(int argc, char **argv)$/;"	f	class:parser
+parser	program_options.hpp	/^  explicit parser(PDE_opts const pde_choice, fk::vector<int> starting_levels,$/;"	f	class:parser
+parser	program_options.hpp	/^  explicit parser(std::string const &pde_choice,$/;"	f	class:parser
+parser	program_options.hpp	/^class parser$/;"	c
+partial_term	pde/pde_base.hpp	/^  partial_term(coefficient_type const coeff_type,$/;"	f	class:partial_term
+partial_term	pde/pde_base.hpp	/^class partial_term$/;"	c
+partial_term_0	pde/pde_continuity1.hpp	/^  inline static const partial_term<P> partial_term_0 = partial_term<P>($/;"	m	class:PDE_continuity_1d
+partial_term_0	pde/pde_diffusion1.hpp	/^  inline static const partial_term<P> partial_term_0 = partial_term<P>($/;"	m	class:PDE_diffusion_1d
+partial_term_0	pde/pde_diffusion2.hpp	/^  inline static const partial_term<P> partial_term_0 = partial_term<P>($/;"	m	class:PDE_diffusion_2d
+partial_term_0	pde/pde_fokkerplanck1_4p3.hpp	/^  inline static partial_term<P> const partial_term_0 = partial_term<P>($/;"	m	class:PDE_fokkerplanck_1d_4p3
+partial_term_0	pde/pde_fokkerplanck1_4p4.hpp	/^  inline static partial_term<P> const partial_term_0 = partial_term<P>($/;"	m	class:PDE_fokkerplanck_1d_4p4
+partial_term_0	pde/pde_fokkerplanck1_4p5.hpp	/^  inline static partial_term<P> const partial_term_0 = partial_term<P>($/;"	m	class:PDE_fokkerplanck_1d_4p5
+partial_term_0	pde/pde_fokkerplanck1_pitch_C.hpp	/^  inline static partial_term<P> const partial_term_0 = partial_term<P>($/;"	m	class:PDE_fokkerplanck_1d_pitch_C
+partial_term_0	pde/pde_fokkerplanck1_pitch_E.hpp	/^  inline static partial_term<P> const partial_term_0 =$/;"	m	class:PDE_fokkerplanck_1d_pitch_E
+partial_term_0_x_	pde/pde_continuity6.hpp	/^  inline static partial_term<P> const partial_term_0_x_ = partial_term<P>($/;"	m	class:PDE_continuity_6d
+partial_term_1	pde/pde_diffusion1.hpp	/^  inline static const partial_term<P> partial_term_1 = partial_term<P>($/;"	m	class:PDE_diffusion_1d
+partial_term_1	pde/pde_diffusion2.hpp	/^  inline static const partial_term<P> partial_term_1 = partial_term<P>($/;"	m	class:PDE_diffusion_2d
+partial_term_1	pde/pde_fokkerplanck1_4p4.hpp	/^  inline static partial_term<P> const partial_term_1 = partial_term<P>($/;"	m	class:PDE_fokkerplanck_1d_4p4
+partial_term_1	pde/pde_fokkerplanck1_4p5.hpp	/^  inline static partial_term<P> const partial_term_1 = partial_term<P>($/;"	m	class:PDE_fokkerplanck_1d_4p5
+partial_term_1	pde/pde_fokkerplanck1_pitch_C.hpp	/^  inline static partial_term<P> const partial_term_1 =$/;"	m	class:PDE_fokkerplanck_1d_pitch_C
+partial_term_1_y_	pde/pde_continuity6.hpp	/^  inline static partial_term<P> const partial_term_1_y_ = partial_term<P>($/;"	m	class:PDE_continuity_6d
+partial_term_2	pde/pde_fokkerplanck1_4p4.hpp	/^  inline static partial_term<P> const partial_term_2 =$/;"	m	class:PDE_fokkerplanck_1d_4p4
+partial_term_2	pde/pde_fokkerplanck1_4p5.hpp	/^  inline static partial_term<P> const partial_term_2 =$/;"	m	class:PDE_fokkerplanck_1d_4p5
+partial_term_2_z_	pde/pde_continuity6.hpp	/^  inline static partial_term<P> const partial_term_2_z_ = partial_term<P>($/;"	m	class:PDE_continuity_6d
+partial_term_3	pde/pde_fokkerplanck1_4p5.hpp	/^  inline static partial_term<P> const partial_term_3 = partial_term<P>($/;"	m	class:PDE_fokkerplanck_1d_4p5
+partial_term_3_vx_	pde/pde_continuity6.hpp	/^  inline static partial_term<P> const partial_term_3_vx_ = partial_term<P>($/;"	m	class:PDE_continuity_6d
+partial_term_4_vy_	pde/pde_continuity6.hpp	/^  inline static partial_term<P> const partial_term_4_vy_ = partial_term<P>($/;"	m	class:PDE_continuity_6d
+partial_term_5_vz_	pde/pde_continuity6.hpp	/^  inline static partial_term<P> const partial_term_5_vz_ = partial_term<P>($/;"	m	class:PDE_continuity_6d
+partial_term_I_	pde/pde_continuity3.hpp	/^  inline static partial_term<P> const partial_term_I_ = partial_term<P>($/;"	m	class:PDE_continuity_3d
+partial_term_I_	pde/pde_continuity6.hpp	/^  inline static partial_term<P> const partial_term_I_ = partial_term<P>($/;"	m	class:PDE_continuity_6d
+partial_term_I_	pde/pde_diffusion2.hpp	/^  inline static partial_term<P> const partial_term_I_ = partial_term<P>($/;"	m	class:PDE_diffusion_2d
+partial_term_t0_d0	pde/pde_continuity2.hpp	/^  inline static const partial_term<P> partial_term_t0_d0 = partial_term<P>($/;"	m	class:PDE_continuity_2d
+partial_term_t0_d0	pde/pde_continuity3.hpp	/^  inline static partial_term<P> const partial_term_t0_d0 = partial_term<P>($/;"	m	class:PDE_continuity_3d
+partial_term_t0_d1	pde/pde_continuity2.hpp	/^  inline static partial_term<P> const partial_term_t0_d1 = partial_term<P>($/;"	m	class:PDE_continuity_2d
+partial_term_t1_d0	pde/pde_continuity2.hpp	/^  inline static partial_term<P> const partial_term_t1_d0 = partial_term<P>($/;"	m	class:PDE_continuity_2d
+partial_term_t1_d1	pde/pde_continuity2.hpp	/^  inline static partial_term<P> const partial_term_t1_d1 = partial_term<P>($/;"	m	class:PDE_continuity_2d
+partial_term_t1_d1	pde/pde_continuity3.hpp	/^  inline static partial_term<P> const partial_term_t1_d1 = partial_term<P>($/;"	m	class:PDE_continuity_3d
+partial_term_t2_d2	pde/pde_continuity3.hpp	/^  inline static partial_term<P> const partial_term_t2_d2 = partial_term<P>($/;"	m	class:PDE_continuity_3d
+partial_terms_	pde/pde_base.hpp	/^  std::vector<partial_term<P>> partial_terms_;$/;"	m	class:term
+pde_choice	program_options.hpp	/^  PDE_opts const pde_choice;$/;"	m	class:PDE_descriptor
+pde_choice	program_options.hpp	/^  PDE_opts pde_choice = DEFAULT_PDE_OPT;$/;"	m	class:parser
+pde_eps_multiplier	pde_tests.cpp	/^static auto const pde_eps_multiplier = 1e2;$/;"	v	file:
+pde_mapping	program_options.hpp	/^static pde_map_t const pde_mapping = {$/;"	v
+pde_str	program_options.hpp	/^  std::string pde_str = DEFAULT_PDE_STR;$/;"	m	class:parser
+periodic	pde/pde_base.hpp	/^  periodic,$/;"	e	enum:boundary_condition
+permutations	permutations.cpp	/^namespace permutations$/;"	n	file:
+permutations	permutations.hpp	/^namespace permutations$/;"	n
+phi	pde/pde_fokkerplanck1_4p3.hpp	/^  static P phi(P const z, P const t)$/;"	f	class:PDE_fokkerplanck_1d_4p3
+phi	pde/pde_fokkerplanck1_4p4.hpp	/^  static P phi(P const z, P const t)$/;"	f	class:PDE_fokkerplanck_1d_4p4
+phi	pde/pde_fokkerplanck1_4p5.hpp	/^  static P phi(P const z, P const t)$/;"	f	class:PDE_fokkerplanck_1d_4p5
+phi	pde/pde_fokkerplanck1_pitch_E.hpp	/^  static P phi(P const z, P const t) { return tanh(atanh(z) - t); }$/;"	f	class:PDE_fokkerplanck_1d_pitch_E
+phi	pde/pde_fokkerplanck2_complete.hpp	/^  static auto constexpr phi = [](P x) { return erf(x); };$/;"	m	class:PDE_fokkerplanck_2d_complete
+plan_	adapt.hpp	/^  distribution_plan plan_;$/;"	m	class:adapt::distributed_grid
+polyval	matlab_utilities.cpp	/^P polyval(fk::vector<P> const p, P const x)$/;"	f
+polyval	matlab_utilities.cpp	/^fk::vector<P> polyval(fk::vector<P> const p, fk::vector<P> const x)$/;"	f
+prepare_kronmult	device/kronmult_cuda.cpp	/^void prepare_kronmult(int const *const flattened_table,$/;"	f
+prepare_kronmult_kernel	device/kronmult_cuda.cpp	/^prepare_kronmult_kernel(int const *const flattened_table,$/;"	f
+print	tensors.hpp	/^void fk::matrix<P, mem, resrc>::print(std::string label) const$/;"	f	class:fk::matrix
+print	tensors.hpp	/^void fk::vector<P, mem, resrc>::print(std::string const label) const$/;"	f	class:fk::vector
+printNumber	tools.cpp	/^void printNumber<Sdouble>(Sdouble x)$/;"	f	namespace:tools
+printNumber	tools.cpp	/^void printNumber<double>(double x)$/;"	f	namespace:tools
+print_available_pdes	program_options.hpp	/^  void print_available_pdes()$/;"	f	class:parser
+product_	batch.hpp	/^  std::vector<batch<P, resrc>> product_;$/;"	m	class:batch_chain
+psi	pde/pde_fokkerplanck2_complete.hpp	/^  static auto constexpr psi = [](P x) {$/;"	m	class:PDE_fokkerplanck_2d_complete
+pterm_I	pde/pde_fokkerplanck2_complete.hpp	/^  inline static partial_term<P> const pterm_I =$/;"	m	class:PDE_fokkerplanck_2d_complete
+ptr_	tensors.hpp	/^  pointer ptr_;$/;"	m	class:fk::matrix::matrix_iterator
+ptrs_size	kronmult.cpp	/^  int64_t ptrs_size;$/;"	m	class:kronmult::kronmult_workspace	file:
+r1_g1	pde/pde_fokkerplanck2_complete.hpp	/^  static P r1_g1(P const x, P const time = 0)$/;"	f	class:PDE_fokkerplanck_2d_complete
+r1_g2	pde/pde_fokkerplanck2_complete.hpp	/^  static P r1_g2(P const x, P const time = 0)$/;"	f	class:PDE_fokkerplanck_2d_complete
+r1_g3	pde/pde_fokkerplanck2_complete.hpp	/^  static P r1_g3(P const x, P const time = 0)$/;"	f	class:PDE_fokkerplanck_2d_complete
+r1_pterm1	pde/pde_fokkerplanck2_complete.hpp	/^  inline static partial_term<P> const r1_pterm1 =$/;"	m	class:PDE_fokkerplanck_2d_complete
+r1_pterm2	pde/pde_fokkerplanck2_complete.hpp	/^  inline static partial_term<P> const r1_pterm2 =$/;"	m	class:PDE_fokkerplanck_2d_complete
+r1_pterm3	pde/pde_fokkerplanck2_complete.hpp	/^  inline static partial_term<P> const r1_pterm3 =$/;"	m	class:PDE_fokkerplanck_2d_complete
+r1_term_p	pde/pde_fokkerplanck2_complete.hpp	/^  inline static term<P> const r1_term_p =$/;"	m	class:PDE_fokkerplanck_2d_complete
+r1_term_z	pde/pde_fokkerplanck2_complete.hpp	/^  inline static term<P> const r1_term_z =$/;"	m	class:PDE_fokkerplanck_2d_complete
+r2_g1	pde/pde_fokkerplanck2_complete.hpp	/^  static P r2_g1(P const x, P const time = 0)$/;"	f	class:PDE_fokkerplanck_2d_complete
+r2_g2	pde/pde_fokkerplanck2_complete.hpp	/^  static P r2_g2(P const x, P const time = 0)$/;"	f	class:PDE_fokkerplanck_2d_complete
+r2_pterm1	pde/pde_fokkerplanck2_complete.hpp	/^  inline static partial_term<P> const r2_pterm1 =$/;"	m	class:PDE_fokkerplanck_2d_complete
+r2_pterm2	pde/pde_fokkerplanck2_complete.hpp	/^  inline static partial_term<P> const r2_pterm2 =$/;"	m	class:PDE_fokkerplanck_2d_complete
+r2_term_p	pde/pde_fokkerplanck2_complete.hpp	/^  inline static term<P> const r2_term_p =$/;"	m	class:PDE_fokkerplanck_2d_complete
+r2_term_z	pde/pde_fokkerplanck2_complete.hpp	/^  inline static term<P> const r2_term_z =$/;"	m	class:PDE_fokkerplanck_2d_complete
+read_matrix_from_txt_file	matlab_utilities.cpp	/^fk::matrix<double> read_matrix_from_txt_file(std::string const &path)$/;"	f
+read_scalar_from_txt_file	matlab_utilities.cpp	/^double read_scalar_from_txt_file(std::string const &path)$/;"	f
+read_vector_from_bin_file	matlab_utilities.cpp	/^fk::vector<double> read_vector_from_bin_file(std::string const &path)$/;"	f
+read_vector_from_txt_file	matlab_utilities.cpp	/^fk::vector<double> read_vector_from_txt_file(std::string const &path)$/;"	f
+real_solution_size	transformations.hpp	/^inline int real_solution_size(PDE<P> const &pde)$/;"	f
+realspace	batch.hpp	/^  realspace, \/\/ for realspace transform$/;"	e	enum:chain_method
+realspace_output_freq	program_options.hpp	/^  int const realspace_output_freq;$/;"	m	class:options
+realspace_output_freq	program_options.hpp	/^  int realspace_output_freq = DEFAULT_WRITE_FREQ;$/;"	m	class:parser
+receive	distribution.hpp	/^  receive$/;"	e	enum:message_direction
+rechain_coefficients	pde/pde_base.hpp	/^  void rechain_coefficients(dimension<P> const &adapted_dim)$/;"	f	class:term
+rechain_dimension	pde/pde_base.hpp	/^  void rechain_dimension(int const dim_index)$/;"	f	class:PDE
+recursive_kron	transformations.cpp	/^recursive_kron(std::vector<fk::matrix<P, mem_type::view>> &kron_matrices,$/;"	f
+redistribute_solution	adapt.cpp	/^distributed_grid<P>::redistribute_solution(fk::vector<P> const &x,$/;"	f	class:adapt::distributed_grid
+redistribute_vector	distribution.cpp	/^redistribute_vector(fk::vector<P> const &old_x,$/;"	f
+redistribute_vector_test	distribution_tests.cpp	/^void redistribute_vector_test(distribution_plan const &old_plan,$/;"	f
+reduce_results	distribution.cpp	/^void reduce_results(fk::vector<P> const &source, fk::vector<P> &dest,$/;"	f
+ref_count_	tensors.hpp	/^  std::shared_ptr<int> ref_count_ = nullptr;$/;"	m	class:fk::matrix
+ref_count_	tensors.hpp	/^  std::shared_ptr<int> ref_count_ = nullptr;$/;"	m	class:fk::vector
+refine	adapt.cpp	/^distributed_grid<P>::refine(fk::vector<P> const &x, options const &cli_opts)$/;"	f	class:adapt::distributed_grid
+refine_elements	adapt.cpp	/^fk::vector<P> distributed_grid<P>::refine_elements($/;"	f	class:adapt::distributed_grid
+refine_solution	adapt.cpp	/^distributed_grid<P>::refine_solution(PDE<P> &pde, fk::vector<P> const &x,$/;"	f	class:adapt::distributed_grid
+region_messages_remap	distribution.cpp	/^region_messages_remap(distribution_plan const &old_plan,$/;"	f
+remap_for_addtl	adapt.cpp	/^remap_for_addtl(int64_t const old_num_elems)$/;"	f	namespace:adapt
+remap_for_delete	adapt.cpp	/^remap_for_delete(std::vector<int64_t> const &deleted_indices,$/;"	f	namespace:adapt
+remove_elements	adapt.cpp	/^fk::vector<P> distributed_grid<P>::remove_elements($/;"	f	class:adapt::distributed_grid
+remove_elements	elements.cpp	/^void table::remove_elements(std::vector<int64_t> const &indices)$/;"	f	class:elements::table
+report	tools.cpp	/^std::string simple_timer::report()$/;"	f	class:tools::simple_timer
+reshape	matlab_utilities.cpp	/^fk::matrix<P> reshape(fk::matrix<P, mem> mat, int const nrow, int const ncol)$/;"	f
+resize	tensors.hpp	/^fk::vector<P, mem, resrc>::resize(int const new_size)$/;"	f	class:fk::fk::vector
+resource	lib_dispatch.hpp	/^enum class resource$/;"	g
+right	basis.hpp	/^  right$/;"	e	enum:basis::side
+right	pde/pde_base.hpp	/^  boundary_condition const right;$/;"	m	class:partial_term
+right_	batch.hpp	/^  std::vector<batch<P, resrc>> right_;$/;"	m	class:batch_chain
+right_bc_funcs	pde/pde_base.hpp	/^  std::vector<vector_func<P>> const right_bc_funcs;$/;"	m	class:partial_term::std
+right_bc_time_func	pde/pde_base.hpp	/^  scalar_func<P> const right_bc_time_func;$/;"	m	class:partial_term
+right_homo	pde/pde_base.hpp	/^  homogeneity const right_homo;$/;"	m	class:partial_term
+rotg	lib_dispatch.cpp	/^void rotg(P *a, P *b, P *c, P *s, resource const resrc)$/;"	f	namespace:lib_dispatch
+round_robin_wheel	distribution.cpp	/^  round_robin_wheel(int const size) : size(size), current_index(0) {}$/;"	f	class:round_robin_wheel
+round_robin_wheel	distribution.cpp	/^class round_robin_wheel$/;"	c	file:
+row_start	distribution.hpp	/^  int const row_start;$/;"	m	class:element_subgrid
+row_stop	distribution.hpp	/^  int const row_stop;$/;"	m	class:element_subgrid
+rows_	tensors.hpp	/^  int rows_;$/;"	m	class:fk::matrix::matrix_iterator
+scal	fast_math.hpp	/^fk::vector<P, mem, resrc> &scal(P const alpha, fk::vector<P, mem, resrc> &x)$/;"	f	class:fm::fk
+scal	lib_dispatch.cpp	/^void scal(int *n, P *alpha, P *x, int *incx, resource const resrc)$/;"	f	namespace:lib_dispatch
+scale	tensors.hpp	/^fk::vector<P, mem> &fk::vector<P, mem, resrc>::scale(P const x)$/;"	f	class:fk::fk::vector
+send	distribution.hpp	/^  send,$/;"	e	enum:message_direction
+set_coefficients	pde/pde_base.hpp	/^  set_coefficients(fk::matrix<P> const &coeffs, int const term, int const dim)$/;"	f	class:PDE
+set_coefficients	pde/pde_base.hpp	/^  void set_coefficients(fk::matrix<P> const &new_coefficients)$/;"	f	class:partial_term
+set_coefficients	pde/pde_base.hpp	/^  void set_coefficients(fk::matrix<P> const &new_coefficients)$/;"	f	class:term
+set_data	pde/pde_base.hpp	/^  void set_data(fk::vector<P> const &data)$/;"	f	class:term
+set_degree	pde/pde_base.hpp	/^  void set_degree(int const degree)$/;"	f	class:dimension
+set_device	lib_dispatch.cpp	/^  void set_device(int const local_rank)$/;"	f	struct:device_handler
+set_dt	pde/pde_base.hpp	/^  void set_dt(P const dt)$/;"	f	class:PDE
+set_global_comm	distribution.cpp	/^  void set_global_comm(MPI_Comm const &comm)$/;"	f	struct:distribution_handler
+set_level	pde/pde_base.hpp	/^  void set_level(int const level)$/;"	f	class:dimension
+set_partial_coefficients	pde/pde_base.hpp	/^  void set_partial_coefficients(fk::matrix<P> const &coeffs, int const pterm)$/;"	f	class:term
+set_partial_coefficients	pde/pde_base.hpp	/^  void set_partial_coefficients(int const term, int const dim, int const pterm,$/;"	f	class:PDE
+set_submatrix	tensors.hpp	/^fk::matrix<P, mem, resrc>::set_submatrix(int const row_idx, int const col_idx,$/;"	f	class:fk::fk::matrix
+set_subvector	tensors.hpp	/^fk::vector<P, mem, resrc>::set_subvector(int const index,$/;"	f	class:fk::fk::vector
+should_output_realspace	program_options.cpp	/^bool options::should_output_realspace(int const i) const$/;"	f	class:options
+should_output_wavelet	program_options.cpp	/^bool options::should_output_wavelet(int const i) const$/;"	f	class:options
+shuffle_random	tools_tests.cpp	/^double shuffle_random(int const num_items)$/;"	f
+side	basis.hpp	/^enum class side$/;"	g	namespace:basis
+sig	pde/pde_fokkerplanck1_4p4.hpp	/^  static double constexpr sig = 0.1;$/;"	m	class:PDE_fokkerplanck_1d_4p4
+sig	pde/pde_fokkerplanck1_4p5.hpp	/^  static double constexpr sig = 0.1;$/;"	m	class:PDE_fokkerplanck_1d_4p5
+simple_gmres	solver.cpp	/^P simple_gmres(fk::matrix<P> const &A, fk::vector<P> &x, fk::vector<P> const &b,$/;"	f	namespace:solver
+simple_timer	tools.hpp	/^class simple_timer$/;"	c	namespace:tools
+single_column_kron	tensors.hpp	/^fk::vector<P> fk::vector<P, mem, resrc>::single_column_kron($/;"	f	class:fk::vector
+size	adapt.hpp	/^  int64_t size() const { return table_.size(); }$/;"	f	class:adapt::distributed_grid
+size	distribution.cpp	/^  int const size;$/;"	m	class:round_robin_wheel	file:
+size	distribution.hpp	/^  int size() const { return stop - start + 1; }$/;"	f	struct:grid_limits
+size	distribution.hpp	/^  int64_t size() const { return static_cast<int64_t>(nrows()) * ncols(); };$/;"	f	class:element_subgrid
+size	elements.hpp	/^  int64_t size() const$/;"	f	class:elements::table
+size	tensors.hpp	/^  int size() const { return nrows() * ncols(); }$/;"	f	class:fk::matrix
+size	tensors.hpp	/^  int size() const { return size_; }$/;"	f	class:fk::vector
+size_	tensors.hpp	/^  int size_; \/\/< dimension$/;"	m	class:fk::vector
+slate	program_options.hpp	/^  slate$/;"	e	enum:solve_opts
+slate_gesv	lib_dispatch.cpp	/^void slate_gesv(int *n, int *nrhs, P *A, int *lda, int *ipiv, P *b, int *ldb,$/;"	f	namespace:lib_dispatch
+slate_getrs	lib_dispatch.cpp	/^void slate_getrs(char *trans, int *n, int *nrhs, P *A, int *lda, int *ipiv,$/;"	f	namespace:lib_dispatch
+solve_opts	program_options.hpp	/^enum class solve_opts$/;"	g
+solver	program_options.hpp	/^  solve_opts const solver;$/;"	m	class:options
+solver	program_options.hpp	/^  solve_opts solver = DEFAULT_SOLVER;$/;"	m	class:parser
+solver	solver.cpp	/^namespace solver$/;"	n	file:
+solver	solver.hpp	/^namespace solver$/;"	n
+solver_mapping	program_options.hpp	/^static solve_map_t const solver_mapping = {{"direct", solve_opts::direct},$/;"	v
+solver_str	program_options.hpp	/^  std::string solver_str = NO_USER_VALUE_STR;$/;"	m	class:parser
+source	pde/pde_base.hpp	/^  source(std::vector<vector_func<P>> const source_funcs,$/;"	f	class:source
+source	pde/pde_base.hpp	/^class source$/;"	c
+source0_	pde/pde_continuity1.hpp	/^  inline static source<P> const source0_ =$/;"	m	class:PDE_continuity_1d
+source0_	pde/pde_continuity2.hpp	/^  inline static source<P> const source0_ =$/;"	m	class:PDE_continuity_2d
+source0_	pde/pde_continuity3.hpp	/^  inline static source<P> const source0_ =$/;"	m	class:PDE_continuity_3d
+source0_	pde/pde_continuity6.hpp	/^  inline static source<P> const source0_ =$/;"	m	class:PDE_continuity_6d
+source1_	pde/pde_continuity1.hpp	/^  inline static source<P> const source1_ =$/;"	m	class:PDE_continuity_1d
+source1_	pde/pde_continuity2.hpp	/^  inline static source<P> const source1_ =$/;"	m	class:PDE_continuity_2d
+source1_	pde/pde_continuity3.hpp	/^  inline static source<P> const source1_ =$/;"	m	class:PDE_continuity_3d
+source1_	pde/pde_continuity6.hpp	/^  inline static source<P> const source1_ =$/;"	m	class:PDE_continuity_6d
+source2_	pde/pde_continuity2.hpp	/^  inline static source<P> const source2_ =$/;"	m	class:PDE_continuity_2d
+source2_	pde/pde_continuity3.hpp	/^  inline static source<P> const source2_ =$/;"	m	class:PDE_continuity_3d
+source2_	pde/pde_continuity6.hpp	/^  inline static source<P> const source2_ =$/;"	m	class:PDE_continuity_6d
+source3_	pde/pde_continuity3.hpp	/^  inline static source<P> const source3_ =$/;"	m	class:PDE_continuity_3d
+source3_	pde/pde_continuity6.hpp	/^  inline static source<P> const source3_ =$/;"	m	class:PDE_continuity_6d
+source4_	pde/pde_continuity6.hpp	/^  inline static source<P> const source4_ =$/;"	m	class:PDE_continuity_6d
+source5_	pde/pde_continuity6.hpp	/^  inline static source<P> const source5_ =$/;"	m	class:PDE_continuity_6d
+source6_	pde/pde_continuity6.hpp	/^  inline static source<P> const source6_ =$/;"	m	class:PDE_continuity_6d
+source_0	pde/pde_diffusion1.hpp	/^  inline static source<P> const source_0 = source<P>({source_0_x}, source_0_t);$/;"	m	class:PDE_diffusion_1d
+source_0_dim0	pde/pde_continuity1.hpp	/^  static fk::vector<P> source_0_dim0(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_1d
+source_0_dim0	pde/pde_continuity2.hpp	/^  static fk::vector<P> source_0_dim0(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_2d
+source_0_dim0	pde/pde_continuity3.hpp	/^  static fk::vector<P> source_0_dim0(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_3d
+source_0_dim1	pde/pde_continuity2.hpp	/^  static fk::vector<P> source_0_dim1(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_2d
+source_0_dim1	pde/pde_continuity3.hpp	/^  static fk::vector<P> source_0_dim1(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_3d
+source_0_dim2	pde/pde_continuity3.hpp	/^  static fk::vector<P> source_0_dim2(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_3d
+source_0_t	pde/pde_diffusion1.hpp	/^  static P source_0_t(P const t)$/;"	f	class:PDE_diffusion_1d
+source_0_time	pde/pde_continuity1.hpp	/^  static P source_0_time(P const time) { return cos(time); }$/;"	f	class:PDE_continuity_1d
+source_0_time	pde/pde_continuity2.hpp	/^  static P source_0_time(P const time) { return 2.0 * cos(2.0 * time); }$/;"	f	class:PDE_continuity_2d
+source_0_time	pde/pde_continuity3.hpp	/^  static P source_0_time(P const time) { return 2.0 * cos(2.0 * time); }$/;"	f	class:PDE_continuity_3d
+source_0_time	pde/pde_continuity6.hpp	/^  static P source_0_time(P const time) { return 2.0 * cos(targ * time); }$/;"	f	class:PDE_continuity_6d
+source_0_vx	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_0_vx(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_0_vy	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_0_vy(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_0_vz	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_0_vz(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_0_x	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_0_x(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_0_x	pde/pde_diffusion1.hpp	/^  static fk::vector<P> source_0_x(fk::vector<P> const x, P const t)$/;"	f	class:PDE_diffusion_1d
+source_0_y	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_0_y(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_0_z	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_0_z(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_1_dim0	pde/pde_continuity1.hpp	/^  static fk::vector<P> source_1_dim0(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_1d
+source_1_dim0	pde/pde_continuity2.hpp	/^  static fk::vector<P> source_1_dim0(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_2d
+source_1_dim0	pde/pde_continuity3.hpp	/^  static fk::vector<P> source_1_dim0(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_3d
+source_1_dim1	pde/pde_continuity2.hpp	/^  static fk::vector<P> source_1_dim1(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_2d
+source_1_dim1	pde/pde_continuity3.hpp	/^  static fk::vector<P> source_1_dim1(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_3d
+source_1_dim2	pde/pde_continuity3.hpp	/^  static fk::vector<P> source_1_dim2(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_3d
+source_1_time	pde/pde_continuity1.hpp	/^  static P source_1_time(P const time) { return -2.0 * PI * sin(time); }$/;"	f	class:PDE_continuity_1d
+source_1_time	pde/pde_continuity2.hpp	/^  static P source_1_time(P const time) { return 2.0 * PI * sin(2.0 * time); }$/;"	f	class:PDE_continuity_2d
+source_1_time	pde/pde_continuity3.hpp	/^  static P source_1_time(P const time) { return 2.0 * PI * sin(2.0 * time); }$/;"	f	class:PDE_continuity_3d
+source_1_time	pde/pde_continuity6.hpp	/^  static P source_1_time(P const time) { return 0.5 * PI * sin(targ * time); }$/;"	f	class:PDE_continuity_6d
+source_1_vx	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_1_vx(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_1_vy	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_1_vy(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_1_vz	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_1_vz(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_1_x	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_1_x(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_1_y	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_1_y(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_1_z	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_1_z(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_2_dim0	pde/pde_continuity2.hpp	/^  static fk::vector<P> source_2_dim0(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_2d
+source_2_dim0	pde/pde_continuity3.hpp	/^  static fk::vector<P> source_2_dim0(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_3d
+source_2_dim1	pde/pde_continuity2.hpp	/^  static fk::vector<P> source_2_dim1(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_2d
+source_2_dim1	pde/pde_continuity3.hpp	/^  static fk::vector<P> source_2_dim1(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_3d
+source_2_dim2	pde/pde_continuity3.hpp	/^  static fk::vector<P> source_2_dim2(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_3d
+source_2_time	pde/pde_continuity2.hpp	/^  static P source_2_time(P const time) { return -PI * sin(2.0 * time); }$/;"	f	class:PDE_continuity_2d
+source_2_time	pde/pde_continuity3.hpp	/^  static P source_2_time(P const time) { return -PI * sin(2.0 * time); }$/;"	f	class:PDE_continuity_3d
+source_2_time	pde/pde_continuity6.hpp	/^  static P source_2_time(P const time) { return -PI * sin(targ * time); }$/;"	f	class:PDE_continuity_6d
+source_2_vx	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_2_vx(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_2_vy	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_2_vy(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_2_vz	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_2_vz(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_2_x	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_2_x(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_2_y	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_2_y(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_2_z	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_2_z(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_3_dim0	pde/pde_continuity3.hpp	/^  static fk::vector<P> source_3_dim0(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_3d
+source_3_dim1	pde/pde_continuity3.hpp	/^  static fk::vector<P> source_3_dim1(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_3d
+source_3_dim2	pde/pde_continuity3.hpp	/^  static fk::vector<P> source_3_dim2(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_3d
+source_3_time	pde/pde_continuity3.hpp	/^  static P source_3_time(P const time)$/;"	f	class:PDE_continuity_3d
+source_3_time	pde/pde_continuity6.hpp	/^  static P source_3_time(P const time) { return -PI * sin(targ * time); }$/;"	f	class:PDE_continuity_6d
+source_3_vx	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_3_vx(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_3_vy	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_3_vy(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_3_vz	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_3_vz(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_3_x	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_3_x(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_3_y	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_3_y(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_3_z	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_3_z(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_4_time	pde/pde_continuity6.hpp	/^  static P source_4_time(P const time)$/;"	f	class:PDE_continuity_6d
+source_4_vx	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_4_vx(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_4_vy	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_4_vy(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_4_vz	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_4_vz(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_4_x	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_4_x(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_4_y	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_4_y(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_4_z	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_4_z(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_5_time	pde/pde_continuity6.hpp	/^  static P source_5_time(P const time)$/;"	f	class:PDE_continuity_6d
+source_5_vx	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_5_vx(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_5_vy	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_5_vy(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_5_vz	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_5_vz(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_5_x	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_5_x(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_5_y	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_5_y(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_5_z	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_5_z(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_6_time	pde/pde_continuity6.hpp	/^  static P source_6_time(P const time)$/;"	f	class:PDE_continuity_6d
+source_6_vx	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_6_vx(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_6_vy	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_6_vy(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_6_vz	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_6_vz(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_6_x	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_6_x(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_6_y	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_6_y(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_6_z	pde/pde_continuity6.hpp	/^  static fk::vector<P> source_6_z(fk::vector<P> const x, P const t = 0)$/;"	f	class:PDE_continuity_6d
+source_funcs	pde/pde_base.hpp	/^  std::vector<vector_func<P>> const source_funcs;$/;"	m	class:source::std
+source_range	distribution.hpp	/^  grid_limits const source_range;$/;"	m	struct:message
+sources	pde/pde_base.hpp	/^  std::vector<source<P>> const sources;$/;"	m	class:PDE::std
+sources_	pde/pde_continuity1.hpp	/^  inline static std::vector<source<P>> const sources_ = {source0_, source1_};$/;"	m	class:PDE_continuity_1d::std
+sources_	pde/pde_continuity2.hpp	/^  inline static std::vector<source<P>> const sources_ = {source0_, source1_,$/;"	m	class:PDE_continuity_2d::std
+sources_	pde/pde_continuity3.hpp	/^  inline static std::vector<source<P>> const sources_ = {source0_, source1_,$/;"	m	class:PDE_continuity_3d::std
+sources_	pde/pde_continuity6.hpp	/^  inline static std::vector<source<P>> const sources_ = {$/;"	m	class:PDE_continuity_6d::std
+sources_	pde/pde_diffusion1.hpp	/^  inline static std::vector<source<P>> const sources_ = {source_0};$/;"	m	class:PDE_diffusion_1d::std
+sources_	pde/pde_diffusion2.hpp	/^  inline static std::vector<source<P>> const sources_ = {};$/;"	m	class:PDE_diffusion_2d::std
+sources_	pde/pde_fokkerplanck1_4p3.hpp	/^  inline static std::vector<source<P>> const sources_ = {};$/;"	m	class:PDE_fokkerplanck_1d_4p3::std
+sources_	pde/pde_fokkerplanck1_4p4.hpp	/^  inline static std::vector<source<P>> const sources_ = {};$/;"	m	class:PDE_fokkerplanck_1d_4p4::std
+sources_	pde/pde_fokkerplanck1_4p5.hpp	/^  inline static std::vector<source<P>> const sources_ = {};$/;"	m	class:PDE_fokkerplanck_1d_4p5::std
+sources_	pde/pde_fokkerplanck1_pitch_C.hpp	/^  inline static std::vector<source<P>> const sources_ = {};$/;"	m	class:PDE_fokkerplanck_1d_pitch_C::std
+sources_	pde/pde_fokkerplanck1_pitch_E.hpp	/^  inline static std::vector<source<P>> const sources_ = {};$/;"	m	class:PDE_fokkerplanck_1d_pitch_E::std
+sources_	pde/pde_fokkerplanck2_complete.hpp	/^  inline static std::vector<source<P>> const sources_ = {};$/;"	m	class:PDE_fokkerplanck_2d_complete::std
+spin	distribution.cpp	/^  int spin()$/;"	f	class:round_robin_wheel
+stage_inputs_kronmult	device/kronmult_cuda.cpp	/^void stage_inputs_kronmult(P const *const x, P *const workspace,$/;"	f
+stage_inputs_kronmult_kernel	device/kronmult_cuda.cpp	/^stage_inputs_kronmult_kernel(P const *const x, P *const workspace,$/;"	f
+start	distribution.hpp	/^  int const start;$/;"	m	struct:grid_limits
+start	tools.hpp	/^  std::string const start(std::string const &identifier)$/;"	f	class:tools::simple_timer::std
+start_	tensors.hpp	/^  pointer start_;$/;"	m	class:fk::matrix::matrix_iterator
+starting_levels	program_options.hpp	/^  fk::vector<int> const starting_levels;$/;"	m	class:options::fk
+starting_levels	program_options.hpp	/^  fk::vector<int> starting_levels;$/;"	m	class:parser
+starting_levels_str	program_options.hpp	/^  std::string starting_levels_str = NO_USER_VALUE_STR;$/;"	m	class:parser
+stop	distribution.hpp	/^  int const stop;$/;"	m	struct:grid_limits
+stop	tools.hpp	/^  void stop(std::string const &identifier, double const flops = -1)$/;"	f	class:tools::simple_timer
+stride	tensors.hpp	/^  int stride() const { return stride_; }$/;"	f	class:fk::matrix
+stride_	batch.hpp	/^  int const stride_; \/\/ leading dimension passed into BLAS call for matrices;$/;"	m	class:batch
+stride_	tensors.hpp	/^  int stride_; \/\/< leading dimension;$/;"	m	class:fk::matrix
+stride_	tensors.hpp	/^  int stride_;$/;"	m	class:fk::matrix::matrix_iterator
+strided_iota	transformations.cpp	/^static void strided_iota(ForwardIterator first, ForwardIterator last, P value,$/;"	f	file:
+subgrid_messages_remap	distribution.cpp	/^subgrid_messages_remap(distribution_plan const &old_plan,$/;"	f	file:
+table	elements.cpp	/^table::table(options const &opts, PDE<P> const &pde)$/;"	f	class:elements::table
+table	elements.hpp	/^class table$/;"	c	namespace:elements
+table_	adapt.hpp	/^  elements::table table_;$/;"	m	class:adapt::distributed_grid
+targ	pde/pde_continuity6.hpp	/^  static double constexpr targ  = 2;$/;"	m	class:PDE_continuity_6d
+target	distribution.hpp	/^  int const target;$/;"	m	struct:message
+tau	pde/pde_fokkerplanck2_complete.hpp	/^  static double constexpr tau   = 1e5;$/;"	m	class:PDE_fokkerplanck_2d_complete
+term	pde/pde_base.hpp	/^  term(bool const time_dependent, fk::vector<P> const data,$/;"	f	class:term
+term	pde/pde_base.hpp	/^class term$/;"	c
+term0_dim0_	pde/pde_continuity1.hpp	/^  inline static term<P> term0_dim0_ =$/;"	m	class:PDE_continuity_1d
+term0_dim0_	pde/pde_continuity2.hpp	/^  inline static term<P> const term0_dim0_ =$/;"	m	class:PDE_continuity_2d
+term0_dim0_	pde/pde_continuity3.hpp	/^  inline static term<P> const term0_dim0_ =$/;"	m	class:PDE_continuity_3d
+term0_dim0_	pde/pde_fokkerplanck1_4p3.hpp	/^  inline static term<P> const term0_dim0_ =$/;"	m	class:PDE_fokkerplanck_1d_4p3
+term0_dim0_	pde/pde_fokkerplanck1_pitch_C.hpp	/^  inline static term<P> const term0_dim0_ =$/;"	m	class:PDE_fokkerplanck_1d_pitch_C
+term0_dim0_	pde/pde_fokkerplanck1_pitch_E.hpp	/^  inline static term<P> const term0_dim0_ =$/;"	m	class:PDE_fokkerplanck_1d_pitch_E
+term0_dim1_	pde/pde_continuity2.hpp	/^  inline static term<P> const term0_dim1_ =$/;"	m	class:PDE_continuity_2d
+term0_x_	pde/pde_continuity6.hpp	/^  inline static term<P> const term0_x_ =$/;"	m	class:PDE_continuity_6d
+term1_dim0_	pde/pde_continuity2.hpp	/^  inline static term<P> const term1_dim0_ =$/;"	m	class:PDE_continuity_2d
+term1_dim1_	pde/pde_continuity2.hpp	/^  inline static term<P> const term1_dim1_ =$/;"	m	class:PDE_continuity_2d
+term1_dim1_	pde/pde_continuity3.hpp	/^  inline static term<P> const term1_dim1_ =$/;"	m	class:PDE_continuity_3d
+term1_y_	pde/pde_continuity6.hpp	/^  inline static term<P> const term1_y_ =$/;"	m	class:PDE_continuity_6d
+term2_dim2_	pde/pde_continuity3.hpp	/^  inline static term<P> const term2_dim2_ =$/;"	m	class:PDE_continuity_3d
+term2_z_	pde/pde_continuity6.hpp	/^  inline static term<P> const term2_z_ =$/;"	m	class:PDE_continuity_6d
+term3_vx_	pde/pde_continuity6.hpp	/^  inline static term<P> const term3_vx_ =$/;"	m	class:PDE_continuity_6d
+term4_vy_	pde/pde_continuity6.hpp	/^  inline static term<P> const term4_vy_ =$/;"	m	class:PDE_continuity_6d
+term5_vz_	pde/pde_continuity6.hpp	/^  inline static term<P> const term5_vz_ =$/;"	m	class:PDE_continuity_6d
+termC	pde/pde_fokkerplanck1_4p4.hpp	/^  inline static std::vector<term<P>> const termC = {termC_z};$/;"	m	class:PDE_fokkerplanck_1d_4p4::std
+termC	pde/pde_fokkerplanck1_4p5.hpp	/^  inline static std::vector<term<P>> const termC = {termC_z};$/;"	m	class:PDE_fokkerplanck_1d_4p5::std
+termC1	pde/pde_fokkerplanck2_complete.hpp	/^  inline static std::vector<term<P>> const termC1 = {c1_term_p, I_};$/;"	m	class:PDE_fokkerplanck_2d_complete::std
+termC2	pde/pde_fokkerplanck2_complete.hpp	/^  inline static std::vector<term<P>> const termC2 = {c2_term_p, I_};$/;"	m	class:PDE_fokkerplanck_2d_complete::std
+termC3	pde/pde_fokkerplanck2_complete.hpp	/^  inline static std::vector<term<P>> const termC3 = {c3_term_p, c3_term_z};$/;"	m	class:PDE_fokkerplanck_2d_complete::std
+termC_z	pde/pde_fokkerplanck1_4p4.hpp	/^  inline static term<P> const termC_z =$/;"	m	class:PDE_fokkerplanck_1d_4p4
+termC_z	pde/pde_fokkerplanck1_4p5.hpp	/^  inline static term<P> const termC_z =$/;"	m	class:PDE_fokkerplanck_1d_4p5
+termE	pde/pde_fokkerplanck1_4p4.hpp	/^  inline static std::vector<term<P>> const termE = {termE_z};$/;"	m	class:PDE_fokkerplanck_1d_4p4::std
+termE	pde/pde_fokkerplanck1_4p5.hpp	/^  inline static std::vector<term<P>> const termE = {termE_z};$/;"	m	class:PDE_fokkerplanck_1d_4p5::std
+termE1	pde/pde_fokkerplanck2_complete.hpp	/^  inline static std::vector<term<P>> const termE1 = {e1_term_p, e1_term_z};$/;"	m	class:PDE_fokkerplanck_2d_complete::std
+termE2	pde/pde_fokkerplanck2_complete.hpp	/^  inline static std::vector<term<P>> const termE2 = {e2_term_p, e2_term_z};$/;"	m	class:PDE_fokkerplanck_2d_complete::std
+termE_z	pde/pde_fokkerplanck1_4p4.hpp	/^  inline static term<P> const termE_z =$/;"	m	class:PDE_fokkerplanck_1d_4p4
+termE_z	pde/pde_fokkerplanck1_4p5.hpp	/^  inline static term<P> const termE_z =$/;"	m	class:PDE_fokkerplanck_1d_4p5
+termR	pde/pde_fokkerplanck1_4p5.hpp	/^  inline static std::vector<term<P>> const termR = {termR_z};$/;"	m	class:PDE_fokkerplanck_1d_4p5::std
+termR1	pde/pde_fokkerplanck2_complete.hpp	/^  inline static std::vector<term<P>> const termR1 = {r1_term_p, r1_term_z};$/;"	m	class:PDE_fokkerplanck_2d_complete::std
+termR2	pde/pde_fokkerplanck2_complete.hpp	/^  inline static std::vector<term<P>> const termR2 = {r2_term_p, r2_term_z};$/;"	m	class:PDE_fokkerplanck_2d_complete::std
+termR_z	pde/pde_fokkerplanck1_4p5.hpp	/^  inline static term<P> const termR_z =$/;"	m	class:PDE_fokkerplanck_1d_4p5
+term_0	pde/pde_diffusion1.hpp	/^  inline static term<P> const term_0 =$/;"	m	class:PDE_diffusion_1d
+term_0	pde/pde_diffusion2.hpp	/^  inline static term<P> const term_0 =$/;"	m	class:PDE_diffusion_2d
+term_1	pde/pde_diffusion2.hpp	/^  inline static term<P> const term_1 =$/;"	m	class:PDE_diffusion_2d
+terminate_all_ranks	distribution.cpp	/^static void terminate_all_ranks(int signum)$/;"	f	file:
+terms0_	pde/pde_continuity1.hpp	/^  inline static std::vector<term<P>> const terms0_ = {term0_dim0_};$/;"	m	class:PDE_continuity_1d::std
+terms0_	pde/pde_continuity2.hpp	/^  inline static std::vector<term<P>> const terms0_ = {term0_dim0_, term0_dim1_};$/;"	m	class:PDE_continuity_2d::std
+terms0_	pde/pde_continuity3.hpp	/^  inline static std::vector<term<P>> const terms0_ = {term0_dim0_, I_, I_};$/;"	m	class:PDE_continuity_3d::std
+terms0_	pde/pde_continuity6.hpp	/^  inline static std::vector<term<P>> const terms0_ = {term0_x_, I_, I_,$/;"	m	class:PDE_continuity_6d::std
+terms0_	pde/pde_fokkerplanck1_4p3.hpp	/^  inline static std::vector<term<P>> const terms0_ = {term0_dim0_};$/;"	m	class:PDE_fokkerplanck_1d_4p3::std
+terms0_	pde/pde_fokkerplanck1_pitch_C.hpp	/^  inline static std::vector<term<P>> const terms0_ = {term0_dim0_};$/;"	m	class:PDE_fokkerplanck_1d_pitch_C::std
+terms0_	pde/pde_fokkerplanck1_pitch_E.hpp	/^  inline static std::vector<term<P>> const terms0_ = {term0_dim0_};$/;"	m	class:PDE_fokkerplanck_1d_pitch_E::std
+terms1_	pde/pde_continuity2.hpp	/^  inline static std::vector<term<P>> const terms1_ = {term1_dim0_, term1_dim1_};$/;"	m	class:PDE_continuity_2d::std
+terms1_	pde/pde_continuity3.hpp	/^  inline static std::vector<term<P>> const terms1_ = {I_, term1_dim1_, I_};$/;"	m	class:PDE_continuity_3d::std
+terms1_	pde/pde_continuity6.hpp	/^  inline static std::vector<term<P>> const terms1_ = {I_, term1_y_, I_,$/;"	m	class:PDE_continuity_6d::std
+terms2_	pde/pde_continuity3.hpp	/^  inline static std::vector<term<P>> const terms2_ = {I_, I_, term2_dim2_};$/;"	m	class:PDE_continuity_3d::std
+terms2_	pde/pde_continuity6.hpp	/^  inline static std::vector<term<P>> const terms2_ = {I_, I_, term2_z_,$/;"	m	class:PDE_continuity_6d::std
+terms3_	pde/pde_continuity6.hpp	/^  inline static std::vector<term<P>> const terms3_ = {I_,        I_, I_,$/;"	m	class:PDE_continuity_6d::std
+terms4_	pde/pde_continuity6.hpp	/^  inline static std::vector<term<P>> const terms4_ = {I_, I_,        I_,$/;"	m	class:PDE_continuity_6d::std
+terms5_	pde/pde_continuity6.hpp	/^  inline static std::vector<term<P>> const terms5_ = {I_, I_, I_,$/;"	m	class:PDE_continuity_6d::std
+terms_	pde/pde_base.hpp	/^  term_set<P> terms_;$/;"	m	class:PDE
+terms_	pde/pde_continuity1.hpp	/^  inline static term_set<P> const terms_ = {terms0_};$/;"	m	class:PDE_continuity_1d
+terms_	pde/pde_continuity2.hpp	/^  inline static term_set<P> const terms_ = {terms0_, terms1_};$/;"	m	class:PDE_continuity_2d
+terms_	pde/pde_continuity3.hpp	/^  inline static term_set<P> const terms_ = {terms0_, terms1_, terms2_};$/;"	m	class:PDE_continuity_3d
+terms_	pde/pde_continuity6.hpp	/^  inline static term_set<P> const terms_ = {terms0_, terms1_, terms2_,$/;"	m	class:PDE_continuity_6d
+terms_	pde/pde_diffusion1.hpp	/^  inline static term_set<P> const terms_           = {terms_0};$/;"	m	class:PDE_diffusion_1d
+terms_	pde/pde_diffusion2.hpp	/^  inline static term_set<P> const terms_ = {terms_0, terms_1};$/;"	m	class:PDE_diffusion_2d
+terms_	pde/pde_fokkerplanck1_4p3.hpp	/^  inline static term_set<P> const terms_ = {terms0_};$/;"	m	class:PDE_fokkerplanck_1d_4p3
+terms_	pde/pde_fokkerplanck1_4p4.hpp	/^  inline static term_set<P> const terms_ = {termE, termC};$/;"	m	class:PDE_fokkerplanck_1d_4p4
+terms_	pde/pde_fokkerplanck1_4p5.hpp	/^  inline static term_set<P> const terms_ = {termE, termC, termR};$/;"	m	class:PDE_fokkerplanck_1d_4p5
+terms_	pde/pde_fokkerplanck1_pitch_C.hpp	/^  inline static term_set<P> const terms_ = {terms0_};$/;"	m	class:PDE_fokkerplanck_1d_pitch_C
+terms_	pde/pde_fokkerplanck1_pitch_E.hpp	/^  inline static term_set<P> const terms_ = {terms0_};$/;"	m	class:PDE_fokkerplanck_1d_pitch_E
+terms_	pde/pde_fokkerplanck2_complete.hpp	/^  inline static term_set<P> const terms_ = {termC1, termC2, termC3, termE1,$/;"	m	class:PDE_fokkerplanck_2d_complete
+terms_0	pde/pde_diffusion1.hpp	/^  inline static std::vector<term<P>> const terms_0 = {term_0};$/;"	m	class:PDE_diffusion_1d::std
+terms_0	pde/pde_diffusion2.hpp	/^  inline static std::vector<term<P>> const terms_0 = {term_0, I_0};$/;"	m	class:PDE_diffusion_2d::std
+terms_1	pde/pde_diffusion2.hpp	/^  inline static std::vector<term<P>> const terms_1 = {I_1, term_1};$/;"	m	class:PDE_diffusion_2d::std
+test_adapt	adapt_tests.cpp	/^void test_adapt(parser const &problem, std::string const &gold_base)$/;"	f
+test_batched_gemm	batch_tests.cpp	/^void test_batched_gemm(int const m, int const n, int const k, int const lda,$/;"	f
+test_batched_gemm	lib_dispatch_tests.cpp	/^void test_batched_gemm(int const m, int const n, int const k, int const lda,$/;"	f
+test_batched_gemv	batch_tests.cpp	/^void test_batched_gemv(int const m, int const n, int const lda,$/;"	f
+test_batched_gemv	lib_dispatch_tests.cpp	/^void test_batched_gemv(int const m, int const n, int const lda,$/;"	f
+test_boundary_condition_vector	boundary_conditions_tests.cpp	/^void test_boundary_condition_vector(PDE<P> &pde,$/;"	f
+test_child_discovery	elements_tests.cpp	/^void test_child_discovery(PDE_opts const pde_choice,$/;"	f
+test_coefficients	coefficients_tests.cpp	/^void test_coefficients(parser const &parse, std::string const &gold_path,$/;"	f
+test_combine_dimensions	transformations_tests.cpp	/^void test_combine_dimensions(PDE<P> const &pde, P const time = 1.0,$/;"	f
+test_compute_boundary_condition	boundary_conditions_tests.cpp	/^void test_compute_boundary_condition(PDE<P> &pde,$/;"	f
+test_element_addition	elements_tests.cpp	/^void test_element_addition(PDE_opts const pde_choice,$/;"	f
+test_element_deletion	elements_tests.cpp	/^void test_element_deletion(PDE_opts const pde_choice,$/;"	f
+test_element_table	elements_tests.cpp	/^void test_element_table(PDE_opts const pde_choice,$/;"	f
+test_exact_solution	pde_tests.cpp	/^void test_exact_solution(PDE<P> const &pde, std::string const base_dir,$/;"	f
+test_fmwt_application	basis_tests.cpp	/^void test_fmwt_application(int const level, int const degree)$/;"	f
+test_fmwt_block_generation	basis_tests.cpp	/^void test_fmwt_block_generation(int const level, int const degree)$/;"	f
+test_gen_realspace_transform	transformations_tests.cpp	/^void test_gen_realspace_transform(PDE<P> const &pde,$/;"	f
+test_initial	adapt_tests.cpp	/^void test_initial(parser const &problem, std::string const &gold_filepath)$/;"	f
+test_initial_condition	pde_tests.cpp	/^void test_initial_condition(PDE<P> const &pde, std::string const base_dir,$/;"	f
+test_kron	batch_tests.cpp	/^void test_kron($/;"	f
+test_kronmult	kronmult_tests.cpp	/^void test_kronmult(parser const &parse, int const workspace_size_MB,$/;"	f
+test_kronmult_build	device/kronmult_cuda_tests.cpp	/^void test_kronmult_build(PDE<P> &pde)$/;"	f
+test_kronmult_staging	device/kronmult_cuda_tests.cpp	/^void test_kronmult_staging(int const num_elems, int const num_copies)$/;"	f
+test_multiwavelet_gen	basis_tests.cpp	/^void test_multiwavelet_gen(int const degree, P const tol_factor)$/;"	f
+test_operator_two_scale	basis_tests.cpp	/^void test_operator_two_scale(int const levels, int const degree)$/;"	f
+test_source_vectors	pde_tests.cpp	/^void test_source_vectors(PDE<P> const &pde, std::string const base_dir,$/;"	f
+test_wavelet_to_realspace	transformations_tests.cpp	/^void test_wavelet_to_realspace(PDE<P> const &pde,$/;"	f
+time_advance	time_advance.cpp	/^namespace time_advance$/;"	n	file:
+time_advance	time_advance.hpp	/^namespace time_advance$/;"	n
+time_advance_test	time_advance_tests.cpp	/^void time_advance_test(parser const &parse, std::string const &filepath,$/;"	f
+time_dependent	pde/pde_base.hpp	/^  bool const time_dependent;$/;"	m	class:term
+time_func	pde/pde_base.hpp	/^  scalar_func<P> const time_func;$/;"	m	class:source
+timer	tools.cpp	/^simple_timer timer;$/;"	m	namespace:tools	file:
+to_global_col	distribution.hpp	/^  int to_global_col(int const local_col) const$/;"	f	class:element_subgrid
+to_global_row	distribution.hpp	/^  int to_global_row(int const local_row) const$/;"	f	class:element_subgrid
+to_local_col	distribution.hpp	/^  int to_local_col(int const global_col) const$/;"	f	class:element_subgrid
+to_local_row	distribution.hpp	/^  int to_local_row(int const global_row) const$/;"	f	class:element_subgrid
+to_std	tensors.hpp	/^std::vector<P> fk::vector<P, mem, resrc>::to_std() const$/;"	f	class:fk::vector
+tol	tools_tests.cpp	/^static auto constexpr tol = 1e3;$/;"	v	file:
+tools	tools.cpp	/^namespace tools$/;"	n	file:
+tools	tools.hpp	/^namespace tools$/;"	n
+trans	basis.hpp	/^  trans$/;"	e	enum:basis::transpose
+transfer_from	tensors.hpp	/^fk::matrix<P, mem, resrc> &fk::matrix<P, mem, resrc>::transfer_from($/;"	f	class:fk::fk::matrix
+transfer_from	tensors.hpp	/^fk::vector<P, mem, resrc> &fk::vector<P, mem, resrc>::transfer_from($/;"	f	class:fk::fk::vector
+transform_and_combine_dimensions	transformations.hpp	/^inline fk::vector<P> transform_and_combine_dimensions($/;"	f
+transpose	basis.hpp	/^enum class transpose$/;"	g	namespace:basis
+transpose	tensors.hpp	/^fk::matrix<P, mem, resrc> &fk::matrix<P, mem, resrc>::transpose()$/;"	f	class:fk::fk::matrix
+two_raised_to	fast_math.hpp	/^inline T two_raised_to(T const exponent)$/;"	f	namespace:fm
+unnormalized	quadrature.hpp	/^  unnormalized,$/;"	e	enum:legendre_normalization
+update_col	tensors.hpp	/^fk::matrix<P, mem, resrc>::update_col(int const col_idx,$/;"	f	class:fk::fk::matrix
+update_dimension	pde/pde_base.hpp	/^  void update_dimension(int const dim_index, int const new_level)$/;"	f	class:PDE
+update_levels	adapt.cpp	/^static void update_levels(elements::table const &adapted_table, PDE<P> &pde,$/;"	f	namespace:adapt
+update_output_file	io.hpp	/^void update_output_file(HighFive::DataSet &dataset, fk::vector<P> const &vec,$/;"	f
+update_row	tensors.hpp	/^fk::matrix<P, mem, resrc>::update_row(int const row_idx,$/;"	f	class:fk::fk::matrix
+upwind	pde/pde_base.hpp	/^  upwind        = 1,$/;"	e	enum:flux_type
+use_full_grid	program_options.hpp	/^  bool const use_full_grid;$/;"	m	class:options
+use_full_grid	program_options.hpp	/^  bool use_full_grid = DEFAULT_USE_FG;  \/\/ enable full(\/sparse) grid$/;"	m	class:parser
+use_implicit_stepping	program_options.hpp	/^  bool const use_implicit_stepping;$/;"	m	class:options
+use_implicit_stepping	program_options.hpp	/^  bool use_implicit_stepping =$/;"	m	class:parser
+using_full_grid	program_options.cpp	/^bool parser::using_full_grid() const { return use_full_grid; }$/;"	f	class:parser
+using_implicit	program_options.cpp	/^bool parser::using_implicit() const { return use_implicit_stepping; }$/;"	f	class:parser
+vT	pde/pde_fokkerplanck2_complete.hpp	/^  static double constexpr vT    = 1;$/;"	m	class:PDE_fokkerplanck_2d_complete
+valid	program_options.hpp	/^  bool valid = true;$/;"	m	class:parser
+validate	kronmult.cpp	/^  void validate(PDE<P> const &pde, element_subgrid const &my_subgrid)$/;"	f	class:kronmult::kronmult_workspace	file:
+vec2csv	tools.cpp	/^std::string vec2csv(const std::vector<Sdouble>& vec) {$/;"	f	namespace:tools
+vec2csv	tools.hpp	/^std::string vec2csv(const std::vector<T>& vec) {$/;"	f	namespace:tools
+vector	tensors.hpp	/^class vector$/;"	c	namespace:fk
+vector	tensors.hpp	/^fk::vector<P, mem, resrc>::vector($/;"	f	class:fk::vector
+vector	tensors.hpp	/^fk::vector<P, mem, resrc>::vector()$/;"	f	class:fk::vector
+vector	tensors.hpp	/^fk::vector<P, mem, resrc>::vector(fk::matrix<P, omem, resrc> &source,$/;"	f	class:fk::vector
+vector	tensors.hpp	/^fk::vector<P, mem, resrc>::vector(fk::matrix<P, omem, resrc> const &source,$/;"	f	class:fk::vector
+vector	tensors.hpp	/^fk::vector<P, mem, resrc>::vector(fk::vector<P, omem, resrc> &a)$/;"	f	class:fk::vector
+vector	tensors.hpp	/^fk::vector<P, mem, resrc>::vector(fk::vector<P, omem, resrc> &vec,$/;"	f	class:fk::vector
+vector	tensors.hpp	/^fk::vector<P, mem, resrc>::vector(fk::vector<P, omem, resrc> const &a)$/;"	f	class:fk::vector
+vector	tensors.hpp	/^fk::vector<P, mem, resrc>::vector(fk::vector<P, omem, resrc> const &vec,$/;"	f	class:fk::vector
+vector	tensors.hpp	/^fk::vector<P, mem, resrc>::vector(int const size)$/;"	f	class:fk::vector
+vector	tensors.hpp	/^fk::vector<P, mem, resrc>::vector(std::initializer_list<P> list)$/;"	f	class:fk::vector
+vector	tensors.hpp	/^fk::vector<P, mem, resrc>::vector(std::vector<P> const &v)$/;"	f	class:fk::vector
+vector	tensors.hpp	/^fk::vector<P, mem, resrc>::vector(vector<P, mem, resrc> &&a)$/;"	f	class:fk::vector
+vector	tensors.hpp	/^fk::vector<P, mem, resrc>::vector(vector<P, mem, resrc> const &a)$/;"	f	class:fk::vector
+vector	tensors.hpp	/^fk::vector<P, mem, resrc>::vector(vector<P, omem, resrc> const &a)$/;"	f	class:fk::vector
+vector	tensors.hpp	/^fk::vector<P, mem, resrc>::vector(vector<PP, omem> const &a)$/;"	f	class:fk::vector
+view	tensors.hpp	/^  view,$/;"	e	enum:mem_type
+vx	pde/pde_fokkerplanck2_complete.hpp	/^  static auto constexpr vx    = [](P p) { return 1.0 \/ vT * (p \/ gamma(p)); };$/;"	m	class:PDE_fokkerplanck_2d_complete
+vx_	pde/pde_continuity6.hpp	/^  inline static dimension<P> const vx_ = dimension<P>((P)-10.0, \/\/ domain min$/;"	m	class:PDE_continuity_6d
+vxarg	pde/pde_continuity6.hpp	/^  static double constexpr vxarg = M_PI \/ 10;$/;"	m	class:PDE_continuity_6d
+vy_	pde/pde_continuity6.hpp	/^  inline static dimension<P> const vy_ = dimension<P>((P)-20.0, \/\/ domain min$/;"	m	class:PDE_continuity_6d
+vyarg	pde/pde_continuity6.hpp	/^  static double constexpr vyarg = M_PI \/ 20;$/;"	m	class:PDE_continuity_6d
+vz_	pde/pde_continuity6.hpp	/^  inline static dimension<P> const vz_ = dimension<P>((P)-30.0, \/\/ domain min$/;"	m	class:PDE_continuity_6d
+vzarg	pde/pde_continuity6.hpp	/^  static double constexpr vzarg = M_PI \/ 30;$/;"	m	class:PDE_continuity_6d
+wavelet_output_freq	program_options.hpp	/^  int const wavelet_output_freq;$/;"	m	class:options
+wavelet_output_freq	program_options.hpp	/^  int wavelet_output_freq = DEFAULT_WRITE_FREQ;$/;"	m	class:parser
+wavelet_to_realspace	transformations.cpp	/^void wavelet_to_realspace($/;"	f
+wavelet_transform	basis.cpp	/^wavelet_transform<P, resrc>::wavelet_transform(options const &program_opts,$/;"	f	class:basis::wavelet_transform
+wavelet_transform	basis.hpp	/^class wavelet_transform$/;"	c	namespace:basis
+work_ptrs	kronmult.cpp	/^  P **work_ptrs;$/;"	m	class:kronmult::kronmult_workspace	file:
+workspace_size	kronmult.cpp	/^  int64_t workspace_size;$/;"	m	class:kronmult::kronmult_workspace	file:
+write_at_step	program_options.cpp	/^bool options::write_at_step(int const i, int const freq) const$/;"	f	class:options
+x	lib_dispatch.cpp	1111;"	d	file:
+x_	pde/pde_continuity6.hpp	/^  inline static dimension<P> const x_ = dimension<P>(-1.0, \/\/ domain min$/;"	m	class:PDE_continuity_6d
+xarg	pde/pde_continuity6.hpp	/^  static double constexpr xarg  = M_PI;$/;"	m	class:PDE_continuity_6d
+y_	pde/pde_continuity6.hpp	/^  inline static dimension<P> const y_ = dimension<P>(-2.0, \/\/ domain min$/;"	m	class:PDE_continuity_6d
+yarg	pde/pde_continuity6.hpp	/^  static double constexpr yarg  = M_PI \/ 2;$/;"	m	class:PDE_continuity_6d
+z_	pde/pde_continuity6.hpp	/^  inline static dimension<P> const z_ = dimension<P>(-3.0, \/\/ domain min$/;"	m	class:PDE_continuity_6d
+z_domain_max	pde/pde_fokkerplanck2_complete.hpp	/^  inline static P const z_domain_max = 1;$/;"	m	class:PDE_fokkerplanck_2d_complete
+z_domain_min	pde/pde_fokkerplanck2_complete.hpp	/^  inline static P const z_domain_min = -1;$/;"	m	class:PDE_fokkerplanck_2d_complete
+zarg	pde/pde_continuity6.hpp	/^  static double constexpr zarg  = M_PI \/ 3;$/;"	m	class:PDE_continuity_6d
+~PDE	pde/pde_base.hpp	/^  virtual ~PDE() {}$/;"	f	class:PDE
+~batch	batch.cpp	/^batch<P, resrc>::~batch()$/;"	f	class:batch
+~device_handler	lib_dispatch.cpp	/^  ~device_handler()$/;"	f	struct:device_handler
+~distribution_test_init	adapt_tests.cpp	/^  ~distribution_test_init()$/;"	f	struct:distribution_test_init
+~distribution_test_init	basis_tests.cpp	/^  ~distribution_test_init() { finalize_distribution(); }$/;"	f	struct:distribution_test_init
+~distribution_test_init	distribution_tests.cpp	/^  ~distribution_test_init()$/;"	f	struct:distribution_test_init
+~distribution_test_init	kronmult_tests.cpp	/^  ~distribution_test_init() { finalize_distribution(); }$/;"	f	struct:distribution_test_init
+~distribution_test_init	program_options_tests.cpp	/^  ~distribution_test_init() { finalize_distribution(); }$/;"	f	struct:distribution_test_init
+~distribution_test_init	time_advance_tests.cpp	/^  ~distribution_test_init() { finalize_distribution(); }$/;"	f	struct:distribution_test_init
+~kronmult_workspace	kronmult.cpp	/^  ~kronmult_workspace()$/;"	f	class:kronmult::kronmult_workspace
+~matrix	tensors.hpp	/^fk::matrix<P, mem, resrc>::~matrix()$/;"	f	class:fk::matrix
+~vector	tensors.hpp	/^fk::vector<P, mem, resrc>::~vector()$/;"	f	class:fk::vector

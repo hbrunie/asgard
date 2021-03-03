@@ -8,6 +8,9 @@
 template<typename P>
 using unscaled_bc_parts = std::vector<std::vector<std::vector<fk::vector<P>>>>;
 
+template<typename P>
+using g_func_type = std::function<P(P const, P const)>;
+
 // FIXME refactor this component
 namespace boundary_conditions
 {
@@ -25,13 +28,13 @@ fk::vector<P> generate_scaled_bc(unscaled_bc_parts<P> const &left_bc_parts,
 
 template<typename P>
 fk::vector<P>
-compute_left_boundary_condition(g_func_type const g_func, P const time,
+compute_left_boundary_condition(g_func_type<P> const g_func, P const time,
                                 dimension<P> const &dim,
                                 vector_func<P> const bc_func);
 
 template<typename P>
 fk::vector<P>
-compute_right_boundary_condition(g_func_type const g_func, P const time,
+compute_right_boundary_condition(g_func_type<P> const g_func, P const time,
                                  dimension<P> const &dim,
                                  vector_func<P> const bc_func);
 
