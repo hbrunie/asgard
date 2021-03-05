@@ -70,31 +70,37 @@ adaptive_advance(method const step_method, PDE<P> &pde,
   profiling::stop("Adaptivity_Coarsening");
 
   // refine
-  profiling::start("Adaptivity_Refining");
+  profiling::start("Adaptivity_Refining_loop");
   auto refining = true;
   while (refining)
   {
     // update boundary conditions
+    profiling::start("Update_boundary_conditions");
     auto const my_subgrid     = adaptive_grid.get_subgrid(get_rank());
     auto const unscaled_parts = boundary_conditions::make_unscaled_bc_parts(
         pde, adaptive_grid.get_table(), transformer, my_subgrid.row_start,
         my_subgrid.row_stop);
+    profiling::stop("Update_boundary_conditions");
 
     // take a probing refinement step
+    profiling::start("Probing_refinement_step");
     auto const y_stepped =
         (step_method == method::exp)
             ? explicit_advance(pde, adaptive_grid, transformer, program_opts,
                                unscaled_parts, y, workspace_size_MB, time)
             : implicit_advance(pde, adaptive_grid, transformer, unscaled_parts,
                                y, time, program_opts.solver, update_system);
+    profiling::stop("Probing_refinement_step");
 
     auto const old_plan = adaptive_grid.get_distrib_plan();
     auto const old_size = adaptive_grid.size();
+    profiling::start("Refine_solution");
     auto const y_refined =
         adaptive_grid.refine_solution(pde, y_stepped, program_opts);
     refining = static_cast<bool>(
         get_global_max(static_cast<float>(y_stepped.size() != y_refined.size()),
                        adaptive_grid.get_distrib_plan()));
+    profiling::stop("Refine_solution");
 
     node_out() << " adapt -- refined grid from " << old_size << " -> "
                << adaptive_grid.size() << " elems\n";
@@ -110,7 +116,7 @@ adaptive_advance(method const step_method, PDE<P> &pde,
       y.resize(y1.size()) = y1;
     }
   }
-  profiling::stop("Adaptivity_Refining");
+  profiling::stop("Adaptivity_Refining_loop");
 
   return y;
 }
