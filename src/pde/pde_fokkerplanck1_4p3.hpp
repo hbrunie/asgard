@@ -49,7 +49,7 @@ private:
   static fk::vector<P>
   initial_condition_dim0(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     return analytic_solution_dim0(x, 0);
   }
 
@@ -85,7 +85,7 @@ private:
 
   static P analytic_solution_time(P const time)
   {
-    ignore(time);
+    UNUSED(time);
     return 1.0;
   }
 
@@ -123,8 +123,8 @@ private:
   // g-funcs
   static P g_func_1(P const x, P const time)
   {
-    ignore(time);
-    return -x * (1 - std::pow(x, 2));
+    UNUSED(time);
+    return -x * (1 - pow(x, 2));
   }
 
   inline static partial_term<P> const partial_term_0 = partial_term<P>(

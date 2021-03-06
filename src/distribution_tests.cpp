@@ -96,7 +96,7 @@ void check_coverage(elements::table const &table,
 
   for (auto const &[rank, grid] : to_test)
   {
-    ignore(rank);
+    UNUSED(rank);
     for (int row = grid.row_start; row <= grid.row_stop; ++row)
     {
       for (int col = grid.col_start; col <= grid.col_stop; ++col)
@@ -118,8 +118,8 @@ void check_even_sizing(elements::table const &table,
   auto const size = to_test.at(0).size();
   for (auto const &[rank, grid] : to_test)
   {
-    ignore(rank);
-    REQUIRE(std::abs(size - grid.size()) <
+    UNUSED(rank);
+    REQUIRE(abs(size - grid.size()) <
             table.size() *
                 2); // at most, a subgrid's size should differ from
                     // another's (in the case of uneven division of elements
@@ -513,7 +513,7 @@ void generate_messages_test(int const num_ranks, elements::table const &table)
   int const num_rows = plan.size() / num_cols;
   for (auto const &[rank, grid] : plan)
   {
-    ignore(grid);
+    UNUSED(grid);
 
     int const my_col    = rank % num_cols;
     int const row_begin = rank - my_col;
@@ -895,7 +895,7 @@ void generate_messages_remap_test(
   // note: each subgrid row has a full copy of the input vector
   for (auto const &[key, val] : changes_map)
   {
-    ignore(key);
+    UNUSED(key);
     for (auto i = val.start; i <= val.stop; ++i)
     {
       REQUIRE(coverage_counts[i] == num_subgrid_rows);
@@ -927,7 +927,7 @@ void generate_messages_remap_test(
   // pairing - all messages within rows
   for (auto const &[my_rank, my_subgrid] : new_plan)
   {
-    ignore(my_subgrid);
+    UNUSED(my_subgrid);
     auto const my_row        = my_rank / num_subgrid_cols;
     auto const &message_list = messages[my_rank];
     for (auto const message : message_list)

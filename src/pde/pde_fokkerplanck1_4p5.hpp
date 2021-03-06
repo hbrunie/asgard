@@ -52,7 +52,7 @@ private:
   static fk::vector<P>
   initial_condition_dim0(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     return analytic_solution_dim0(x, 0);
   }
 
@@ -75,7 +75,7 @@ private:
 
   static fk::vector<P> f0_vec(fk::vector<P> const z, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> f(z.size());
     for (int i = 0; i < z.size(); ++i)
     {
@@ -87,7 +87,7 @@ private:
   static fk::vector<P>
   analytic_solution_dim0(fk::vector<P> const z, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> f(z.size());
     for (int i = 0; i < z.size(); ++i)
     {
@@ -101,7 +101,7 @@ private:
 
   static P analytic_solution_time(P const time)
   {
-    ignore(time);
+    UNUSED(time);
     return 1.0;
   }
 
@@ -140,8 +140,8 @@ private:
 
   static P g_func_t1_z(P const x, P const time)
   {
-    ignore(time);
-    return -E * (1 - std::pow(x, 2));
+    UNUSED(time);
+    return -E * (1 - pow(x, 2));
   }
 
   inline static partial_term<P> const partial_term_0 = partial_term<P>(
@@ -162,19 +162,19 @@ private:
 
   static P g_func_0(P const x, P const time)
   {
-    ignore(x);
-    ignore(time);
+    UNUSED(x);
+    UNUSED(time);
     return -1.0;
   }
   static P g_func_t2_z1(P const x, P const time)
   {
-    ignore(time);
-    return 1 - std::pow(x, 2);
+    UNUSED(time);
+    return 1 - pow(x, 2);
   }
   static P g_func_t2_z2(P const x, P const time)
   {
-    ignore(x);
-    ignore(time);
+    UNUSED(x);
+    UNUSED(time);
     return 1.0;
   }
 
@@ -200,8 +200,8 @@ private:
 
   static P g_func_t3_z(P const x, P const time)
   {
-    ignore(time);
-    return -R * x * (1 - std::pow(x, 2));
+    UNUSED(time);
+    return -R * x * (1 - pow(x, 2));
   }
 
   inline static partial_term<P> const partial_term_3 = partial_term<P>(

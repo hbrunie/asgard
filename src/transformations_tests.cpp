@@ -108,7 +108,7 @@ TEMPLATE_TEST_CASE("forward multi-wavelet transform", "[transformations]",
     int const degree     = 2;
     int const levels     = 2;
     auto const double_it = [](fk::vector<TestType> x, TestType t) {
-      ignore(t);
+      UNUSED(t);
       return x * static_cast<TestType>(2.0);
     };
 
@@ -137,7 +137,7 @@ TEMPLATE_TEST_CASE("forward multi-wavelet transform", "[transformations]",
     int const degree       = 3;
     int const levels       = 4;
     auto const double_plus = [](fk::vector<TestType> x, TestType t) {
-      ignore(t);
+      UNUSED(t);
       return x + (x * static_cast<TestType>(2.0));
     };
 

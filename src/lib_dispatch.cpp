@@ -29,7 +29,6 @@ extern "C" void slate_sgetrs_(const char *trans, const int *n, const int *nrhs,
                               const int *ldb, int *info);
 #endif
 
-auto const ignore = [](auto ignored) { (void)ignored; };
 struct device_handler
 {
   device_handler()
@@ -65,7 +64,7 @@ struct device_handler
     expect(cublas_success == CUBLAS_STATUS_SUCCESS);
 
 #else
-    ignore(local_rank);
+    UNUSED(local_rank);
 #endif
   }
 
@@ -92,7 +91,7 @@ void initialize_libraries(int const local_rank)
   expect(local_rank >= 0);
   device.set_device(local_rank);
 #else
-  ignore(local_rank);
+  UNUSED(local_rank);
 #endif
 }
 
@@ -607,7 +606,7 @@ void getrf(int *m, int *n, P *A, int *lda, int *ipiv, int *info,
     // no non-fp blas on device
     expect(std::is_floating_point_v<P>);
     expect(*m == *n);
-    ignore(m);
+    UNUSED(m);
 
     P **A_d;
     auto stat = cudaMalloc((void **)&A_d, sizeof(P *));
@@ -669,7 +668,7 @@ void getri(int *n, P *A, int *lda, int *ipiv, P *work, int *lwork, int *info,
     expect(std::is_floating_point_v<P>);
 
     expect(*lwork == (*n) * (*n));
-    ignore(lwork);
+    UNUSED(lwork);
 
     P const **A_d;
     P **work_d;

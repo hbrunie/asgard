@@ -60,7 +60,7 @@ private:
   static fk::vector<P>
   initial_condition_dim0(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     auto f = analytic_solution_dim0(x, 0);
     return f;
   }
@@ -96,7 +96,7 @@ private:
 
   static P analytic_solution_time(P const time)
   {
-    ignore(time);
+    UNUSED(time);
     return 1.0;
   }
 
@@ -120,21 +120,21 @@ private:
   static P g_func_0(P const x, P const time)
   {
     // suppress compiler warnings
-    ignore(x);
-    ignore(time);
+    UNUSED(x);
+    UNUSED(time);
     return -1.0;
   }
   static P g_func_1(P const x, P const time)
   {
     // suppress compiler warnings
-    ignore(time);
-    return -1 * (1 - std::pow(x, 2));
+    UNUSED(time);
+    return -1 * (1 - pow(x, 2));
   }
   static P g_func_2(P const x, P const time)
   {
     // suppress compiler warnings
-    ignore(x);
-    ignore(time);
+    UNUSED(x);
+    UNUSED(time);
     return 1.0;
   }
 

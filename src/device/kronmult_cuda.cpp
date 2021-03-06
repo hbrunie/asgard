@@ -1,4 +1,5 @@
 #include "kronmult_cuda.hpp"
+#include "../tools.hpp"
 #include "build_info.hpp"
 
 #ifdef ASGARD_USE_CUDA
@@ -31,10 +32,9 @@
 
 // duplicated code from tools component - need host/device assert compiled
 // separately
-HOST_FUNCTION DEVICE_FUNCTION inline void expect(bool const condition)
+HOST_FUNCTION DEVICE_FUNCTION inline void local_expect(bool const condition)
 {
-  auto const ignore = [](auto ignored) { (void)ignored; };
-  ignore(condition);
+  UNUSED(condition);
   assert(condition);
 }
 
@@ -45,10 +45,10 @@ stage_inputs_kronmult_kernel(P const *const x, P *const workspace,
 {
 #ifdef ASGARD_USE_CUDA
 
-  expect(blockIdx.y == 0);
-  expect(blockIdx.z == 0);
-  expect(gridDim.y == 1);
-  expect(gridDim.z == 1);
+  local_expect(blockIdx.y == 0);
+  local_expect(blockIdx.z == 0);
+  local_expect(gridDim.y == 1);
+  local_expect(gridDim.z == 1);
 
   auto const id = static_cast<int64_t>(blockIdx.x) * blockDim.x + threadIdx.x;
   auto const num_threads = static_cast<int64_t>(blockDim.x) * gridDim.x;
@@ -83,8 +83,8 @@ template<typename P>
 void stage_inputs_kronmult(P const *const x, P *const workspace,
                            int const num_elems, int const num_copies)
 {
-  expect(num_elems > 0);
-  expect(num_copies > 0);
+  local_expect(num_elems > 0);
+  local_expect(num_copies > 0);
 
 #ifdef ASGARD_USE_CUDA
 
@@ -99,7 +99,7 @@ void stage_inputs_kronmult(P const *const x, P *const workspace,
       <<<num_blocks, num_threads>>>(x, workspace, num_elems, num_copies);
 
   auto const stat = cudaDeviceSynchronize();
-  expect(stat == cudaSuccess);
+  local_expect(stat == cudaSuccess);
 #else
   stage_inputs_kronmult_kernel(x, workspace, num_elems, num_copies);
 #endif
@@ -110,8 +110,8 @@ DEVICE_FUNCTION
 inline int get_1d_index(int const level, int const cell)
 
 {
-  expect((level >= 0) && (level < 30));
-  expect(cell >= 0);
+  local_expect((level >= 0) && (level < 30));
+  local_expect(cell >= 0);
 
   if (level == 0)
   {
@@ -141,7 +141,7 @@ DEVICE_FUNCTION
 void get_indices(int const *const coords, int indices[], int const degree,
                  int const num_dims)
 {
-  expect(degree > 0);
+  local_expect(degree > 0);
 
   for (int i = 0; i < num_dims; ++i)
   {
@@ -173,10 +173,10 @@ prepare_kronmult_kernel(int const *const flattened_table,
 
 #ifdef ASGARD_USE_CUDA
 
-  expect(blockIdx.y == 0);
-  expect(blockIdx.z == 0);
-  expect(gridDim.y == 1);
-  expect(gridDim.z == 1);
+  local_expect(blockIdx.y == 0);
+  local_expect(blockIdx.z == 0);
+  local_expect(gridDim.y == 1);
+  local_expect(gridDim.z == 1);
 
   auto const id = static_cast<int64_t>(blockIdx.x) * blockDim.x + threadIdx.x;
   auto const num_threads = static_cast<int64_t>(blockDim.x) * gridDim.x;
@@ -199,7 +199,7 @@ prepare_kronmult_kernel(int const *const flattened_table,
     auto const col = i % num_cols + elem_col_start;
 
     int constexpr max_dims = 6;
-    expect(num_dims <= max_dims);
+    local_expect(num_dims <= max_dims);
 
     // calculate and store operator row indices for this element
     int operator_row[max_dims];
@@ -252,22 +252,22 @@ void prepare_kronmult(int const *const flattened_table,
                       int const elem_row_start, int const elem_row_stop,
                       int const elem_col_start, int const elem_col_stop)
 {
-  expect(elem_col_stop >= elem_col_start);
-  expect(elem_row_stop >= elem_row_start);
-  expect(elem_row_start >= 0);
-  expect(elem_row_stop >= 0);
-  expect(degree > 0);
-  expect(num_terms > 0);
-  expect(num_dims > 0);
-  expect(flattened_table);
-  expect(operators);
-  expect(operator_lda > 0);
-  expect(element_x);
-  expect(element_work);
-  expect(operator_ptrs);
-  expect(work_ptrs);
-  expect(input_ptrs);
-  expect(output_ptrs);
+  local_expect(elem_col_stop >= elem_col_start);
+  local_expect(elem_row_stop >= elem_row_start);
+  local_expect(elem_row_start >= 0);
+  local_expect(elem_row_stop >= 0);
+  local_expect(degree > 0);
+  local_expect(num_terms > 0);
+  local_expect(num_dims > 0);
+  local_expect(flattened_table);
+  local_expect(operators);
+  local_expect(operator_lda > 0);
+  local_expect(element_x);
+  local_expect(element_work);
+  local_expect(operator_ptrs);
+  local_expect(work_ptrs);
+  local_expect(input_ptrs);
+  local_expect(output_ptrs);
 
 #ifdef ASGARD_USE_CUDA
   auto constexpr warp_size   = 32;
@@ -282,7 +282,7 @@ void prepare_kronmult(int const *const flattened_table,
       operator_ptrs, work_ptrs, input_ptrs, output_ptrs, degree, num_terms,
       num_dims, elem_row_start, elem_row_stop, elem_col_start, elem_col_stop);
   auto const stat = cudaDeviceSynchronize();
-  expect(stat == cudaSuccess);
+  local_expect(stat == cudaSuccess);
 #else
   prepare_kronmult_kernel(
       flattened_table, operators, operator_lda, element_x, element_work, fx,
@@ -333,14 +333,14 @@ void call_kronmult(int const n, P *x_ptrs[], P *output_ptrs[], P *work_ptrs[],
           n, operator_ptrs, lda, x_ptrs, output_ptrs, work_ptrs, num_krons);
       break;
     default:
-      expect(false);
+      local_expect(false);
     };
 
     // -------------------------------------------
     // note important to wait for kernel to finish
     // -------------------------------------------
     auto const stat = cudaDeviceSynchronize();
-    expect(stat == cudaSuccess);
+    local_expect(stat == cudaSuccess);
   }
 #else
 
@@ -372,7 +372,7 @@ void call_kronmult(int const n, P *x_ptrs[], P *output_ptrs[], P *work_ptrs[],
                             work_ptrs, num_krons);
       break;
     default:
-      expect(false);
+      local_expect(false);
     };
   }
 #endif

@@ -311,7 +311,7 @@ implicit_advance(PDE<P> const &pde,
       return x;
       break;
     case solve_opts::gmres:
-      ignore(ipiv);
+      UNUSED(ipiv);
       break;
     }
   } // end first time/update system

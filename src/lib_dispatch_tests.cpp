@@ -1163,7 +1163,7 @@ void test_batched_gemv(int const m, int const n, int const lda,
   {
     if constexpr (resrc == resource::host)
     {
-      ignore(tol_factor);
+      UNUSED(tol_factor);
       REQUIRE(vectors[1][i] == vectors[2][i]);
     }
     else

@@ -46,8 +46,8 @@ private:
   // define some reusable functions
   static fk::vector<P> f0(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
-    return fk::vector<P>(std::vector<P>(x.size(), 0.0));
+    UNUSED(t);
+    return fk::vector<P>(std::vector<P>(x.size(), (P) 0.0));
   }
 
   // specify initial condition vector functions...
@@ -74,7 +74,7 @@ private:
 
   static fk::vector<P> exact_solution_x(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(xarg * x); });
@@ -82,7 +82,7 @@ private:
   }
   static fk::vector<P> exact_solution_y(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::sin(yarg * x); });
@@ -91,7 +91,7 @@ private:
 
   static fk::vector<P> exact_solution_z(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(zarg * x); });
@@ -99,7 +99,7 @@ private:
   }
   static fk::vector<P> exact_solution_vx(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(vxarg * x); });
@@ -107,7 +107,7 @@ private:
   }
   static fk::vector<P> exact_solution_vy(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::sin(vyarg * x); });
@@ -116,7 +116,7 @@ private:
 
   static fk::vector<P> exact_solution_vz(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(vzarg * x); });
@@ -144,7 +144,7 @@ private:
   //    };
   static fk::vector<P> source_0_x(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(xarg * x); });
@@ -152,7 +152,7 @@ private:
   }
   static fk::vector<P> source_0_y(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::sin(yarg * x); });
@@ -160,7 +160,7 @@ private:
   }
   static fk::vector<P> source_0_z(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(zarg * x); });
@@ -168,7 +168,7 @@ private:
   }
   static fk::vector<P> source_0_vx(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(vxarg * x); });
@@ -176,7 +176,7 @@ private:
   }
   static fk::vector<P> source_0_vy(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::sin(vyarg * x); });
@@ -184,7 +184,7 @@ private:
   }
   static fk::vector<P> source_0_vz(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(vzarg * x); });
@@ -209,7 +209,7 @@ private:
 
   static fk::vector<P> source_1_x(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(xarg * x); });
@@ -217,7 +217,7 @@ private:
   }
   static fk::vector<P> source_1_y(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(yarg * x); });
@@ -225,7 +225,7 @@ private:
   }
   static fk::vector<P> source_1_z(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(zarg * x); });
@@ -233,7 +233,7 @@ private:
   }
   static fk::vector<P> source_1_vx(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(vxarg * x); });
@@ -241,7 +241,7 @@ private:
   }
   static fk::vector<P> source_1_vy(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::sin(vyarg * x); });
@@ -249,7 +249,7 @@ private:
   }
   static fk::vector<P> source_1_vz(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(vzarg * x); });
@@ -276,7 +276,7 @@ private:
   //    };
   static fk::vector<P> source_2_x(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::sin(xarg * x); });
@@ -284,7 +284,7 @@ private:
   }
   static fk::vector<P> source_2_y(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::sin(yarg * x); });
@@ -292,7 +292,7 @@ private:
   }
   static fk::vector<P> source_2_z(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(zarg * x); });
@@ -300,7 +300,7 @@ private:
   }
   static fk::vector<P> source_2_vx(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(vxarg * x); });
@@ -308,7 +308,7 @@ private:
   }
   static fk::vector<P> source_2_vy(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::sin(vyarg * x); });
@@ -316,7 +316,7 @@ private:
   }
   static fk::vector<P> source_2_vz(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(vzarg * x); });
@@ -341,7 +341,7 @@ private:
 
   static fk::vector<P> source_3_x(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(xarg * x); });
@@ -349,7 +349,7 @@ private:
   }
   static fk::vector<P> source_3_y(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::sin(yarg * x); });
@@ -357,7 +357,7 @@ private:
   }
   static fk::vector<P> source_3_z(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::sin(zarg * x); });
@@ -365,7 +365,7 @@ private:
   }
   static fk::vector<P> source_3_vx(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(vxarg * x); });
@@ -373,7 +373,7 @@ private:
   }
   static fk::vector<P> source_3_vy(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::sin(vyarg * x); });
@@ -381,7 +381,7 @@ private:
   }
   static fk::vector<P> source_3_vz(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(vzarg * x); });
@@ -406,7 +406,7 @@ private:
 
   static fk::vector<P> source_4_x(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(xarg * x); });
@@ -414,7 +414,7 @@ private:
   }
   static fk::vector<P> source_4_y(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::sin(yarg * x); });
@@ -422,7 +422,7 @@ private:
   }
   static fk::vector<P> source_4_z(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(zarg * x); });
@@ -430,7 +430,7 @@ private:
   }
   static fk::vector<P> source_4_vx(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(vxarg * x); });
@@ -438,7 +438,7 @@ private:
   }
   static fk::vector<P> source_4_vy(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(vyarg * x); });
@@ -446,7 +446,7 @@ private:
   }
   static fk::vector<P> source_4_vz(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(vzarg * x); });
@@ -473,7 +473,7 @@ private:
   //    };
   static fk::vector<P> source_5_x(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(xarg * x); });
@@ -481,7 +481,7 @@ private:
   }
   static fk::vector<P> source_5_y(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::sin(yarg * x); });
@@ -489,7 +489,7 @@ private:
   }
   static fk::vector<P> source_5_z(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(zarg * x); });
@@ -497,7 +497,7 @@ private:
   }
   static fk::vector<P> source_5_vx(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::sin(vxarg * x); });
@@ -505,7 +505,7 @@ private:
   }
   static fk::vector<P> source_5_vy(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::sin(vyarg * x); });
@@ -513,7 +513,7 @@ private:
   }
   static fk::vector<P> source_5_vz(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(vzarg * x); });
@@ -541,7 +541,7 @@ private:
 
   static fk::vector<P> source_6_x(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(xarg * x); });
@@ -549,7 +549,7 @@ private:
   }
   static fk::vector<P> source_6_y(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::sin(yarg * x); });
@@ -557,7 +557,7 @@ private:
   }
   static fk::vector<P> source_6_z(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(zarg * x); });
@@ -565,7 +565,7 @@ private:
   }
   static fk::vector<P> source_6_vx(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(vxarg * x); });
@@ -573,7 +573,7 @@ private:
   }
   static fk::vector<P> source_6_vy(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::sin(vyarg * x); });
@@ -581,10 +581,10 @@ private:
   }
   static fk::vector<P> source_6_vz(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
-                   [](P const &x) { return std::sin(vzarg * x); });
+                   [](P const &x) { return sin(vzarg * x); });
     return fx;
   }
   static P source_6_time(P const time)
@@ -613,50 +613,50 @@ private:
   static P g_func_identity(P const x, P const time)
   {
     // suppress compiler warnings
-    ignore(x);
-    ignore(time);
+    UNUSED(x);
+    UNUSED(time);
     return 1.0;
   }
   static P gx(P const x, P const time)
   {
     // suppress compiler warnings
-    ignore(x);
-    ignore(time);
+    UNUSED(x);
+    UNUSED(time);
     return -bx;
   }
   static P gy(P const x, P const time)
   {
     // suppress compiler warnings
-    ignore(x);
-    ignore(time);
+    UNUSED(x);
+    UNUSED(time);
     return -by;
   }
   static P gz(P const x, P const time)
   {
     // suppress compiler warnings
-    ignore(x);
-    ignore(time);
+    UNUSED(x);
+    UNUSED(time);
     return -bz;
   }
   static P gvx(P const x, P const time)
   {
     // suppress compiler warnings
-    ignore(x);
-    ignore(time);
+    UNUSED(x);
+    UNUSED(time);
     return -ax;
   }
   static P gvy(P const x, P const time)
   {
     // suppress compiler warnings
-    ignore(x);
-    ignore(time);
+    UNUSED(x);
+    UNUSED(time);
     return -ay;
   }
   static P gvz(P const x, P const time)
   {
     // suppress compiler warnings
-    ignore(x);
-    ignore(time);
+    UNUSED(x);
+    UNUSED(time);
     return -az;
   }
 

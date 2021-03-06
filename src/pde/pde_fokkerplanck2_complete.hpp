@@ -114,7 +114,7 @@ private:
   // initial condition in p
   static fk::vector<P> initial_condition_p(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
 
     P N = 1000.0;
     P h = 20.0 / N;
@@ -167,7 +167,7 @@ private:
   // initial conditionn in z
   static fk::vector<P> initial_condition_z(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> ret(x.size());
     std::fill(ret.begin(), ret.end(), 1.0);
     return ret;
@@ -213,8 +213,8 @@ private:
   // create a default mass matrix
   static P gI(P const x, P const time = 0)
   {
-    ignore(x);
-    ignore(time);
+    UNUSED(x);
+    UNUSED(time);
     return 1.0;
   }
 
@@ -237,18 +237,18 @@ private:
 
   static P c1_g1(P const x, P const time = 0)
   {
-    ignore(time);
-    return 1.0 / std::pow(x, 2);
+    UNUSED(time);
+    return 1.0 / pow(x, 2);
   }
   static P c1_g2(P const x, P const time = 0)
   {
-    ignore(time);
-    return std::pow(x, 2) * Ca(x);
+    UNUSED(time);
+    return pow(x, 2) * Ca(x);
   }
   static P c1_g3(P const x, P const time = 0)
   {
-    ignore(x);
-    ignore(time);
+    UNUSED(x);
+    UNUSED(time);
     return 1.0;
   }
 
@@ -281,13 +281,13 @@ private:
 
   static P c2_g1(P const x, P const time = 0)
   {
-    ignore(time);
-    return 1.0 / std::pow(x, 2);
+    UNUSED(time);
+    return 1.0 / pow(x, 2);
   }
   static P c2_g2(P const x, P const time = 0)
   {
-    ignore(time);
-    return std::pow(x, 2) * Cf(x);
+    UNUSED(time);
+    return pow(x, 2) * Cf(x);
   }
 
   // 1. create partial_terms
@@ -318,18 +318,18 @@ private:
 
   static P c3_g1(P const x, P const time = 0)
   {
-    ignore(time);
-    return Cb(x) / std::pow(x, 4);
+    UNUSED(time);
+    return Cb(x) / pow(x, 4);
   }
   static P c3_g2(P const x, P const time = 0)
   {
-    ignore(time);
-    return 1.0 - std::pow(x, 2);
+    UNUSED(time);
+    return 1.0 - pow(x, 2);
   }
   static P c3_g3(P const x, P const time = 0)
   {
-    ignore(x);
-    ignore(time);
+    UNUSED(x);
+    UNUSED(time);
     return 1.0;
   }
 
@@ -370,19 +370,19 @@ private:
 
   static P e1_g1(P const x, P const time = 0)
   {
-    ignore(time);
+    UNUSED(time);
     return -1 * x;
   }
   static P e1_g2(P const x, P const time = 0)
   {
-    ignore(time);
+    UNUSED(time);
     expect(x > 0);
-    return 1.0 / std::pow(x, 2);
+    return 1.0 / pow(x, 2);
   }
   static P e1_g3(P const x, P const time = 0)
   {
-    ignore(time);
-    return E * std::pow(x, 2);
+    UNUSED(time);
+    return E * pow(x, 2);
   }
 
   // 1. create partial_terms
@@ -416,13 +416,13 @@ private:
 
   static P e2_g1(P const x, P const time = 0)
   {
-    ignore(time);
+    UNUSED(time);
     return -1 / x;
   }
   static P e2_g2(P const x, P const time = 0)
   {
-    ignore(time);
-    return E * (1.0 - std::pow(x, 2));
+    UNUSED(time);
+    return E * (1.0 - pow(x, 2));
   }
 
   // 1. create partial_terms
@@ -461,18 +461,18 @@ private:
 
   static P r1_g1(P const x, P const time = 0)
   {
-    ignore(time);
-    return 1.0 / std::pow(x, 2);
+    UNUSED(time);
+    return 1.0 / pow(x, 2);
   }
   static P r1_g2(P const x, P const time = 0)
   {
-    ignore(time);
-    return std::pow(x, 3) * gamma(x) / tau;
+    UNUSED(time);
+    return pow(x, 3) * gamma(x) / tau;
   }
   static P r1_g3(P const x, P const time = 0)
   {
-    ignore(time);
-    return 1.0 - std::pow(x, 2);
+    UNUSED(time);
+    return 1.0 - pow(x, 2);
   }
 
   // 1. create partial_terms
@@ -510,13 +510,13 @@ private:
 
   static P r2_g1(P const x, P const time = 0)
   {
-    ignore(time);
+    UNUSED(time);
     return -1.0 / (tau * gamma(x));
   }
   static P r2_g2(P const x, P const time = 0)
   {
-    ignore(time);
-    return x * (1.0 - std::pow(x, 2));
+    UNUSED(time);
+    return x * (1.0 - pow(x, 2));
   }
 
   // 1. create partial_terms

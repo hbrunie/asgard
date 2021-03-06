@@ -145,8 +145,8 @@ class partial_term
 public:
   static double null_gfunc(double const x, double const t)
   {
-    ignore(x);
-    ignore(t);
+    UNUSED(x);
+    UNUSED(t);
     return 1.0;
   }
 
@@ -208,8 +208,8 @@ class term
   static P g_func_default(P const x, P const time)
   {
     // suppress compiler warnings
-    ignore(x);
-    ignore(time);
+    UNUSED(x);
+    UNUSED(time);
     return 1.0;
   }
 

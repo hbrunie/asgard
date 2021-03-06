@@ -76,7 +76,7 @@ private:
 
   static fk::vector<P> bc_func(fk::vector<P> const x, P const t)
   {
-    ignore(t);
+    UNUSED(t);
 
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
@@ -118,7 +118,7 @@ private:
   /* exact solutions */
   static fk::vector<P> exact_solution(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(PI * x); });

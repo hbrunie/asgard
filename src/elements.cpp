@@ -308,7 +308,7 @@ fk::matrix<int> table::get_cell_index_set(fk::vector<int> const &level_tuple)
   expect(level_tuple.size() > 0);
   for (auto const level : level_tuple)
   {
-    ignore(level);
+    UNUSED(level);
     expect(level >= 0);
   }
   int const num_dims = level_tuple.size();

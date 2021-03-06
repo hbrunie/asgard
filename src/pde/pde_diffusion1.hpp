@@ -56,7 +56,7 @@ private:
 
   static fk::vector<P> bc_func(fk::vector<P> const x, P const t)
   {
-    ignore(t);
+    UNUSED(t);
 
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
@@ -90,7 +90,7 @@ private:
   /* Create sources */
   static fk::vector<P> source_0_x(fk::vector<P> const x, P const t)
   {
-    ignore(t);
+    UNUSED(t);
     static double const coefficient = -1.0 * nu * nu;
 
     fk::vector<P> fx(x.size());
@@ -115,7 +115,7 @@ private:
   /* exact solutions */
   static fk::vector<P> exact_solution_0(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> fx(x.size());
     std::transform(x.begin(), x.end(), fx.begin(),
                    [](P const &x) { return std::cos(nu * x); });

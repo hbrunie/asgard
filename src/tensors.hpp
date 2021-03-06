@@ -24,9 +24,6 @@ class access_badge
   access_badge(){};
 };
 
-// used to suppress warnings in unused variables
-auto const ignore = [](auto ignored) { (void)ignored; };
-
 enum class mem_type
 {
   owner,
@@ -1563,7 +1560,7 @@ fk::vector<P, mem, resrc>::vector(fk::vector<P, omem, resrc> const &vec,
     : ref_count_{vec.ref_count_}
 {
   // ignore dummy argument to avoid compiler warnings
-  ignore(delegated);
+  UNUSED(delegated);
   data_ = nullptr;
   size_ = 0;
   if (vec.size() > 0)
@@ -2617,7 +2614,7 @@ fk::matrix<P, mem, resrc>::matrix(fk::matrix<P, omem, resrc> const &owner,
                                   bool const delegated)
     : ref_count_(owner.ref_count_)
 {
-  ignore(delegated);
+  UNUSED(delegated);
   data_   = nullptr;
   nrows_  = 0;
   ncols_  = 0;

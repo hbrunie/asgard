@@ -240,7 +240,7 @@ int main(int argc, char **argv)
                          realspace_output_name);
     }
 #else
-    ignore(default_workspace_cpu_MB);
+    UNUSED(default_workspace_cpu_MB);
 #endif
 
     node_out() << "timestep: " << i << " complete" << '\n';

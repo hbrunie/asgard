@@ -72,9 +72,8 @@ fk::matrix<P> generate_coefficients(
     auto [lP_R, lPP_R] = legendre(fk::vector<P>{+1}, dim.get_degree());
     lP_R               = lP_R * (1 / std::sqrt(grid_spacing));
     // this is to get around unused warnings (until c++20)
-    auto const ignore = [](auto ignored) { (void)ignored; };
-    ignore(lPP_L);
-    ignore(lPP_R);
+    UNUSED(lPP_L);
+    UNUSED(lPP_R);
     return std::array<fk::matrix<P>, 2>{lP_L, lP_R};
   }();
 

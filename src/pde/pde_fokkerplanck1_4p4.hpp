@@ -51,30 +51,29 @@ private:
   static fk::vector<P>
   initial_condition_dim0(fk::vector<P> const x, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     return analytic_solution_dim0(x, 0);
   }
 
-  static P constexpr sig = 0.1;
-  static P constexpr E   = 4.0;
-  static P constexpr C   = 1.0;
+  static double constexpr sig = 0.1;
+  static double constexpr E   = 4.0;
+  static double constexpr C   = 1.0;
 
   // analytic solution
 
   static P phi(P const z, P const t)
   {
-    return z * std::exp(-t) /
-           std::sqrt(1 - (std::exp(-2 * t) - 1) * std::pow(z, 2));
+    return z * exp(-t) / sqrt(1 - (exp(-2 * t) - 1) * pow(z, 2));
   }
   static P f0(P const z)
   {
     auto const shift = 0.36;
-    return std::exp(-std::pow(z + shift, 2) / std::pow(sig, 2));
+    return exp(-pow(z + shift, 2) / pow(sig, 2));
   }
 
   static fk::vector<P> f0_vec(fk::vector<P> const z, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> f(z.size());
     for (int i = 0; i < z.size(); ++i)
     {
@@ -86,19 +85,19 @@ private:
   static fk::vector<P>
   analytic_solution_dim0(fk::vector<P> const z, P const t = 0)
   {
-    ignore(t);
+    UNUSED(t);
     fk::vector<P> f(z.size());
     for (int i = 0; i < z.size(); ++i)
     {
       auto const A = E / C;
-      f(i)         = A / (2 * std::sinh(A) * std::exp(A * z(i)));
+      f(i)         = A / (2 * sinh(A) * exp(A * z(i)));
     }
     return f;
   }
 
   static P analytic_solution_time(P const time)
   {
-    ignore(time);
+    UNUSED(time);
     return 1.0;
   }
 
@@ -121,24 +120,24 @@ private:
   // g-funcs
   static P g_func_0(P const x, P const time)
   {
-    ignore(x);
-    ignore(time);
+    UNUSED(x);
+    UNUSED(time);
     return -1.0;
   }
   static P g_func_t1_z(P const x, P const time)
   {
-    ignore(time);
-    return -E * (1 - std::pow(x, 2));
+    UNUSED(time);
+    return -E * (1 - pow(x, 2));
   }
   static P g_func_t2_z1(P const x, P const time)
   {
-    ignore(time);
-    return 1 - std::pow(x, 2);
+    UNUSED(time);
+    return 1 - pow(x, 2);
   }
   static P g_func_t2_z2(P const x, P const time)
   {
-    ignore(x);
-    ignore(time);
+    UNUSED(x);
+    UNUSED(time);
     return 1.0;
   }
 

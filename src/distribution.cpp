@@ -523,11 +523,11 @@ static void dispatch_message(fk::vector<P> const &source, fk::vector<P> &dest,
   }
 #else
 
-  ignore(source);
-  ignore(dest);
-  ignore(map);
-  ignore(message);
-  ignore(segment_size);
+  UNUSED(source);
+  UNUSED(dest);
+  UNUSED(map);
+  UNUSED(message);
+  UNUSED(segment_size);
   expect(false);
 
 #endif
@@ -571,7 +571,7 @@ void exchange_results(fk::vector<P> const &source, fk::vector<P> &dest,
   }
 
 #else
-  ignore(segment_size);
+  UNUSED(segment_size);
   fm::copy(source, dest);
   return;
 #endif
@@ -723,7 +723,7 @@ gather_results(fk::vector<P> const &my_results, distribution_plan const &plan,
   return own_results();
 
 #else
-  ignore(element_segment_size);
+  UNUSED(element_segment_size);
   return own_results();
 #endif
 }
@@ -963,13 +963,13 @@ generate_messages_remap(distribution_plan const &old_plan,
   std::vector<std::list<message>> redis_messages(new_plan.size());
   for (auto const &[rank, subgrid] : new_plan)
   {
-    ignore(subgrid);
+    UNUSED(subgrid);
     auto rank_messages =
         subgrid_messages_remap(old_plan, new_plan, elem_index_remap, rank);
     assert(rank_messages.size() == new_plan.size());
     for (auto const &[rank, subgrid] : new_plan)
     {
-      ignore(subgrid);
+      UNUSED(subgrid);
       redis_messages[rank].splice(redis_messages[rank].end(),
                                   rank_messages[rank]);
     }
