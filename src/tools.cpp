@@ -5,7 +5,6 @@
 #include <cstdio>
 #include <math.h>
 #include <numeric>
-#include <sstream>
 
 namespace tools
 {
