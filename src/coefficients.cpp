@@ -383,19 +383,19 @@ fk::matrix<P> generate_coefficients(
   return coefficients;
 }
 
-#define X(T)                                           \
-  template fk::matrix<T> generate_coefficients<T>(\
-    dimension<T> const &dim, term<T> const &term_1D,\
-    partial_term<T> const &pterm,\
-    basis::wavelet_transform<T, resource::host> const &transformer,\
-    T const time, bool const rotate);
+#define X(T)                                                          \
+  template fk::matrix<T> generate_coefficients<T>(                    \
+      dimension<T> const &dim, term<T> const &term_1D,                \
+      partial_term<T> const &pterm,                                   \
+      basis::wavelet_transform<T, resource::host> const &transformer, \
+      T const time, bool const rotate);
 #include "type_list_float.inc"
 #undef X
 
-#define X(T)                                           \
-template void generate_all_coefficients<T>(\
-    PDE<T> &pde,\
-    basis::wavelet_transform<T, resource::host> const &transformer,\
-    T const time, bool const rotate);
+#define X(T)                                                          \
+  template void generate_all_coefficients<T>(                         \
+      PDE<T> & pde,                                                   \
+      basis::wavelet_transform<T, resource::host> const &transformer, \
+      T const time, bool const rotate);
 #include "type_list_float.inc"
 #undef X

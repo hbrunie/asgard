@@ -47,7 +47,7 @@ private:
   static fk::vector<P> f0(fk::vector<P> const x, P const t = 0)
   {
     UNUSED(t);
-    return fk::vector<P>(std::vector<P>(x.size(), (P) 0.0));
+    return fk::vector<P>(std::vector<P>(x.size(), (P)0.0));
   }
 
   // specify initial condition vector functions...
@@ -255,10 +255,7 @@ private:
                    [](P const &x) { return cos(vzarg * x); });
     return fx;
   }
-  static P source_1_time(P const time)
-  {
-    return 0.5 * PI * sin(targ * time);
-  }
+  static P source_1_time(P const time) { return 0.5 * PI * sin(targ * time); }
   inline static source<P> const source1_ =
       source<P>({source_1_x, source_1_y, source_1_z, source_1_vx, source_1_vy,
                  source_1_vz},
@@ -454,7 +451,7 @@ private:
   }
   static P source_4_time(P const time)
   {
-    return (P) 3.0 / (P) 200.0 * PI * sin(targ * time);
+    return (P)3.0 / (P)200.0 * PI * sin(targ * time);
   }
   inline static source<P> const source4_ =
       source<P>({source_4_x, source_4_y, source_4_z, source_4_vx, source_4_vy,
@@ -521,7 +518,7 @@ private:
   }
   static P source_5_time(P const time)
   {
-    return (P)-2.0 / (P) 5.0 * PI * sin(targ * time);
+    return (P)-2.0 / (P)5.0 * PI * sin(targ * time);
   }
   inline static source<P> const source5_ =
       source<P>({source_5_x, source_5_y, source_5_z, source_5_vx, source_5_vy,
@@ -589,7 +586,7 @@ private:
   }
   static P source_6_time(P const time)
   {
-    return (P) -1.0 / (P) 15.0 * PI * sin(targ * time);
+    return (P)-1.0 / (P)15.0 * PI * sin(targ * time);
   }
   inline static source<P> const source6_ =
       source<P>({source_6_x, source_6_y, source_6_z, source_6_vx, source_6_vy,
@@ -683,23 +680,23 @@ private:
                                                      "z"); // name
 
   inline static dimension<P> const vx_ = dimension<P>((P)-10.0, // domain min
-                                                      (P) 10.0,  // domain max
-                                                      2,     // levels
-                                                      2,     // degree
+                                                      (P)10.0,  // domain max
+                                                      2,        // levels
+                                                      2,        // degree
                                                       f0, // initial condition
                                                       "vx"); // name
 
-  inline static dimension<P> const vy_ = dimension<P>((P) -20.0, // domain min
-                                                      (P) 20.0,  // domain max
-                                                      2,     // levels
-                                                      2,     // degree
+  inline static dimension<P> const vy_ = dimension<P>((P)-20.0, // domain min
+                                                      (P)20.0,  // domain max
+                                                      2,        // levels
+                                                      2,        // degree
                                                       f0, // initial condition
                                                       "vy"); // name
 
-  inline static dimension<P> const vz_ = dimension<P>((P) -30.0, // domain min
-                                                      (P) 30.0,  // domain max
-                                                      2,     // levels
-                                                      2,     // degree
+  inline static dimension<P> const vz_ = dimension<P>((P)-30.0, // domain min
+                                                      (P)30.0,  // domain max
+                                                      2,        // levels
+                                                      2,        // degree
                                                       f0,   // initial condition
                                                       "z"); // name
 

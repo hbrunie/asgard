@@ -67,10 +67,7 @@ private:
   {
     return z * exp(-t) / sqrt(1 - (exp(-2 * t) - 1) * pow(z, 2));
   }
-  static P f0(P const z)
-  {
-    return exp(-pow(z, 2) / pow(sig, 2));
-  }
+  static P f0(P const z) { return exp(-pow(z, 2) / pow(sig, 2)); }
 
   static fk::vector<P> f0_vec(fk::vector<P> const z, P const t = 0)
   {
@@ -92,7 +89,7 @@ private:
     {
       auto const A     = E / C;
       auto const B     = R / C;
-      static const P Q = (P) 0.03;
+      static const P Q = (P)0.03;
       f(i)             = Q * exp(A * z(i) + (B / 2) * pow(z(i), 2));
     }
     return f;

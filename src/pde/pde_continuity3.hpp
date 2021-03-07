@@ -51,19 +51,19 @@ private:
   initial_condition_dim0(fk::vector<P> const x, P const t = 0)
   {
     UNUSED(t);
-    return fk::vector<P>(std::vector<P>(x.size(), (P) 0.0));
+    return fk::vector<P>(std::vector<P>(x.size(), (P)0.0));
   }
   static fk::vector<P>
   initial_condition_dim1(fk::vector<P> const x, P const t = 0)
   {
     UNUSED(t);
-    return fk::vector<P>(std::vector<P>(x.size(), (P) 0.0));
+    return fk::vector<P>(std::vector<P>(x.size(), (P)0.0));
   }
   static fk::vector<P>
   initial_condition_dim2(fk::vector<P> const x, P const t = 0)
   {
     UNUSED(t);
-    return fk::vector<P>(std::vector<P>(x.size(), (P) 0.0));
+    return fk::vector<P>(std::vector<P>(x.size(), (P)0.0));
   }
 
   // specify exact solution vectors/time function...
@@ -155,10 +155,7 @@ private:
     return fx;
   }
 
-  static P source_1_time(P const time)
-  {
-    return 2.0 * PI * sin(2.0 * time);
-  }
+  static P source_1_time(P const time) { return 2.0 * PI * sin(2.0 * time); }
 
   // source 2
   static fk::vector<P> source_2_dim0(fk::vector<P> const x, P const t = 0)

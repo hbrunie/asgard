@@ -207,13 +207,15 @@ int main(int argc, char **argv)
         fk::vector<prec> squared(diff);
         std::transform(squared.begin(), squared.end(), squared.begin(),
                        [](prec const &elem) { return elem * elem; });
-        auto const mean = std::accumulate(squared.begin(), squared.end(), (prec)0.0) /
-                          squared.size();
+        auto const mean =
+            std::accumulate(squared.begin(), squared.end(), (prec)0.0) /
+            squared.size();
         return sqrt(mean);
       }();
       std::cerr << "ANALYTIC SOLUTION" << std::endl << tools::vec2csv(analytic_solution.to_std()) << std::endl;
       std::cerr << "SIMULATED SOLUTION" << std::endl << tools::vec2csv(f_val.to_std()) << std::endl;
-      auto const relative_error = RMSE / inf_norm(analytic_solution) * (prec) 100.;
+      auto const relative_error =
+          RMSE / inf_norm(analytic_solution) * (prec)100.;
       auto const [rmse_errors, relative_errors] =
           gather_errors(RMSE, relative_error);
       expect(rmse_errors.size() == relative_errors.size());

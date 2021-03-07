@@ -124,6 +124,6 @@ std::string vec2csv(const std::vector<T>& vec) {
   return s.str();
 }
 
-template <typename P>
+template<typename P>
 void printNumber(P x);
 } // namespace tools

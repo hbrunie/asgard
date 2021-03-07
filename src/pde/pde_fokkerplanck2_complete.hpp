@@ -79,12 +79,12 @@ private:
     return ret;
   };
 
-  static P constexpr nuEE     = 1;
-  static P constexpr vT       = 1;
-  static P constexpr delta    = 0.3;
-  static P constexpr Z        = 5;
-  static P constexpr E        = 0.4;
-  static P constexpr tau      = 1e5;
+  static P constexpr nuEE     = (P)1;
+  static P constexpr vT       = (P)1;
+  static P constexpr delta    = (P)0.3;
+  static P constexpr Z        = (P)5;
+  static P constexpr E        = (P)0.4;
+  static P constexpr tau      = (P)1e5;
   static auto constexpr gamma = [](P p) {
     return sqrt(1 + pow(delta * p, 2));
   };
@@ -96,8 +96,7 @@ private:
 
   static auto constexpr Cb = [](P p) {
     return 1.0 / 2.0 * nuEE * pow(vT, 2) * 1.0 / vx(p) *
-           (Z + phi(vx(p)) - psi(vx(p)) +
-            pow(delta, 4) * pow(vx(p), 2) / 2.0);
+           (Z + phi(vx(p)) - psi(vx(p)) + pow(delta, 4) * pow(vx(p), 2) / 2.0);
   };
 
   static auto constexpr Cf = [](P p) { return 2.0 * nuEE * vT * psi(vx(p)); };
@@ -116,17 +115,17 @@ private:
   {
     UNUSED(t);
 
-    P N = (P) 1000.0;
-    P h = (P) 20.0 / N;
+    P N = (P)1000.0;
+    P h = (P)20.0 / N;
     P Q = 0;
 
     auto const function = [](fk::vector<P> const &p) -> fk::vector<P> {
       fk::vector<P> transformed(p);
-      std::transform(
-          p.begin(), p.end(), transformed.begin(), [](P const p_elem) -> P {
-            return exp(-2 / pow(delta, 2) *
-                            sqrt(1 + pow(delta, 2) * pow(p_elem, 2)));
-          });
+      std::transform(p.begin(), p.end(), transformed.begin(),
+                     [](P const p_elem) -> P {
+                       return exp(-2 / pow(delta, 2) *
+                                  sqrt(1 + pow(delta, 2) * pow(p_elem, 2)));
+                     });
 
       return transformed;
     };

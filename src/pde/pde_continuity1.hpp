@@ -50,7 +50,7 @@ private:
   initial_condition_dim0(fk::vector<P> const x, P const t = 0)
   {
     UNUSED(t);
-    return fk::vector<P>(std::vector<P>(x.size(), (P) 0.0));
+    return fk::vector<P>(std::vector<P>(x.size(), (P)0.0));
   }
 
   // specify exact solution vectors/time function...

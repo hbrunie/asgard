@@ -140,7 +140,8 @@ enum class flux_type
 template<typename P>
 class partial_term
 {
-using g_func_type = std::function<P(P const, P const)>;
+  using g_func_type = std::function<P(P const, P const)>;
+
 public:
   static P null_gfunc(P const x, P const t)
   {
@@ -522,7 +523,7 @@ public:
 
   void set_dt(P const dt)
   {
-    expect(dt > (P) 0.0);
+    expect(dt > (P)0.0);
     dt_ = dt;
   }
 

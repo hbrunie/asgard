@@ -127,10 +127,7 @@ private:
     return fx;
   }
 
-  static P source_1_time(P const time)
-  {
-    return 2.0 * PI * sin(2.0 * time);
-  }
+  static P source_1_time(P const time) { return 2.0 * PI * sin(2.0 * time); }
 
   // source 2
   static fk::vector<P> source_2_dim0(fk::vector<P> const x, P const t = 0)

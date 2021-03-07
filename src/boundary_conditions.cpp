@@ -105,9 +105,8 @@ fk::vector<P> boundary_conditions::generate_scaled_bc(
     unscaled_bc_parts<P> const &right_bc_parts, PDE<P> const &pde,
     int const start_element, int const stop_element, P const time)
 {
-  fk::vector<P> bc(
-      (stop_element - start_element + 1) *
-      pow(pde.get_dimensions()[0].get_degree(), pde.num_dims));
+  fk::vector<P> bc((stop_element - start_element + 1) *
+                   pow(pde.get_dimensions()[0].get_degree(), pde.num_dims));
 
   term_set<P> const &terms_vec_vec = pde.get_terms();
 
@@ -150,7 +149,7 @@ fk::vector<P> boundary_conditions::generate_scaled_bc(
 
 template<typename P>
 fk::vector<P> boundary_conditions::compute_left_boundary_condition(
-    g_func_type<P>  const g_func, P const time, dimension<P> const &dim,
+    g_func_type<P> const g_func, P const time, dimension<P> const &dim,
     vector_func<P> const bc_func)
 {
   P const domain_min    = dim.domain_min;
