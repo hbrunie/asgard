@@ -351,6 +351,8 @@ execute(PDE<P> const &pde, elements::table const &elem_table,
 }
 
 // public, execute a given subgrid by decomposing and running over sub-subgrids
+/* Recursive calls, by levels, to kronmult::execute through all subgrids.,
+ * as long as decompose returns a vector of subgrids */
 template<typename P>
 fk::vector<P, mem_type::owner, resource::host>
 execute(PDE<P> const &pde, elements::table const &elem_table,
@@ -358,7 +360,8 @@ execute(PDE<P> const &pde, elements::table const &elem_table,
         int const workspace_size_MB,
         fk::vector<P, mem_type::owner, resource::host> const &x)
 {
-  auto const grids = decompose(pde, elem_table, my_subgrid, workspace_size_MB);
+  std::vector<element_subgrid> const grids =
+      decompose(pde, elem_table, my_subgrid, workspace_size_MB);
 
   auto const degree     = pde.get_dimensions()[0].get_degree();
   auto const deg_to_dim = static_cast<int>(std::pow(degree, pde.num_dims));
