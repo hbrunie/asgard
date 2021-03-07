@@ -202,6 +202,8 @@ int main(int argc, char **argv)
                           squared.size();
         return std::sqrt(mean);
       }();
+      std::cerr << "ANALYTIC SOLUTION" << std::endl << tools::vec2csv(analytic_solution.to_std()) << std::endl;
+      std::cerr << "SIMULATED SOLUTION" << std::endl << tools::vec2csv(f_val.to_std()) << std::endl;
       auto const relative_error = RMSE / inf_norm(analytic_solution) * 100;
       auto const [rmse_errors, relative_errors] =
           gather_errors(RMSE, relative_error);
