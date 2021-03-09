@@ -215,11 +215,11 @@ template<typename P>
 fk::vector<P>
 distributed_grid<P>::refine(fk::vector<P> const &x, options const &cli_opts)
 {
-  auto const abs_compare = [](auto const a, auto const b) {
+  auto const abs_compare = [](P const a, P const b) {
     return (abs(a) < abs(b));
   };
-  auto const max_elem = abs(*std::max_element(x.begin(), x.end(), abs_compare));
-  auto const global_max = get_global_max(max_elem, this->plan_);
+  P const max_elem = abs(*std::max_element(x.begin(), x.end(), abs_compare));
+  P const global_max = get_global_max(max_elem, this->plan_);
 
   auto const refine_threshold = cli_opts.adapt_threshold * global_max;
   if (refine_threshold <= 0.0)
@@ -242,18 +242,18 @@ template<typename P>
 fk::vector<P>
 distributed_grid<P>::coarsen(fk::vector<P> const &x, options const &cli_opts)
 {
-  auto const abs_compare = [](auto const a, auto const b) {
+  auto const abs_compare = [](P const a, P const b) {
     return (abs(a) < abs(b));
   };
-  auto const max_elem = abs(*std::max_element(x.begin(), x.end(), abs_compare));
-  auto const global_max       = get_global_max(max_elem, this->plan_);
-  auto const refine_threshold = cli_opts.adapt_threshold * global_max;
+  P const max_elem = abs(*std::max_element(x.begin(), x.end(), abs_compare));
+  P const global_max       = get_global_max(max_elem, this->plan_);
+  P const refine_threshold = cli_opts.adapt_threshold * global_max;
   if (refine_threshold <= 0.0)
   {
     return x;
   }
 
-  auto const coarsen_threshold = refine_threshold * 0.1;
+  P const coarsen_threshold = refine_threshold * (P) 0.1;
   auto const &table            = this->table_;
   auto const coarsen_check =
       [&table, coarsen_threshold,
