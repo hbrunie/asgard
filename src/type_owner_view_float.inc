@@ -8,4 +8,7 @@ X(double, const_view)
 X(Sdouble, owner)
 X(Sdouble, view)
 X(Sdouble, const_view)
+X(Sfloat, owner)
+X(Sfloat, view)
+X(Sfloat, const_view)
 #endif

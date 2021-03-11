@@ -7,4 +7,6 @@ X(long double, device)
 #ifdef ASGARD_USE_SHAMAN
 X(Sdouble, host)
 X(Sdouble, device)
+X(Sfloat, host)
+X(Sfloat, device)
 #endif
