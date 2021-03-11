@@ -149,6 +149,28 @@ void get_indices(int const *const coords, int indices[], int const degree,
   {
     indices[i] = get_1d_index(coords[i], coords[i + num_dims]) * degree;
   }
+} 
+
+GLOBAL_FUNCTION void
+convert_kernel(
+          int64_t work_size, int64_t output_size,
+          double * dp_input, double * dp_output,
+          double * dp_work,
+          float * sp_input, float * sp_output,
+          float * sp_work)
+{
+#ifdef ASGARD_USE_CUDA
+  auto const id = static_cast<int64_t>(blockIdx.x) * blockDim.x + threadIdx.x;
+  auto const num_threads = static_cast<int64_t>(blockDim.x) * gridDim.x;
+
+#else
+      for(int64_t i =0; i<work_size; i++){
+          sp_input [i] = (float)  dp_input[i];
+          sp_work  [i] = (float)   dp_work[i];
+      }
+      for(int64_t i =0; i<output_size; i++)
+          sp_output[i] = (float) dp_output[i];
+#endif
 }
 
 template<typename P>

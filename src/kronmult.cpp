@@ -67,12 +67,19 @@ namespace kronmult
           float * sp_input, float * sp_output,
           float * sp_work)
   {
-      for(int64_t i =0; i<work_size; i++){
-          sp_input [i] = (float)  dp_input[i];
-          sp_work  [i] = (float)   dp_work[i];
-      }
-      for(int64_t i =0; i<output_size; i++)
-          sp_output[i] = (float) dp_output[i];
+#ifdef ASGARD_USE_CUDA
+      convert_kernel<<<128,256>>>(
+          dp_input, dp_output,
+          dp_work,
+          sp_input, sp_output,
+          sp_work);
+#else
+      convert_kernel(
+          dp_input, dp_output,
+          dp_work,
+          sp_input, sp_output,
+          sp_work);
+#endif
   }
 
   void convert_back(
@@ -82,12 +89,15 @@ namespace kronmult
           float * sp_input, float * sp_output,
           float * sp_work)
   {
+#ifdef ASGARD_USE_CUDA
+#else
       for(int64_t i =0; i<work_size; i++){
           dp_work  [i] = (double)   sp_work[i];
           dp_input [i] = (double)  sp_input[i];
       }
       for(int64_t i =0; i<output_size; i++)
          dp_output[i] = (double) sp_output[i];
+#endif
   }
 
 // calculate how much workspace we need on device to compute a single connected
