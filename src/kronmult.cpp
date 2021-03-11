@@ -279,6 +279,7 @@ execute(PDE<P> const &pde, elements::table const &elem_table,
         fk::vector<P, mem_type::view, resource::device> &fx)
 {
   // FIXME code relies on uniform degree across dimensions
+  profiling::start("get_workspace");
   auto const degree     = pde.get_dimensions()[0].get_degree();
   auto const deg_to_dim = static_cast<int>(std::pow(degree, pde.num_dims));
 
@@ -290,26 +291,25 @@ execute(PDE<P> const &pde, elements::table const &elem_table,
   auto const &workspace =
       kronmult_workspace<P>::get_workspace(pde, elem_table, my_subgrid);
 
-  tools::timer.start("kronmult_stage");
+  //tools::timer.start("kronmult_stage");
+  profiling::stop("get_workspace");
+  profiling::start("stage_inputs_kronmult");
   // stage x vector in writable regions for each element
   auto const num_copies = my_subgrid.nrows() * pde.num_terms;
   stage_inputs_kronmult(x.data(), workspace.get_element_x(), x.size(),
                         num_copies);
-  tools::timer.stop("kronmult_stage");
+  profiling::stop("stage_inputs_kronmult");
+  //tools::timer.stop("kronmult_stage");
 
   // list building kernel needs simple arrays/pointers, can't compile our
   // objects
 
+  profiling::start("build_operators");
   // FIXME assume all operators same size - largest possible adaptivity size
   auto const lda =
       degree *
       fm::two_raised_to(
           program_opts.max_level); // leading dimension of coefficient matrices
-  auto const real_size =
-      degree * fm::two_raised_to(pde.get_dimensions()[0].get_level());
-  auto const coeff = pde.get_coefficients(0, 0).clone_onto_host();
-  fk::matrix<P, mem_type::const_view> const blah(coeff, 0, real_size - 1, 0,
-                                                 real_size - 1);
 
   fk::vector<P *> const operators = [&pde, lda] {
     fk::vector<P *> builder(pde.num_terms * pde.num_dims);
@@ -327,7 +327,9 @@ execute(PDE<P> const &pde, elements::table const &elem_table,
       operators.clone_onto_device());
 
   // prepare lists for kronmult, on device if cuda is enabled
-  tools::timer.start("kronmult_build");
+  profiling::stop("build_operators");
+  profiling::start("prepare_kronmult");
+  //tools::timer.start("kronmult_build");
   prepare_kronmult(elem_table.get_active_table().data(), operators_d.data(),
                    lda, workspace.get_element_x(), workspace.get_element_work(),
                    fx.data(), workspace.get_operator_ptrs(),
@@ -335,17 +337,20 @@ execute(PDE<P> const &pde, elements::table const &elem_table,
                    workspace.get_output_ptrs(), degree, pde.num_terms,
                    pde.num_dims, my_subgrid.row_start, my_subgrid.row_stop,
                    my_subgrid.col_start, my_subgrid.col_stop);
-  tools::timer.stop("kronmult_build");
+  //tools::timer.stop("kronmult_build");
+  profiling::stop("prepare_kronmult");
 
+  profiling::start("call_kronmult");
   auto const total_kronmults = my_subgrid.size() * pde.num_terms;
   auto const flops = pde.num_dims * 2.0 * (std::pow(degree, pde.num_dims + 1)) *
                      total_kronmults;
 
-  tools::timer.start("kronmult");
+  //tools::timer.start("kronmult");
   call_kronmult(degree, workspace.get_input_ptrs(), workspace.get_output_ptrs(),
                 workspace.get_work_ptrs(), workspace.get_operator_ptrs(), lda,
                 total_kronmults, pde.num_dims);
-  tools::timer.stop("kronmult", flops);
+  //tools::timer.stop("kronmult", flops);
+  profiling::stop("call_kronmult");
 
   return fx;
 }
@@ -358,6 +363,7 @@ execute(PDE<P> const &pde, elements::table const &elem_table,
         int const workspace_size_MB,
         fk::vector<P, mem_type::owner, resource::host> const &x)
 {
+  profiling::start("decompose");
   auto const grids = decompose(pde, elem_table, my_subgrid, workspace_size_MB);
 
   auto const degree     = pde.get_dimensions()[0].get_degree();
@@ -369,6 +375,7 @@ execute(PDE<P> const &pde, elements::table const &elem_table,
   fk::vector<P, mem_type::owner, resource::device> const x_dev(
       x.clone_onto_device());
 
+  profiling::stop("decompose");
   for (auto const grid : grids)
   {
     auto const col_start = my_subgrid.to_local_col(grid.col_start);
@@ -379,8 +386,10 @@ execute(PDE<P> const &pde, elements::table const &elem_table,
         x_dev, col_start * deg_to_dim, (col_end + 1) * deg_to_dim - 1);
     fk::vector<P, mem_type::view, resource::device> fx_dev_grid(
         fx_dev, row_start * deg_to_dim, (row_end + 1) * deg_to_dim - 1);
+    profiling::start("kronmult_exec_private");
     fx_dev_grid = kronmult::execute(pde, elem_table, program_opts, grid,
                                     x_dev_grid, fx_dev_grid);
+    profiling::stop("kronmult_exec_private");
   }
   return fx_dev.clone_onto_host();
 }

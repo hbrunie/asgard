@@ -97,10 +97,12 @@ adaptive_advance(method const step_method, PDE<P> &pde,
     profiling::start("Refine_solution");
     auto const y_refined =
         adaptive_grid.refine_solution(pde, y_stepped, program_opts);
+    profiling::stop("Refine_solution");
+    profiling::start("Get global max");
     refining = static_cast<bool>(
         get_global_max(static_cast<float>(y_stepped.size() != y_refined.size()),
                        adaptive_grid.get_distrib_plan()));
-    profiling::stop("Refine_solution");
+    profiling::stop("Get global max");
 
     node_out() << " adapt -- refined grid from " << old_size << " -> "
                << adaptive_grid.size() << " elems\n";
