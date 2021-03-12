@@ -100,11 +100,15 @@ static void update_levels(elements::table const &adapted_table, PDE<P> &pde,
   profiling::start("update_rechain");
   for (auto i = 0; i < static_cast<int>(new_levels.size()); ++i)
   {
+    profiling::start("update_dimension");
     pde.update_dimension(i, new_levels[i]);
+    profiling::stop("update_dimension");
+    profiling::start("rechain_dimension");
     if (rechain)
     {
       pde.rechain_dimension(i);
     }
+    profiling::stop("rechain_dimension");
   }
   profiling::stop("update_rechain");
 }
