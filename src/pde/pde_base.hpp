@@ -258,26 +258,46 @@ public:
   // recombine partial terms to form new coefficient matrices
   void rechain_coefficients(dimension<P> const &adapted_dim)
   {
-    auto const new_dof =
+      profiling::start("new_dof");
+    int const new_dof =
         adapted_dim.get_degree() * fm::two_raised_to(adapted_dim.get_level());
     expect(coefficients_.nrows() == coefficients_.ncols());
-    auto new_coeffs = eye<P>(new_dof);
-
+    fk::matrix<P> new_coeffs = eye<P>(new_dof);
+      profiling::stop("new_dof");
+      std::cerr << "SIZE " << new_coeffs.size()<< std::endl;
+    //std::vector<partial_term<P>> partial_terms_;
+    int cnt=0;
     for (auto const &pterm : partial_terms_)
     {
-      auto const &partial_coeff = pterm.get_coefficients();
+      cnt++;
+      //std::cerr << "CNT " << cnt++ << std::endl;
+      profiling::start("get_coefficient");
+      fk::matrix<P> const &partial_coeff = pterm.get_coefficients();
+      std::cerr << "SIZE " << partial_coeff.size()<< std::endl;
       expect(partial_coeff.size() >
              new_dof); // make sure we built the partial terms to support
                        // new level/degree
-      new_coeffs = new_coeffs *
-                   fk::matrix<P, mem_type::const_view>(
+      profiling::stop("get_coefficient");
+      //partial_coeff.print("Partial Coeff");
+      auto partial_coeff_view = fk::matrix<P, mem_type::const_view>(
                        partial_coeff, 0, new_dof - 1, 0,
                        new_dof - 1); // at some point, we could consider storing
                                      // these device-side after construction.
+      //partial_coeff_view.print("Partial coeff view");
+      profiling::start("new_coeff");
+      std::cerr << "SIZE " << partial_coeff_view.size()<< std::endl;
+      new_coeffs = new_coeffs * partial_coeff_view;
+      profiling::stop("new_coeff");
+      //new_coeffs.print("new coeffs");
     }
+    static int total =0;
+    total += cnt;
+    std::cerr << "CNT " << cnt << " TOTAL "<< total << std::endl;
+    profiling::start("transfer_from");
     fk::matrix<P, mem_type::view, resource::device>(coefficients_, 0,
                                                     new_dof - 1, 0, new_dof - 1)
         .transfer_from(new_coeffs);
+    profiling::stop("transfer_from");
   }
 
   // public but const data. no getters

@@ -1411,27 +1411,29 @@ template<resource, typename>
 void fk::vector<P, mem, resrc>::print(std::string const label) const
 {
   if constexpr (mem == mem_type::owner)
-    std::cout << label << "(owner, ref_count = " << ref_count_.use_count()
+    std::cerr << label << "(owner, ref_count = " << ref_count_.use_count()
               << ")" << '\n';
   else if constexpr (mem == mem_type::view)
-    std::cout << label << "(view)" << '\n';
+    std::cerr << label << "(view)" << '\n';
   else if constexpr (mem == mem_type::const_view)
-    std::cout << label << "(const view)" << '\n';
-  else
+    std::cerr << label << "(const view)" << '\n';
+  else{
+    std::cerr << label << "(WRONG)" << '\n';
     expect(false); // above cases should cover all implemented types
+  }
 
   if constexpr (std::is_floating_point<P>::value)
   {
     for (auto i = 0; i < size(); ++i)
-      std::cout << std::setw(12) << std::setprecision(4) << std::scientific
+      std::cerr << std::setw(12) << std::setprecision(4) << std::scientific
                 << std::right << (*this)(i);
   }
   else
   {
     for (auto i = 0; i < size(); ++i)
-      std::cout << std::right << (*this)(i) << " ";
+      std::cerr << std::right << (*this)(i) << " ";
   }
-  std::cout << '\n';
+  std::cerr << '\n';
 }
 
 //
