@@ -54,7 +54,7 @@ adaptive_advance(method const step_method, PDE<float> &sp_pde, PDE<P> &pde,
     auto result =
         (step_method == method::exp)
             ? explicit_advance(pde, adaptive_grid, transformer, program_opts,
-                               unscaled_parts, x_orig, workspace_size_MB, time)
+                               unscaled_parts, x_orig, workspace_size_MB, time, "No adaptivity")
             : implicit_advance(pde, adaptive_grid, transformer, unscaled_parts,
                                x_orig, time, program_opts.solver,
                                update_system);
@@ -120,7 +120,7 @@ adaptive_advance(method const step_method, PDE<float> &sp_pde, PDE<P> &pde,
         auto const y_stepped =
             (step_method == method::exp)
                 ? explicit_advance(pde, adaptive_grid, transformer, program_opts,
-                                   unscaled_parts, y, workspace_size_MB, time, "Refining")
+                                   unscaled_parts, y, workspace_size_MB, time, "Real step")
                 : implicit_advance(pde, adaptive_grid, transformer, unscaled_parts,
                                    y, time, program_opts.solver, update_system);
       y.resize(y_stepped.size()) = y_stepped;
@@ -183,50 +183,71 @@ explicit_advance_mp(PDE<Q> const &sp_pde,PDE<P> const &pde,
 
   // FIXME eventually want to extract RK step into function
   // -- RK step 1
+  profiling::start("RKstep1");
   auto const apply_id = tools::timer.start("kronmult_setup");
-  //std::cerr << " KRON RK1"<< std::endl;
+  profiling::start("kronmult_exec");
   auto fx =
       kronmult::execute_mp(sp_pde, pde, table, program_opts, grid, workspace_size_MB, x, "RK 1");
+  profiling::stop("kronmult_exec");
 
   tools::timer.stop(apply_id);
+  profiling::start("Reduced_results");
   reduce_results(fx, reduced_fx, plan, get_rank());
+  profiling::stop("Reduced_results");
 
   if (pde.num_sources > 0)
   {
+    profiling::start("get_sources-axpy");
     auto const sources = get_sources(pde, adaptive_grid, transformer, time);
     fm::axpy(sources, reduced_fx);
+    profiling::stop("get_sources-axpy");
   }
 
+  profiling::start("generate_scale-axpy");
   auto const bc0 = boundary_conditions::generate_scaled_bc(
       unscaled_parts[0], unscaled_parts[1], pde, grid.row_start, grid.row_stop,
       time);
   fm::axpy(bc0, reduced_fx);
+  profiling::stop("generate_scale-axpy");
 
   // FIXME I eventually want to return a vect here
+  profiling::start("exchange_results-axpy");
   fk::vector<P> rk_1(x_orig.size());
   exchange_results(reduced_fx, rk_1, elem_size, plan, get_rank());
   P const rk_scale_1 = a21 * dt;
   fm::axpy(rk_1, x, rk_scale_1);
+  profiling::stop("exchange_results-axpy");
 
+  profiling::stop("RKstep1");
   // -- RK step 2
   tools::timer.start(apply_id);
-  //std::cerr << " KRON RK2"<< std::endl;
+  profiling::start("RKstep2");
+  profiling::start("kronmult_exec");
   fx = kronmult::execute_mp(sp_pde, pde, table, program_opts, grid, workspace_size_MB, x, "RK2");
+  profiling::stop("kronmult_exec");
   tools::timer.stop(apply_id);
+
+  profiling::start("Reduced_results");
   reduce_results(fx, reduced_fx, plan, get_rank());
+  profiling::stop("Reduced_results");
 
   if (pde.num_sources > 0)
   {
+    profiling::start("get_sources-axpy");
     auto const sources =
         get_sources(pde, adaptive_grid, transformer, time + c2 * dt);
     fm::axpy(sources, reduced_fx);
+    profiling::stop("get_sources-axpy");
   }
 
+  profiling::start("generate_scale-axpy");
   fk::vector<P> const bc1 = boundary_conditions::generate_scaled_bc(
       unscaled_parts[0], unscaled_parts[1], pde, grid.row_start, grid.row_stop,
       time + c2 * dt);
   fm::axpy(bc1, reduced_fx);
+  profiling::stop("generate_scale-axpy");
 
+  profiling::start("exchange_results-axpy");
   fk::vector<P> rk_2(x_orig.size());
   exchange_results(reduced_fx, rk_2, elem_size, plan, get_rank());
 
@@ -236,25 +257,36 @@ explicit_advance_mp(PDE<Q> const &sp_pde,PDE<P> const &pde,
 
   fm::axpy(rk_1, x, rk_scale_2a);
   fm::axpy(rk_2, x, rk_scale_2b);
+  profiling::stop("exchange_results-axpy");
+  profiling::stop("RKstep2");
+  profiling::start("RKstep3");
 
   // -- RK step 3
   tools::timer.start(apply_id);
-  //std::cerr << " KRON RK3"<< std::endl;
+  profiling::start("kronmult_exec");
   fx = kronmult::execute_mp(sp_pde, pde, table, program_opts, grid, workspace_size_MB, x, "RK3");
+  profiling::stop("kronmult_exec");
   tools::timer.stop(apply_id);
+  profiling::start("Reduced_results");
   reduce_results(fx, reduced_fx, plan, get_rank());
+  profiling::stop("Reduced_results");
 
   if (pde.num_sources > 0)
   {
+    profiling::start("get_sources-axpy");
     auto const sources =
         get_sources(pde, adaptive_grid, transformer, time + c3 * dt);
     fm::axpy(sources, reduced_fx);
+    profiling::stop("get_sources-axpy");
   }
 
+  profiling::start("generate_scale-axpy");
   auto const bc2 = boundary_conditions::generate_scaled_bc(
       unscaled_parts[0], unscaled_parts[1], pde, grid.row_start, grid.row_stop,
       time + c3 * dt);
   fm::axpy(bc2, reduced_fx);
+  profiling::stop("generate_scale-axpy");
+  profiling::start("exchange_results-axpy");
 
   fk::vector<P> rk_3(x_orig.size());
   exchange_results(reduced_fx, rk_3, elem_size, plan, get_rank());
@@ -268,6 +300,8 @@ explicit_advance_mp(PDE<Q> const &sp_pde,PDE<P> const &pde,
   fm::axpy(rk_1, x, scale_1);
   fm::axpy(rk_2, x, scale_2);
   fm::axpy(rk_3, x, scale_3);
+  profiling::stop("exchange_results-axpy");
+  profiling::stop("RKstep3");
 
   return x;
 }
