@@ -146,8 +146,9 @@ fk::vector<P> distributed_grid<P>::get_initial_condition(
   auto refining = true;
   while (refining)
   {
-    auto const old_y   = fk::vector<P>(refine_y);
-    //FIXME display the vector arount this->refine: compare Double with Mixed Precision
+    auto const old_y = fk::vector<P>(refine_y);
+    // FIXME display the vector arount this->refine: compare Double with Mixed
+    // Precision
     auto const refined = this->refine(old_y, cli_opts);
     refining           = old_y.size() != refined.size();
     update_levels(this->get_table(), pde);
@@ -259,8 +260,8 @@ distributed_grid<P>::coarsen(fk::vector<P> const &x, options const &cli_opts)
   }
 
   // Coarsening threshold is arbitrary 10% of refinement threshold
-  P const coarsen_threshold = refine_threshold * (P) 0.1;
-  auto const &table            = this->table_;
+  P const coarsen_threshold = refine_threshold * (P)0.1;
+  auto const &table         = this->table_;
   auto const coarsen_check =
       [&table, coarsen_threshold,
        abs_compare](int64_t const elem_index,

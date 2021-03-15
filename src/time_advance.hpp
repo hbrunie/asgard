@@ -38,14 +38,14 @@ explicit_advance(PDE<P> const &pde,
                  P const time, std::string);
 
 template<typename P, typename Q>
-fk::vector<P>
-explicit_advance_mp(PDE<Q> const &sp_pde, PDE<P> const &pde,
-                 adapt::distributed_grid<P> const &adaptive_grid,
-                 basis::wavelet_transform<P, resource::host> const &transformer,
-                 options const &program_opts,
-                 std::array<unscaled_bc_parts<P>, 2> const &unscaled_parts,
-                 fk::vector<P> const &x, int const workspace_size_MB,
-                 P const time, std::string);
+fk::vector<P> explicit_advance_mp(
+    PDE<Q> const &sp_pde, PDE<P> const &pde,
+    adapt::distributed_grid<P> const &adaptive_grid,
+    basis::wavelet_transform<P, resource::host> const &transformer,
+    options const &program_opts,
+    std::array<unscaled_bc_parts<P>, 2> const &unscaled_parts,
+    fk::vector<P> const &x, int const workspace_size_MB, P const time,
+    std::string);
 
 template<typename P>
 fk::vector<P>

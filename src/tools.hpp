@@ -3,13 +3,11 @@
 #include <chrono>
 #include <iomanip>
 #include <iostream>
-#include <iomanip>
 #include <map>
 #include <sstream>
 #include <string>
 #include <type_traits>
 #include <vector>
-#include <sstream>
 
 // simple profiling object
 // this is NOT thread safe for now - only one thread should be calling class
@@ -96,16 +94,18 @@ private:
 extern simple_timer timer;
 
 template<typename T>
-std::string vec2csv(const std::vector<T>& vec) {
-    std::ostringstream s;
-    s << std::scientific << std::setprecision(16);
-    for (unsigned long i=0; i<vec.size();i++){
-        const T x = vec[i];
-        s << "(" << i << ")" << x;
-        if ((1+i) < vec.size())
-            s << ", ";
-    }
-    return s.str();
+std::string vec2csv(const std::vector<T> &vec)
+{
+  std::ostringstream s;
+  s << std::scientific << std::setprecision(16);
+  for (unsigned long i = 0; i < vec.size(); i++)
+  {
+    const T x = vec[i];
+    s << "(" << i << ")" << x;
+    if ((1 + i) < vec.size())
+      s << ", ";
+  }
+  return s.str();
 }
 
 } // namespace tools

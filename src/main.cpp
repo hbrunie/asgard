@@ -59,7 +59,7 @@ int main(int argc, char **argv)
 
   // -- generate pde
   node_out() << "generating: pde..." << '\n';
-  auto pde = make_PDE<prec>(cli_input);
+  auto pde    = make_PDE<prec>(cli_input);
   auto sp_pde = make_PDE<float>(cli_input);
 
   // do this only once to avoid confusion
@@ -103,8 +103,8 @@ int main(int argc, char **argv)
   auto const quiet = false;
   basis::wavelet_transform<prec, resource::host> const transformer(opts, *pde,
                                                                    quiet);
-  basis::wavelet_transform<float, resource::host> const sp_transformer(opts, *sp_pde,
-                                                                   quiet);
+  basis::wavelet_transform<float, resource::host> const sp_transformer(
+      opts, *sp_pde, quiet);
   // -- generate initial condition vector
   node_out() << "  generating: initial conditions..." << '\n';
   auto const initial_condition =
@@ -205,17 +205,21 @@ int main(int argc, char **argv)
 
       // calculate root mean squared error
       auto const diff = f_val - analytic_solution;
-        //std::cerr << "ANALYTIC SOLUTION" << std::endl << tools::vec2csv(analytic_solution.to_std()) << std::endl;
-        //std::cerr << "SIMULATED SOLUTION" << std::endl << tools::vec2csv(f_val.to_std()) << std::endl;
+      // std::cerr << "ANALYTIC SOLUTION" << std::endl <<
+      // tools::vec2csv(analytic_solution.to_std()) << std::endl; std::cerr <<
+      // "SIMULATED SOLUTION" << std::endl << tools::vec2csv(f_val.to_std()) <<
+      // std::endl;
       auto const RMSE = [&diff]() {
         fk::vector<prec> squared(diff);
         std::transform(squared.begin(), squared.end(), squared.begin(),
                        [](prec const &elem) { return elem * elem; });
-        auto const mean = std::accumulate(squared.begin(), squared.end(), (prec)0.0) /
-                          squared.size();
+        auto const mean =
+            std::accumulate(squared.begin(), squared.end(), (prec)0.0) /
+            squared.size();
         return std::sqrt(mean);
       }();
-      auto const relative_error = RMSE / inf_norm(analytic_solution) * (prec)100;
+      auto const relative_error =
+          RMSE / inf_norm(analytic_solution) * (prec)100;
       auto const [rmse_errors, relative_errors] =
           gather_errors(RMSE, relative_error);
       expect(rmse_errors.size() == relative_errors.size());

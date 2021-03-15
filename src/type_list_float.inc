@@ -1,3 +1,3 @@
 X(float)
 X(double)
-X(long double)
+// X(long double)

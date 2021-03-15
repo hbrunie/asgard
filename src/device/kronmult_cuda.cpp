@@ -1,7 +1,7 @@
 #include "kronmult_cuda.hpp"
 #include "build_info.hpp"
-#include <string>
 #include <iostream>
+#include <string>
 
 #ifdef ASGARD_USE_CUDA
 #include <cuda.h>
@@ -74,7 +74,7 @@ stage_inputs_kronmult_kernel(P const *const xdata, P *const element_x,
 #endif
   for (auto i = start; i < stop; i += increment)
   {
-    auto const dest = element_x+ i * num_elems;
+    auto const dest = element_x + i * num_elems;
     std::copy(xdata, xdata + num_elems, dest);
   }
 
@@ -198,7 +198,7 @@ prepare_kronmult_kernel(int const *const flattened_table,
 #endif
   for (int64_t i = start; i < num_elems; i += increment)
   {
-    //std::cerr << "Element " << i << std::endl;
+    // std::cerr << "Element " << i << std::endl;
     auto const row = i / num_cols + elem_row_start;
     auto const col = i % num_cols + elem_col_start;
 
@@ -226,7 +226,8 @@ prepare_kronmult_kernel(int const *const flattened_table,
                             (col - elem_col_start) * num_terms + t;
 
       // point to inputs
-      //fprintf(stderr, "input_ptrs(%d) = &element_x_start[%d]\n",num_kron,t*x_size);
+      // fprintf(stderr, "input_ptrs(%d) =
+      // &element_x_start[%d]\n",num_kron,t*x_size);
       input_ptrs[num_kron] = element_x_start + t * x_size;
 
       // point to work/output
