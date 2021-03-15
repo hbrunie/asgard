@@ -93,16 +93,24 @@ template<typename P>
 static void update_levels(elements::table const &adapted_table, PDE<P> &pde,
                           bool const rechain = false)
 {
+  profiling::start("get_levels");
   auto const new_levels =
       get_levels(adapted_table, pde.get_dimensions().size());
+  profiling::stop("get_levels");
+  profiling::start("update_rechain");
   for (auto i = 0; i < static_cast<int>(new_levels.size()); ++i)
   {
+    profiling::start("update_dimension");
     pde.update_dimension(i, new_levels[i]);
+    profiling::stop("update_dimension");
+    profiling::start("rechain_dimension");
     if (rechain)
     {
       pde.rechain_dimension(i);
     }
+    profiling::stop("rechain_dimension");
   }
+  profiling::stop("update_rechain");
 }
 
 template<typename P>
@@ -198,9 +206,13 @@ fk::vector<P>
 distributed_grid<P>::refine_solution(PDE<P> &pde, fk::vector<P> const &x,
                                      options const &cli_opts)
 {
+  profiling::start("Refine");
   auto const refine_y = this->refine(x, cli_opts);
+  profiling::stop("Refine");
   auto const rechain  = true;
+  profiling::start("Update Levels");
   update_levels(this->get_table(), pde, rechain);
+  profiling::stop("Update Levels");
   return refine_y;
 }
 

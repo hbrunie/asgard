@@ -238,7 +238,10 @@ combine_dimensions(int const degree, elements::table const &table,
     fk::vector<P, mem_type::view> combined_view(combined, start_index,
                                                 stop_index);
 
+    //FIXME compare double to single
+    //combined_view.print("Combined View Before");
     combined_view = kron_d(kron_list, kron_list.size()) * time_scale;
+    //combined_view.print("Combined View After");
   }
 
   return combined;
