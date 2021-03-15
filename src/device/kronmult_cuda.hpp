@@ -18,3 +18,11 @@ template<typename P>
 void call_kronmult(int const n, P *x_ptrs[], P *output_ptrs[], P *work_ptrs[],
                    P const *const operator_ptrs[], int const lda,
                    int const num_krons, int const num_dims);
+
+void premix_convert_back(int64_t work_size, int64_t output_size,
+                         double *dp_input, double *dp_output, double *dp_work,
+                         float *sp_input, float *sp_output, float *sp_work);
+
+void premix_convert(int64_t work_size, int64_t output_size, double *dp_input,
+                    double *dp_output, double *dp_work, float *sp_input,
+                    float *sp_output, float *sp_work);

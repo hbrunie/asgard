@@ -151,6 +151,78 @@ void get_indices(int const *const coords, int indices[], int const degree,
   }
 }
 
+GLOBAL_FUNCTION void premix_convert_kernel(double *src, float *dst)
+{
+  auto const id = static_cast<int64_t>(blockIdx.x) * blockDim.x + threadIdx.x;
+  dst[id]       = (float)src[id];
+}
+
+GLOBAL_FUNCTION void premix_convert_back_kernel(double *dst, float *src)
+{
+  auto const id = static_cast<int64_t>(blockIdx.x) * blockDim.x + threadIdx.x;
+  dst[id]       = (double)src[id];
+}
+
+void premix_convert(int64_t work_size, int64_t output_size, double *dp_input,
+                    double *dp_output, double *dp_work, float *sp_input,
+                    float *sp_output, float *sp_work)
+{
+#ifdef ASGARD_USE_CUDA
+  auto constexpr warp_size   = 32;
+  auto constexpr num_warps   = 1;
+  auto constexpr num_threads = num_warps * warp_size;
+  if (work_size % num_threads != 0)
+    exit(-1);
+  auto const num_blocks = (work_size / num_threads) + 1;
+  premix_convert_kernel<<<num_blocks, num_threads>>>(dp_work, sp_work);
+  premix_convert_kernel<<<num_blocks, num_threads>>>(dp_input, sp_input);
+  if (output_size % num_threads != 0)
+    exit(-1);
+  auto const num_blocks2 = (output_size / num_threads) + 1;
+  premix_convert_kernel<<<num_blocks2, num_threads>>>(dp_output, sp_output);
+  auto const stat = cudaDeviceSynchronize();
+#else
+  for (int64_t i = 0; i < work_size; i++)
+  {
+    sp_input[i] = (float)dp_input[i];
+    sp_work[i]  = (float)dp_work[i];
+  }
+  for (int64_t i = 0; i < output_size; i++)
+    sp_output[i] = (float)dp_output[i];
+#endif
+}
+
+void premix_convert_back(int64_t work_size, int64_t output_size,
+                         double *dp_input, double *dp_output, double *dp_work,
+                         float *sp_input, float *sp_output, float *sp_work)
+{
+#ifdef ASGARD_USE_CUDA
+  auto constexpr warp_size   = 32;
+  auto constexpr num_warps   = 1;
+  auto constexpr num_threads = num_warps * warp_size;
+  if (work_size % num_threads != 0)
+    exit(-1);
+  auto const num_blocks = (work_size / num_threads) + 1;
+  premix_convert_back_kernel<<<num_blocks, num_threads>>>(dp_work, sp_work);
+  premix_convert_back_kernel<<<num_blocks, num_threads>>>(dp_input, sp_input);
+  if (output_size % num_threads != 0)
+    exit(-1);
+  auto const num_blocks2 = (output_size / num_threads) + 1;
+  premix_convert_back_kernel<<<num_blocks2, num_threads>>>(dp_output,
+                                                           sp_output);
+  auto const stat = cudaDeviceSynchronize();
+  expect(stat == cudaSuccess);
+#else
+  for (int64_t i = 0; i < work_size; i++)
+  {
+    dp_work[i]  = (double)sp_work[i];
+    dp_input[i] = (double)sp_input[i];
+  }
+  for (int64_t i = 0; i < output_size; i++)
+    dp_output[i] = (double)sp_output[i];
+#endif
+}
+
 template<typename P>
 GLOBAL_FUNCTION void
 prepare_kronmult_kernel(int const *const flattened_table,
