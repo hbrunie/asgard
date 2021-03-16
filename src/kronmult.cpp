@@ -388,7 +388,6 @@ execute_mp(PDE<float> const &sp_pde, PDE<P> const &pde,
   fk::vector<float *, mem_type::owner, resource::device> const sp_operators_d(
       sp_operators.clone_onto_device());
   profiling::stop("build_operators");
-  profiling::start("Convert (PreMix)");
 
   // FIXME: reduce precision of workspace arrays here
   float *sp_input          = NULL;
@@ -402,14 +401,17 @@ execute_mp(PDE<float> const &sp_pde, PDE<P> const &pde,
   int64_t ptrs_size        = my_subgrid.size() * pde.num_terms;
   if constexpr (std::is_same<P, double>::value)
   {
+  profiling::stop("Allocation (PreMix)");
     allocate_sp_space(workspace_size, output_size, ptrs_size, pde.num_dims,
                       &sp_input, &sp_output, &sp_work, &sp_input_ptrs,
                       &sp_output_ptrs, &sp_work_ptrs, &sp_operator_ptrs);
+  profiling::stop("Allocation (PreMix)");
+  profiling::start("Convert (PreMix)");
     premix_convert(workspace_size, output_size, workspace.get_element_x(),
                    fx.data(), workspace.get_element_work(), sp_input, sp_output,
                    sp_work);
-  }
   profiling::stop("Convert (PreMix)");
+  }
 
   // prepare lists for kronmult, on device if cuda is enabled
   //tools::timer.start("kronmult_build");
