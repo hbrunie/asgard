@@ -89,7 +89,7 @@ adaptive_advance(method const step_method, PDE<float> &sp_pde, PDE<P> &pde,
 
     // take a probing refinement step
     profiling::start("Probing_refinement_step");
-    auto const y_stepped =
+    fk::vector<P> const y_stepped =
         (step_method == method::exp)
 #ifdef ASGARD_USE_MIXED_PREC
             ? explicit_advance_mp(sp_pde, pde, adaptive_grid, transformer,
@@ -123,23 +123,23 @@ adaptive_advance(method const step_method, PDE<float> &sp_pde, PDE<P> &pde,
         auto const y1 =
             adaptive_grid.redistribute_solution(y, old_plan, old_size);
         y.resize(y1.size()) = y1;
+    }else{
+        auto const y_stepped =
+            (step_method == method::exp)
+            ? explicit_advance(pde, adaptive_grid, transformer, program_opts,
+                    unscaled_parts, y, workspace_size_MB, time, "Real step")
+            : implicit_advance(pde, adaptive_grid, transformer, unscaled_parts,
+                    y, time, program_opts.solver, update_system);
+        y.resize(y_stepped.size()) = y_stepped;
     }
   }
-  // refining == FALSE
-  auto const y_stepped =
-      (step_method == method::exp)
-      ? explicit_advance(pde, adaptive_grid, transformer, program_opts,
-              unscaled_parts, y, workspace_size_MB, time, "Real step")
-      : implicit_advance(pde, adaptive_grid, transformer, unscaled_parts,
-              y, time, program_opts.solver, update_system);
-  y.resize(y_stepped.size()) = y_stepped;
   profiling::stop("Adaptivity_Refining_loop");
 
   return y;
 }
 
 template<typename P, typename Q>
-fk::vector<float> explicit_advance_mp(
+fk::vector<P> explicit_advance_mp(
     PDE<Q> const &sp_pde, PDE<P> const &pde,
     adapt::distributed_grid<P> const &adaptive_grid,
     basis::wavelet_transform<P, resource::host> const &transformer,
@@ -165,9 +165,10 @@ fk::vector<float> explicit_advance_mp(
   // time advance working vectors
   // input vector for apply_A
   //fk::vector<P> x(x_orig);
-  fk::vector<float> sp_x(x_orig);
+  fk::vector<Q> sp_x_orig(x_orig);
+  fk::vector<Q> sp_x(x_orig);
   // a buffer for reducing across subgrid row
-  fk::vector<P> reduced_fx(row_size);
+  fk::vector<Q> reduced_fx(row_size);
 
   expect(time >= 0);
   expect(dt > 0);
@@ -188,35 +189,41 @@ fk::vector<float> explicit_advance_mp(
   profiling::start("RKstep1");
   auto const apply_id = tools::timer.start("kronmult_setup");
   profiling::start("kronmult_exec");
-  auto fx = kronmult::execute_mp(sp_pde, pde, table, program_opts, grid,
+  fk::vector<Q> sp_fx = kronmult::execute_mp(sp_pde, pde, table, program_opts, grid,
                                  workspace_size_MB, sp_x,"RK 1");
   profiling::stop("kronmult_exec");
   tools::timer.stop(apply_id);
   profiling::start("Reduced_results");
-  reduce_results(fx, reduced_fx, plan, get_rank());
+  //fk::vector<P> fx(sp_fx);
+  reduce_results(sp_fx, reduced_fx, plan, get_rank());
   profiling::stop("Reduced_results");
 
   if (pde.num_sources > 0)
   {
     profiling::start("get_sources-axpy");
-    auto const sources = get_sources(pde, adaptive_grid, transformer, time);
-    fm::axpy(sources, reduced_fx);
+    //FIXME get sources in float?
+    fk::vector<P> const sources = get_sources(pde, adaptive_grid, transformer,
+            time);
+    fk::vector<Q> const sp_sources(sources);
+    fm::axpy(sp_sources, reduced_fx);
     profiling::stop("get_sources-axpy");
   }
 
   profiling::start("generate_scale-axpy");
-  auto const bc0 = boundary_conditions::generate_scaled_bc(
+  //FIXME generate_scaled_bc in float?
+  fk::vector<P> const bc0 = boundary_conditions::generate_scaled_bc(
       unscaled_parts[0], unscaled_parts[1], pde, grid.row_start, grid.row_stop,
       time);
-  fm::axpy(bc0, reduced_fx);
+  fk::vector<Q> const sp_bc0(bc0);
+  fm::axpy(sp_bc0, reduced_fx);
   profiling::stop("generate_scale-axpy");
 
   // FIXME I eventually want to return a vect here
   profiling::start("exchange_results-axpy");
-  fk::vector<P> rk_1(x_orig.size());
+  fk::vector<Q> rk_1(x_orig.size());
   exchange_results(reduced_fx, rk_1, elem_size, plan, get_rank());
-  P const rk_scale_1 = a21 * dt;
-  fm::axpy(rk_1, x, rk_scale_1);
+  Q const rk_scale_1 = a21 * dt;
+  fm::axpy(rk_1, sp_x, rk_scale_1);
   profiling::stop("exchange_results-axpy");
 
   profiling::stop("RKstep1");
@@ -224,13 +231,13 @@ fk::vector<float> explicit_advance_mp(
   tools::timer.start(apply_id);
   profiling::start("RKstep2");
   profiling::start("kronmult_exec");
-  fx = kronmult::execute_mp(sp_pde, pde, table, program_opts, grid,
+  sp_fx = kronmult::execute_mp(sp_pde, pde, table, program_opts, grid,
                             workspace_size_MB, sp_x, "RK2");
   profiling::stop("kronmult_exec");
   tools::timer.stop(apply_id);
 
   profiling::start("Reduced_results");
-  reduce_results(fx, reduced_fx, plan, get_rank());
+  reduce_results(sp_fx, reduced_fx, plan, get_rank());
   profiling::stop("Reduced_results");
 
   if (pde.num_sources > 0)
@@ -238,7 +245,8 @@ fk::vector<float> explicit_advance_mp(
     profiling::start("get_sources-axpy");
     auto const sources =
         get_sources(pde, adaptive_grid, transformer, time + c2 * dt);
-    fm::axpy(sources, reduced_fx);
+    fk::vector<Q> sp_sources(sources);
+    fm::axpy(sp_sources, reduced_fx);
     profiling::stop("get_sources-axpy");
   }
 
@@ -246,16 +254,17 @@ fk::vector<float> explicit_advance_mp(
   fk::vector<P> const bc1 = boundary_conditions::generate_scaled_bc(
       unscaled_parts[0], unscaled_parts[1], pde, grid.row_start, grid.row_stop,
       time + c2 * dt);
-  fm::axpy(bc1, reduced_fx);
+  fk::vector<Q> const sp_bc1(bc1);
+  fm::axpy(sp_bc1, reduced_fx);
   profiling::stop("generate_scale-axpy");
 
   profiling::start("exchange_results-axpy");
-  fk::vector<P> rk_2(x_orig.size());
+  fk::vector<Q> rk_2(x_orig.size());
   exchange_results(reduced_fx, rk_2, elem_size, plan, get_rank());
 
-  fm::copy(x_orig, sp_x);
-  P const rk_scale_2a = a31 * dt;
-  P const rk_scale_2b = a32 * dt;
+  fm::copy(sp_x_orig, sp_x);
+  Q const rk_scale_2a = a31 * dt;
+  Q const rk_scale_2b = a32 * dt;
 
   fm::axpy(rk_1, sp_x, rk_scale_2a);
   fm::axpy(rk_2, sp_x, rk_scale_2b);
@@ -266,12 +275,12 @@ fk::vector<float> explicit_advance_mp(
   // -- RK step 3
   tools::timer.start(apply_id);
   profiling::start("kronmult_exec");
-  fx = kronmult::execute_mp(sp_pde, pde, table, program_opts, grid,
+  sp_fx = kronmult::execute_mp(sp_pde, pde, table, program_opts, grid,
                             workspace_size_MB, sp_x, "RK3");
   profiling::stop("kronmult_exec");
   tools::timer.stop(apply_id);
   profiling::start("Reduced_results");
-  reduce_results(fx, reduced_fx, plan, get_rank());
+  reduce_results(sp_fx, reduced_fx, plan, get_rank());
   profiling::stop("Reduced_results");
 
   if (pde.num_sources > 0)
@@ -279,7 +288,8 @@ fk::vector<float> explicit_advance_mp(
     profiling::start("get_sources-axpy");
     auto const sources =
         get_sources(pde, adaptive_grid, transformer, time + c3 * dt);
-    fm::axpy(sources, reduced_fx);
+    fk::vector<Q> const sp_sources(sources);
+    fm::axpy(sp_sources, reduced_fx);
     profiling::stop("get_sources-axpy");
   }
 
@@ -287,18 +297,19 @@ fk::vector<float> explicit_advance_mp(
   auto const bc2 = boundary_conditions::generate_scaled_bc(
       unscaled_parts[0], unscaled_parts[1], pde, grid.row_start, grid.row_stop,
       time + c3 * dt);
-  fm::axpy(bc2, reduced_fx);
+  fk::vector<Q> const sp_bc2(bc2);
+  fm::axpy(sp_bc2, reduced_fx);
   profiling::stop("generate_scale-axpy");
   profiling::start("exchange_results-axpy");
 
-  fk::vector<P> rk_3(x_orig.size());
+  fk::vector<Q> rk_3(x_orig.size());
   exchange_results(reduced_fx, rk_3, elem_size, plan, get_rank());
 
   // -- finish
-  fm::copy(x_orig, sp_x);
-  P const scale_1 = dt * b1;
-  P const scale_2 = dt * b2;
-  P const scale_3 = dt * b3;
+  fm::copy(sp_x_orig, sp_x);
+  Q const scale_1 = dt * b1;
+  Q const scale_2 = dt * b2;
+  Q const scale_3 = dt * b3;
 
   fm::axpy(rk_1, sp_x, scale_1);
   fm::axpy(rk_2, sp_x, scale_2);
@@ -306,7 +317,8 @@ fk::vector<float> explicit_advance_mp(
   profiling::stop("exchange_results-axpy");
   profiling::stop("RKstep3");
 
-  return sp_x;
+  fk::vector <double> dp_x(sp_x);
+  return dp_x;
 }
 
 // this function executes an explicit time step using the current solution
@@ -590,7 +602,10 @@ implicit_advance(PDE<P> const &pde,
       basis::wavelet_transform<T, resource::host> const &transformer,    \
       options const &program_opts, fk::vector<T> const &x, T const time, \
       int const workspace_size_MB, bool const update_system);
-#include "type_list_float.inc"
+#ifndef ASGARD_USE_MIXED_PREC
+X(float)
+#endif
+X(double)
 #undef X
 
 #define X(T)                                                              \
@@ -604,17 +619,14 @@ implicit_advance(PDE<P> const &pde,
 #include "type_list_float.inc"
 #undef X
 
-#define X(T)                                                             \
-  template fk::vector<float> explicit_advance_mp(                            \
-      PDE<float> const &sp_pde, PDE<T> const &pde,                       \
-      adapt::distributed_grid<T> const &adaptive_grid,                   \
-      basis::wavelet_transform<T, resource::host> const &transformer,    \
-      options const &program_opts,                                       \
-      std::array<unscaled_bc_parts<T>, 2> const &unscaled_parts,         \
-      fk::vector<T> const &x, int const workspace_size_MB, T const time, \
+  template fk::vector<double> explicit_advance_mp(
+      PDE<float> const &sp_pde, PDE<double> const &pde,
+      adapt::distributed_grid<double> const &adaptive_grid,
+      basis::wavelet_transform<double, resource::host> const &transformer,
+      options const &program_opts,
+      std::array<unscaled_bc_parts<double>, 2> const &unscaled_parts,
+      fk::vector<double> const &x, int const workspace_size_MB, double const time,
       std::string);
-#include "type_list_float.inc"
-#undef X
 
 #define X(T)                                                                  \
   template fk::vector<T> implicit_advance(                                    \

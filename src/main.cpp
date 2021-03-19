@@ -96,7 +96,7 @@ int main(int argc, char **argv)
   node_out() << "  generating: adaptive grid..." << '\n';
 
   adapt::distributed_grid adaptive_grid(*pde, opts);
-  adapt::distributed_grid sp_adaptive_grid(*sp_pde, opts);
+  //adapt::distributed_grid sp_adaptive_grid(*sp_pde, opts);
   node_out() << "  degrees of freedom: "
              << adaptive_grid.size() *
                     static_cast<uint64_t>(std::pow(degree, pde->num_dims))
@@ -106,14 +106,14 @@ int main(int argc, char **argv)
   auto const quiet = false;
   basis::wavelet_transform<prec, resource::host> const transformer(opts, *pde,
                                                                    quiet);
-  basis::wavelet_transform<float, resource::host> const sp_transformer(
-      opts, *sp_pde, quiet);
+  //basis::wavelet_transform<float, resource::host> const sp_transformer(
+  //    opts, *sp_pde, quiet);
   // -- generate initial condition vector
   node_out() << "  generating: initial conditions..." << '\n';
   auto const initial_condition =
       adaptive_grid.get_initial_condition(*pde, transformer, opts);
-  auto const sp_initial_condition =
-      sp_adaptive_grid.get_initial_condition(*sp_pde, sp_transformer, opts);
+  //auto const sp_initial_condition =
+  //    sp_adaptive_grid.get_initial_condition(*sp_pde, sp_transformer, opts);
   node_out() << "  degrees of freedom (post initial adapt): "
              << adaptive_grid.size() *
                     static_cast<uint64_t>(std::pow(degree, pde->num_dims))
@@ -122,7 +122,7 @@ int main(int argc, char **argv)
   // -- generate and store coefficient matrices.
   node_out() << "  generating: coefficient matrices..." << '\n';
   generate_all_coefficients<prec>(*pde, transformer);
-  generate_all_coefficients<float>(*sp_pde, sp_transformer);
+  //generate_all_coefficients<float>(*sp_pde, sp_transformer);
 
   // this is to bail out for further profiling/development on the setup routines
   if (opts.num_time_steps < 1)

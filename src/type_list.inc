@@ -1,4 +1,2 @@
 X(int)
-X(float)
-X(double)
-// X(long double)
+#include "type_list_float.inc"

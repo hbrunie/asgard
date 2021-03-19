@@ -275,6 +275,7 @@ private:
       fk::allocate_device(sp_work_ptrs, new_ptrs_size, initialize);
       fk::allocate_device(sp_output_ptrs, new_ptrs_size, initialize);
       fk::allocate_device(sp_operator_ptrs, new_ptrs_size * pde.num_dims,
+                          initialize);
 
       fk::allocate_device(element_x, new_workspace_size, initialize);
       fk::allocate_device(element_work, new_workspace_size, initialize);
@@ -330,13 +331,13 @@ private:
 };
 
 // private, directly execute one subgrid
-template<typename P>
-fk::vector<P, mem_type::view, resource::device>
-execute_mp(PDE<float> const &sp_pde, PDE<P> const &pde,
+template<typename P, typename Q>
+fk::vector<Q, mem_type::view, resource::device>
+execute_mp(PDE<Q> const &sp_pde, PDE<P> const &pde,
            elements::table const &elem_table, options const &program_opts,
            element_subgrid const &my_subgrid,
-           fk::vector<P, mem_type::const_view, resource::device> const &vec_x,
-           fk::vector<P, mem_type::view, resource::device> &fx,
+           fk::vector<Q, mem_type::const_view, resource::device> const &vec_x,
+           fk::vector<Q, mem_type::view, resource::device> &fx,
            std::string previous)
 {
   // std::cerr << "Executing : " << previous << std::endl;
@@ -358,7 +359,7 @@ execute_mp(PDE<float> const &sp_pde, PDE<P> const &pde,
   profiling::start("stage_inputs_kronmult");
   // stage x vector in writable regions for each element
   auto const num_copies = my_subgrid.nrows() * pde.num_terms;
-  stage_inputs_kronmult(vec_x.data(), workspace.get_element_x(), vec_x.size(),
+  stage_inputs_kronmult(vec_x.data(), workspace.get_sp_element_x(), vec_x.size(),
                         num_copies);
   profiling::stop("stage_inputs_kronmult");
   //tools::timer.stop("kronmult_stage");
@@ -372,21 +373,6 @@ execute_mp(PDE<float> const &sp_pde, PDE<P> const &pde,
       degree *
       fm::two_raised_to(
           program_opts.max_level); // leading dimension of coefficient matrices
-
-  fk::vector<P *> const operators = [&pde, lda] {
-    fk::vector<P *> builder(pde.num_terms * pde.num_dims);
-    for (int i = 0; i < pde.num_terms; ++i)
-    {
-      for (int j = 0; j < pde.num_dims; ++j)
-      {
-        builder(i * pde.num_dims + j) = pde.get_coefficients(i, j).data();
-        expect(pde.get_coefficients(i, j).nrows() == lda);
-      }
-    }
-    return builder;
-  }();
-  fk::vector<P *, mem_type::owner, resource::device> const operators_d(
-      operators.clone_onto_device());
 
   fk::vector<float *> const sp_operators = [&sp_pde, lda] {
     fk::vector<float *> builder(sp_pde.num_terms * sp_pde.num_dims);
@@ -405,30 +391,6 @@ execute_mp(PDE<float> const &sp_pde, PDE<P> const &pde,
       sp_operators.clone_onto_device());
   profiling::stop("build_operators");
 
-  // FIXME: reduce precision of workspace arrays here
-  float *sp_input          = NULL;
-  float *sp_work           = NULL;
-  float *sp_output         = NULL;
-  float **sp_input_ptrs    = NULL;
-  float **sp_work_ptrs     = NULL;
-  float **sp_output_ptrs   = NULL;
-  float **sp_operator_ptrs = NULL;
-  int64_t workspace_size   = my_subgrid.size() * deg_to_dim * pde.num_terms;
-  int64_t ptrs_size        = my_subgrid.size() * pde.num_terms;
-  if constexpr (std::is_same<P, double>::value)
-  {
-  profiling::start("Allocation (PreMix)");
-    allocate_sp_space(workspace_size, output_size, ptrs_size, pde.num_dims,
-                      &sp_input, &sp_output, &sp_work, &sp_input_ptrs,
-                      &sp_output_ptrs, &sp_work_ptrs, &sp_operator_ptrs);
-  profiling::stop("Allocation (PreMix)");
-  profiling::start("Only Convert (PreMix)");
-    premix_convert(workspace_size, output_size, workspace.get_element_x(),
-                   fx.data(), workspace.get_element_work(), sp_input, sp_output,
-                   sp_work);
-  profiling::stop("Only Convert (PreMix)");
-  }
-
   // prepare lists for kronmult, on device if cuda is enabled
   //tools::timer.start("kronmult_build");
   /*
@@ -441,8 +403,10 @@ execute_mp(PDE<float> const &sp_pde, PDE<P> const &pde,
   profiling::start("prepare_kronmult");
   prepare_kronmult<float>(
       elem_table.get_active_table().data(), sp_operators_d.data(), lda,
-      sp_input, sp_work, sp_output, sp_operator_ptrs, sp_work_ptrs,
-      sp_input_ptrs, sp_output_ptrs, degree, pde.num_terms, pde.num_dims,
+      workspace.get_sp_element_x(), workspace.get_sp_element_work(),
+      fx.data(), workspace.get_sp_operator_ptrs(),
+      workspace.get_sp_work_ptrs(), workspace.get_sp_input_ptrs(),
+      workspace.get_sp_output_ptrs(), degree, pde.num_terms, pde.num_dims,
       my_subgrid.row_start, my_subgrid.row_stop, my_subgrid.col_start,
       my_subgrid.col_stop);
   //tools::timer.stop("kronmult_build");
@@ -454,27 +418,11 @@ execute_mp(PDE<float> const &sp_pde, PDE<P> const &pde,
                      total_kronmults;
 
   //tools::timer.start("kronmult");
-  /*
-   call_kronmult(degree, workspace.get_input_ptrs(),
-   workspace.get_output_ptrs(), workspace.get_work_ptrs(),
-   workspace.get_operator_ptrs(), lda,
-   */
-  call_kronmult(degree, sp_input_ptrs, sp_output_ptrs, sp_work_ptrs,
-                sp_operator_ptrs, lda, total_kronmults, pde.num_dims);
+   call_kronmult(degree, workspace.get_sp_input_ptrs(),
+   workspace.get_sp_output_ptrs(), workspace.get_sp_work_ptrs(),
+   workspace.get_sp_operator_ptrs(), lda, total_kronmults, pde.num_dims);
   //tools::timer.stop("kronmult", flops);
   profiling::stop("call_kronmult");
-  if constexpr (std::is_same<P, double>::value)
-  {
-  profiling::start("Only Convert back (PreMix)");
-    premix_convert_back(workspace_size, output_size, workspace.get_element_x(),
-                        fx.data(), workspace.get_element_work(), sp_input,
-                        sp_output, sp_work);
-  profiling::stop("Only Convert back (PreMix)");
-  profiling::start("Deallocate Convert back (PreMix)");
-    deallocate_sp_space(sp_input, sp_output, sp_work, sp_input_ptrs,
-                        sp_output_ptrs, sp_work_ptrs, sp_operator_ptrs);
-  profiling::stop("Deallocate Convert back (PreMix)");
-  }
   return fx;
 }
 
@@ -566,12 +514,13 @@ execute(PDE<P> const &pde, elements::table const &elem_table,
 }
 
 // public MIXED PRECISION FIXME
-template<typename P>
-fk::vector<P, mem_type::owner, resource::host>
-execute_mp(PDE<float> const &sp_pde, PDE<P> const &pde,
+// P is double, Q is float
+template<typename P, typename Q>
+fk::vector<Q, mem_type::owner, resource::host>
+execute_mp(PDE<Q> const &sp_pde, PDE<P> const &pde,
            elements::table const &elem_table, options const &program_opts,
            element_subgrid const &my_subgrid, int const workspace_size_MB,
-           fk::vector<P, mem_type::owner, resource::host> const &x,
+           fk::vector<Q, mem_type::owner, resource::host> const &x,
            std::string previous)
 {
   profiling::start("decompose");
@@ -582,8 +531,8 @@ execute_mp(PDE<float> const &sp_pde, PDE<P> const &pde,
 
   auto const output_size = my_subgrid.nrows() * deg_to_dim;
   expect(output_size < INT_MAX);
-  fk::vector<P, mem_type::owner, resource::device> fx_dev(output_size);
-  fk::vector<P, mem_type::owner, resource::device> const x_dev(
+  fk::vector<Q, mem_type::owner, resource::device> fx_dev(output_size);
+  fk::vector<Q, mem_type::owner, resource::device> const x_dev(
       x.clone_onto_device());
 
   profiling::stop("decompose");
@@ -593,9 +542,9 @@ execute_mp(PDE<float> const &sp_pde, PDE<P> const &pde,
     auto const col_end   = my_subgrid.to_local_col(grid.col_stop);
     auto const row_start = my_subgrid.to_local_row(grid.row_start);
     auto const row_end   = my_subgrid.to_local_row(grid.row_stop);
-    fk::vector<P, mem_type::const_view, resource::device> const x_dev_grid(
+    fk::vector<Q, mem_type::const_view, resource::device> const x_dev_grid(
         x_dev, col_start * deg_to_dim, (col_end + 1) * deg_to_dim - 1);
-    fk::vector<P, mem_type::view, resource::device> fx_dev_grid(
+    fk::vector<Q, mem_type::view, resource::device> fx_dev_grid(
         fx_dev, row_start * deg_to_dim, (row_end + 1) * deg_to_dim - 1);
     profiling::start("kronmult_exec_private");
     fx_dev_grid = kronmult::execute_mp(sp_pde, pde, elem_table, program_opts,
@@ -660,13 +609,10 @@ execute(PDE<P> const &pde, elements::table const &elem_table,
 #include "type_list_float.inc"
 #undef X
 
-#define X(T)                                                             \
-  template fk::vector<T, mem_type::owner, resource::host> execute_mp(    \
-      PDE<float> const &sp_pde, PDE<T> const &pde,                       \
-      elements::table const &elem_table, options const &program_options, \
-      element_subgrid const &my_subgrid, int const workspace_size_MB,    \
-      fk::vector<T, mem_type::owner, resource::host> const &x, std::string);
-#include "type_list_float.inc"
-#undef X
+template fk::vector<float, mem_type::owner, resource::host> execute_mp(
+        PDE<float> const &sp_pde, PDE<double> const &pde,
+        elements::table const &elem_table, options const &program_options,
+        element_subgrid const &my_subgrid, int const workspace_size_MB,
+        fk::vector<float, mem_type::owner, resource::host> const &x, std::string);
 
 } // namespace kronmult

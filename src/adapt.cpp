@@ -363,7 +363,10 @@ fk::vector<P> distributed_grid<P>::remove_elements(
 }
 
 #define X(T) template class distributed_grid<T>;
-#include "type_list_float.inc"
+#ifndef ASGARD_USE_MIXED_PREC
+X(float)
+#endif
+X(double)
 #undef X
 
 } // namespace adapt

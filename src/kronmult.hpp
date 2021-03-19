@@ -21,12 +21,12 @@ execute(PDE<P> const &pde, elements::table const &elem_table,
         int const workspace_size_MB,
         fk::vector<P, mem_type::owner, resource::host> const &x, std::string);
 
-template<typename P>
-fk::vector<P, mem_type::owner, resource::host>
-execute_mp(PDE<float> const &sp_pde, PDE<P> const &pde,
+template<typename P, typename Q>
+fk::vector<Q, mem_type::owner, resource::host>
+execute_mp(PDE<Q> const &sp_pde, PDE<P> const &pde,
            elements::table const &elem_table, options const &program_options,
            element_subgrid const &my_subgrid, int const workspace_size_MB,
-           fk::vector<P, mem_type::owner, resource::host> const &x,
+           fk::vector<Q, mem_type::owner, resource::host> const &x,
            std::string);
 
 } // namespace kronmult
