@@ -95,7 +95,7 @@ private:
   // select elements from table given condition (function) and solution vector
   template<typename F>
   std::vector<int64_t>
-  filter_elements(F const condition, fk::vector<P> const &x)
+  filter_elements(F const condition_func, fk::vector<P> const &x)
   {
     auto const my_subgrid = this->get_subgrid(get_rank());
     assert(x.size() % my_subgrid.ncols() == 0);
@@ -110,7 +110,7 @@ private:
       fk::vector<P, mem_type::const_view> const element_x(x, elem_start,
                                                           elem_stop);
       auto const elem_index = my_subgrid.to_global_col(i);
-      if (condition(elem_index, element_x))
+      if (condition_func(elem_index, element_x))
       {
         matching_elements.push_back(elem_index);
       }

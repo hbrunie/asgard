@@ -81,6 +81,8 @@ get_levels(elements::table const &adapted_table, int const num_dims)
   {
     fk::vector<int, mem_type::const_view> coords(
         flat_table, element * coord_size, (element + 1) * coord_size - 1);
+    //FIXME: only 0 to num_dims-1 when coord_size = num_dims * 2. Why?
+    //FIXME adapted_table.get_active_table() is made of levels?
     for (auto i = 0; i < num_dims; ++i)
     {
       max_levels[i] = std::max(coords(i), max_levels[i]);
@@ -98,6 +100,7 @@ static void update_levels(elements::table const &adapted_table, PDE<P> &pde,
       get_levels(adapted_table, pde.get_dimensions().size());
   profiling::stop("get_levels");
   profiling::start("update_rechain");
+  //FIXME why not num_dims? Can new_level.size() be different?
   for (auto i = 0; i < static_cast<int>(new_levels.size()); ++i)
   {
     profiling::start("update_dimension");
@@ -255,20 +258,20 @@ distributed_grid<P>::refine(fk::vector<P> const &x, options const &cli_opts)
 
 template<typename P>
 fk::vector<P>
-distributed_grid<P>::coarsen(fk::vector<P> const &x, options const &cli_opts)
+distributed_grid<P>::coarsen(fk::vector<P> const &x_orig, options const &cli_opts)
 {
   auto const abs_compare = [](P const a, P const b) {
     return (std::abs(a) < std::abs(b));
   };
   P const max_elem =
-      std::abs(*std::max_element(x.begin(), x.end(), abs_compare));
+      std::abs(*std::max_element(x_orig.begin(), x_orig.end(), abs_compare));
   // Get max accross all MPI processes (Reduce collective call)
   P const global_max       = get_global_max(max_elem, this->plan_);
   P const refine_threshold = cli_opts.adapt_threshold * global_max;
   // No refinement process: no coarsening either.
   if (refine_threshold <= 0.0)
   {
-    return x;
+    return x_orig;
   }
 
   // Coarsening threshold is arbitrary 10% of refinement threshold
@@ -286,8 +289,8 @@ distributed_grid<P>::coarsen(fk::vector<P> const &x, options const &cli_opts)
         return std::abs(max_elem) <= coarsen_threshold && min_level >= 1;
       };
 
-  auto const to_coarsen = filter_elements(coarsen_check, x);
-  return this->remove_elements(to_coarsen, x);
+  auto const to_coarsen = filter_elements(coarsen_check, x_orig);
+  return this->remove_elements(to_coarsen, x_orig);
 }
 
 template<typename P>
