@@ -171,6 +171,7 @@ void premix_convert(int64_t work_size, int64_t output_size, double *dp_input,
   auto constexpr warp_size   = 32;
   auto constexpr num_warps   = 1;
   auto constexpr num_threads = num_warps * warp_size;
+    //FIXME: make it more generic
   if (work_size % num_threads != 0)
     exit(-1);
   auto const num_blocks = (work_size / num_threads) + 1;

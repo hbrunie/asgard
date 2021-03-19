@@ -18,41 +18,6 @@
 
 namespace kronmult
 {
-/* Data conversion for adaptivity probing time step Mixed Precision Optim */
-void allocate_sp_space(int64_t work_size, int64_t output_size,
-                       int64_t ptrs_size, int64_t num_dims, float **sp_input,
-                       float **sp_output, float **sp_work,
-                       float ***sp_input_ptrs, float ***sp_output_ptrs,
-                       float ***sp_work_ptrs, float ***sp_operator_ptrs)
-{
-  // input <--> element_x
-  // output <--> fx
-  // work <--> element_work
-  // operator_ptrs <--> operator
-  bool const init = false;
-  // Arrays
-  fk::allocate_device(*sp_input, work_size, init);
-  fk::allocate_device(*sp_output, output_size, init);
-  fk::allocate_device(*sp_work, work_size, init);
-  // Pointers to arrays: views
-  fk::allocate_device(*sp_input_ptrs, ptrs_size, init);
-  fk::allocate_device(*sp_output_ptrs, ptrs_size, init);
-  fk::allocate_device(*sp_work_ptrs, ptrs_size, init);
-  fk::allocate_device(*sp_operator_ptrs, ptrs_size * num_dims, init);
-}
-
-void deallocate_sp_space(float *sp_input, float *sp_output, float *sp_work,
-                         float **sp_input_ptrs, float **sp_output_ptrs,
-                         float **sp_work_ptrs, float **sp_operator_ptrs)
-{
-  fk::delete_device(sp_input);
-  fk::delete_device(sp_output);
-  fk::delete_device(sp_work);
-  fk::delete_device(sp_input_ptrs);
-  fk::delete_device(sp_output_ptrs);
-  fk::delete_device(sp_work_ptrs);
-  fk::delete_device(sp_operator_ptrs);
-}
 
 // calculate how much workspace we need on device to compute a single connected
 // element
@@ -200,6 +165,13 @@ public:
   P **get_output_ptrs() const { return output_ptrs; }
   P **get_operator_ptrs() const { return operator_ptrs; }
 
+  float *get_sp_element_x() const { return sp_element_x; }
+  float *get_sp_element_work() const { return sp_element_work; }
+  float **get_sp_input_ptrs() const { return sp_input_ptrs; }
+  float **get_sp_work_ptrs() const { return sp_work_ptrs; }
+  float **get_sp_output_ptrs() const { return sp_output_ptrs; }
+  float **get_sp_operator_ptrs() const { return sp_operator_ptrs; }
+
   // no move no copy
   kronmult_workspace(kronmult_workspace const &) = delete;
   void operator=(kronmult_workspace const &)        = delete;
@@ -214,6 +186,13 @@ public:
     fk::delete_device(operator_ptrs);
     fk::delete_device(work_ptrs);
     fk::delete_device(output_ptrs);
+
+    fk::delete_device(sp_element_x);
+    fk::delete_device(sp_element_work);
+    fk::delete_device(sp_input_ptrs);
+    fk::delete_device(sp_operator_ptrs);
+    fk::delete_device(sp_work_ptrs);
+    fk::delete_device(sp_output_ptrs);
   }
 
 private:
@@ -249,6 +228,13 @@ private:
     fk::allocate_device(work_ptrs, ptrs_size, initialize);
     fk::allocate_device(output_ptrs, ptrs_size, initialize);
     fk::allocate_device(operator_ptrs, ptrs_size * pde.num_dims, initialize);
+
+    fk::allocate_device(sp_element_x, workspace_size, initialize);
+    fk::allocate_device(sp_element_work, workspace_size, initialize);
+    fk::allocate_device(sp_input_ptrs, ptrs_size, initialize);
+    fk::allocate_device(sp_work_ptrs, ptrs_size, initialize);
+    fk::allocate_device(sp_output_ptrs, ptrs_size, initialize);
+    fk::allocate_device(sp_operator_ptrs, ptrs_size * pde.num_dims, initialize);
   }
 
   void validate(PDE<P> const &pde, element_subgrid const &my_subgrid)
@@ -269,12 +255,27 @@ private:
       fk::delete_device(work_ptrs);
       fk::delete_device(output_ptrs);
 
+      fk::delete_device(sp_element_x);
+      fk::delete_device(sp_element_work);
+      fk::delete_device(sp_input_ptrs);
+      fk::delete_device(sp_operator_ptrs);
+      fk::delete_device(sp_work_ptrs);
+      fk::delete_device(sp_output_ptrs);
+
       // don't memset
       bool const initialize = false;
 
       // FIXME allocate once for maximum adaptivity? this would be a LOT of
       // elements, not sure we want to do that. but, the below code will crash
       // if we add so many elements that we spill out of device RAM
+      //
+      fk::allocate_device(sp_element_x, new_workspace_size, initialize);
+      fk::allocate_device(sp_element_work, new_workspace_size, initialize);
+      fk::allocate_device(sp_input_ptrs, new_ptrs_size, initialize);
+      fk::allocate_device(sp_work_ptrs, new_ptrs_size, initialize);
+      fk::allocate_device(sp_output_ptrs, new_ptrs_size, initialize);
+      fk::allocate_device(sp_operator_ptrs, new_ptrs_size * pde.num_dims,
+
       fk::allocate_device(element_x, new_workspace_size, initialize);
       fk::allocate_device(element_work, new_workspace_size, initialize);
       fk::allocate_device(input_ptrs, new_ptrs_size, initialize);
@@ -311,6 +312,21 @@ private:
   // containing the A matrix with the operators to apply to X
   // kron(A1, A2, ... Andims) \times  X
   P **operator_ptrs;
+
+  /* Same element in float for mixed precision tuning */
+  float *sp_element_x;
+  float *sp_element_work;
+  // Array (kron batch) of arrays (element_x)
+  float ** sp_input_ptrs;
+  // Array (kron batch) of arrays(element_work):
+  // temporary (work) memory space for kronmult computation
+  float ** sp_work_ptrs;
+  // Array (kron batch) of arrays(fx):
+  // containing the final kronmult result
+  float ** sp_output_ptrs;
+  // containing the A matrix with the operators to apply to X
+  // kron(A1, A2, ... Andims) \times  X
+  float ** sp_operator_ptrs;
 };
 
 // private, directly execute one subgrid
