@@ -401,16 +401,16 @@ execute_mp(PDE<float> const &sp_pde, PDE<P> const &pde,
   int64_t ptrs_size        = my_subgrid.size() * pde.num_terms;
   if constexpr (std::is_same<P, double>::value)
   {
-  profiling::stop("Allocation (PreMix)");
+  profiling::start("Allocation (PreMix)");
     allocate_sp_space(workspace_size, output_size, ptrs_size, pde.num_dims,
                       &sp_input, &sp_output, &sp_work, &sp_input_ptrs,
                       &sp_output_ptrs, &sp_work_ptrs, &sp_operator_ptrs);
   profiling::stop("Allocation (PreMix)");
-  profiling::start("Convert (PreMix)");
+  profiling::start("Only Convert (PreMix)");
     premix_convert(workspace_size, output_size, workspace.get_element_x(),
                    fx.data(), workspace.get_element_work(), sp_input, sp_output,
                    sp_work);
-  profiling::stop("Convert (PreMix)");
+  profiling::stop("Only Convert (PreMix)");
   }
 
   // prepare lists for kronmult, on device if cuda is enabled
@@ -447,16 +447,18 @@ execute_mp(PDE<float> const &sp_pde, PDE<P> const &pde,
                 sp_operator_ptrs, lda, total_kronmults, pde.num_dims);
   //tools::timer.stop("kronmult", flops);
   profiling::stop("call_kronmult");
-  profiling::start("Convert back (PreMix)");
   if constexpr (std::is_same<P, double>::value)
   {
+  profiling::start("Only Convert back (PreMix)");
     premix_convert_back(workspace_size, output_size, workspace.get_element_x(),
                         fx.data(), workspace.get_element_work(), sp_input,
                         sp_output, sp_work);
+  profiling::stop("Only Convert back (PreMix)");
+  profiling::start("Deallocate Convert back (PreMix)");
     deallocate_sp_space(sp_input, sp_output, sp_work, sp_input_ptrs,
                         sp_output_ptrs, sp_work_ptrs, sp_operator_ptrs);
+  profiling::stop("Deallocate Convert back (PreMix)");
   }
-  profiling::stop("Convert back (PreMix)");
   return fx;
 }
 
