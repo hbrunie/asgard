@@ -65,6 +65,9 @@ adaptive_advance(method const step_method, PDE<float> &sp_pde, PDE<P> &pde,
   profiling::start("Adaptivity_Coarsening");
   // coarsen
   auto const old_size = adaptive_grid.size();
+  // Consider solution coefficient to threshold: if too small, remove them
+  // and coarsen the adaptive_grid consequently
+  // FIXME what is the link between x_orig and y here?
   auto y = adaptive_grid.coarsen_solution(pde, x_orig, program_opts);
   profiling::stop("Adaptivity_Coarsening");
   node_out() << " adapt -- coarsened grid from " << old_size << " -> "
@@ -113,34 +116,30 @@ adaptive_advance(method const step_method, PDE<float> &sp_pde, PDE<P> &pde,
                        adaptive_grid.get_distrib_plan()));
     profiling::stop("Get global max");
 
-    node_out() << " adapt -- refined grid from " << old_size << " -> "
-               << adaptive_grid.size() << " elems\n";
-    adaptive_grid.get_table().display("Refined");
-
-    if (!refining)
-    {
-        auto const y_stepped =
-            (step_method == method::exp)
-                ? explicit_advance(pde, adaptive_grid, transformer, program_opts,
-                                   unscaled_parts, y, workspace_size_MB, time, "Real step")
-                : implicit_advance(pde, adaptive_grid, transformer, unscaled_parts,
-                                   y, time, program_opts.solver, update_system);
-      y.resize(y_stepped.size()) = y_stepped;
-    }
-    else
-    {
-      auto const y1 =
-          adaptive_grid.redistribute_solution(y, old_plan, old_size);
-      y.resize(y1.size()) = y1;
+    if(refining){
+        node_out() << " adapt -- refined grid from " << old_size << " -> "
+            << adaptive_grid.size() << " elems\n";
+        adaptive_grid.get_table().display("Refined");
+        auto const y1 =
+            adaptive_grid.redistribute_solution(y, old_plan, old_size);
+        y.resize(y1.size()) = y1;
     }
   }
+  // refining == FALSE
+  auto const y_stepped =
+      (step_method == method::exp)
+      ? explicit_advance(pde, adaptive_grid, transformer, program_opts,
+              unscaled_parts, y, workspace_size_MB, time, "Real step")
+      : implicit_advance(pde, adaptive_grid, transformer, unscaled_parts,
+              y, time, program_opts.solver, update_system);
+  y.resize(y_stepped.size()) = y_stepped;
   profiling::stop("Adaptivity_Refining_loop");
 
   return y;
 }
 
 template<typename P, typename Q>
-fk::vector<P> explicit_advance_mp(
+fk::vector<float> explicit_advance_mp(
     PDE<Q> const &sp_pde, PDE<P> const &pde,
     adapt::distributed_grid<P> const &adaptive_grid,
     basis::wavelet_transform<P, resource::host> const &transformer,
@@ -165,7 +164,8 @@ fk::vector<P> explicit_advance_mp(
 
   // time advance working vectors
   // input vector for apply_A
-  fk::vector<P> x(x_orig);
+  //fk::vector<P> x(x_orig);
+  fk::vector<float> sp_x(x_orig);
   // a buffer for reducing across subgrid row
   fk::vector<P> reduced_fx(row_size);
 
@@ -189,7 +189,7 @@ fk::vector<P> explicit_advance_mp(
   auto const apply_id = tools::timer.start("kronmult_setup");
   profiling::start("kronmult_exec");
   auto fx = kronmult::execute_mp(sp_pde, pde, table, program_opts, grid,
-                                 workspace_size_MB, x, "RK 1");
+                                 workspace_size_MB, sp_x,"RK 1");
   profiling::stop("kronmult_exec");
   tools::timer.stop(apply_id);
   profiling::start("Reduced_results");
@@ -225,7 +225,7 @@ fk::vector<P> explicit_advance_mp(
   profiling::start("RKstep2");
   profiling::start("kronmult_exec");
   fx = kronmult::execute_mp(sp_pde, pde, table, program_opts, grid,
-                            workspace_size_MB, x, "RK2");
+                            workspace_size_MB, sp_x, "RK2");
   profiling::stop("kronmult_exec");
   tools::timer.stop(apply_id);
 
@@ -253,12 +253,12 @@ fk::vector<P> explicit_advance_mp(
   fk::vector<P> rk_2(x_orig.size());
   exchange_results(reduced_fx, rk_2, elem_size, plan, get_rank());
 
-  fm::copy(x_orig, x);
+  fm::copy(x_orig, sp_x);
   P const rk_scale_2a = a31 * dt;
   P const rk_scale_2b = a32 * dt;
 
-  fm::axpy(rk_1, x, rk_scale_2a);
-  fm::axpy(rk_2, x, rk_scale_2b);
+  fm::axpy(rk_1, sp_x, rk_scale_2a);
+  fm::axpy(rk_2, sp_x, rk_scale_2b);
   profiling::stop("exchange_results-axpy");
   profiling::stop("RKstep2");
   profiling::start("RKstep3");
@@ -267,7 +267,7 @@ fk::vector<P> explicit_advance_mp(
   tools::timer.start(apply_id);
   profiling::start("kronmult_exec");
   fx = kronmult::execute_mp(sp_pde, pde, table, program_opts, grid,
-                            workspace_size_MB, x, "RK3");
+                            workspace_size_MB, sp_x, "RK3");
   profiling::stop("kronmult_exec");
   tools::timer.stop(apply_id);
   profiling::start("Reduced_results");
@@ -295,18 +295,18 @@ fk::vector<P> explicit_advance_mp(
   exchange_results(reduced_fx, rk_3, elem_size, plan, get_rank());
 
   // -- finish
-  fm::copy(x_orig, x);
+  fm::copy(x_orig, sp_x);
   P const scale_1 = dt * b1;
   P const scale_2 = dt * b2;
   P const scale_3 = dt * b3;
 
-  fm::axpy(rk_1, x, scale_1);
-  fm::axpy(rk_2, x, scale_2);
-  fm::axpy(rk_3, x, scale_3);
+  fm::axpy(rk_1, sp_x, scale_1);
+  fm::axpy(rk_2, sp_x, scale_2);
+  fm::axpy(rk_3, sp_x, scale_3);
   profiling::stop("exchange_results-axpy");
   profiling::stop("RKstep3");
 
-  return x;
+  return sp_x;
 }
 
 // this function executes an explicit time step using the current solution
@@ -605,7 +605,7 @@ implicit_advance(PDE<P> const &pde,
 #undef X
 
 #define X(T)                                                             \
-  template fk::vector<T> explicit_advance_mp(                            \
+  template fk::vector<float> explicit_advance_mp(                            \
       PDE<float> const &sp_pde, PDE<T> const &pde,                       \
       adapt::distributed_grid<T> const &adaptive_grid,                   \
       basis::wavelet_transform<T, resource::host> const &transformer,    \
