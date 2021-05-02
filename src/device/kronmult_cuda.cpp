@@ -12,6 +12,7 @@
 #define SHARED_MEMORY __shared__
 #define DEVICE_FUNCTION __device__
 #define HOST_FUNCTION __host__
+#include "kronmult/kronmult_gpu.hpp"
 #else
 #define GLOBAL_FUNCTION
 #define SYNCTHREADS
@@ -20,10 +21,9 @@
 #define HOST_FUNCTION
 #endif
 
-#include "kronmult_gpu/kronmult.cuh"
-
 #ifdef ASGARD_USE_OPENMP
 #include <omp.h>
+#include "kronmult/kronmult_openmp.hpp"
 #endif
 
 // duplicated code from tools component - need host/device assert compiled
@@ -302,7 +302,7 @@ void call_kronmult(int const n, P *x_ptrs[], P *output_ptrs[], P *work_ptrs[],
 {
 #ifdef ASGARD_USE_CUDA
   {
-      kronmult_batched<P>(
+      kronmult_gpu::kronmult_batched<p>(
           num_dims, n, operator_ptrs, lda, x_ptrs, output_ptrs, work_ptrs, num_krons);
     // -------------------------------------------
     // note important to wait for kernel to finish
@@ -311,38 +311,7 @@ void call_kronmult(int const n, P *x_ptrs[], P *output_ptrs[], P *work_ptrs[],
     expect(stat == cudaSuccess);
   }
 #else
-
-  {
-    switch (num_dims)
-    {
-    case 1:
-      kronmult1_xbatched<P>(n, operator_ptrs, lda, x_ptrs, output_ptrs,
-                            work_ptrs, num_krons);
-      break;
-    case 2:
-      kronmult2_xbatched<P>(n, operator_ptrs, lda, x_ptrs, output_ptrs,
-                            work_ptrs, num_krons);
-      break;
-    case 3:
-      kronmult3_xbatched<P>(n, operator_ptrs, lda, x_ptrs, output_ptrs,
-                            work_ptrs, num_krons);
-      break;
-    case 4:
-      kronmult4_xbatched<P>(n, operator_ptrs, lda, x_ptrs, output_ptrs,
-                            work_ptrs, num_krons);
-      break;
-    case 5:
-      kronmult5_xbatched<P>(n, operator_ptrs, lda, x_ptrs, output_ptrs,
-                            work_ptrs, num_krons);
-      break;
-    case 6:
-      kronmult6_xbatched<P>(n, operator_ptrs, lda, x_ptrs, output_ptrs,
-                            work_ptrs, num_krons);
-      break;
-    default:
-      expect(false);
-    };
-  }
+    kronmult_openmp::kronmult_batched<P>(num_dims, n, operator_ptrs, lda, x_ptrs, output_ptrs, work_ptrs, num_krons);
 #endif
 }
 
