@@ -12,7 +12,7 @@
 #define SHARED_MEMORY __shared__
 #define DEVICE_FUNCTION __device__
 #define HOST_FUNCTION __host__
-#include "kronmult/kronmult_gpu.hpp"
+#include "kronmult_gpu/kronmult.hpp"
 #else
 #define GLOBAL_FUNCTION
 #define SYNCTHREADS
@@ -23,8 +23,10 @@
 
 #ifdef ASGARD_USE_OPENMP
 #include <omp.h>
-#include "kronmult/kronmult_openmp.hpp"
+#include "kronmult_omp/kronmult.hpp"
 #endif
+
+#include <cmath>
 
 // duplicated code from tools component - need host/device assert compiled
 // separately
@@ -163,7 +165,7 @@ prepare_kronmult_kernel(int const *const flattened_table,
 
   // Due to floating-point rounding error on GPU: +0.1 FIXME maybe cast double?
   auto const deg_to_dim =
-      static_cast<int>(pow((float)degree, (float)num_dims) + 0.1);
+      static_cast<int>(pow((P)degree, (P)num_dims) + 0.1);
 
   auto const x_size     = static_cast<int64_t>(num_cols) * deg_to_dim;
   auto const coord_size = num_dims * 2;
@@ -193,7 +195,6 @@ prepare_kronmult_kernel(int const *const flattened_table,
 #endif
   for (int64_t i = start; i < num_elems; i += increment)
   {
-    //std::cerr << "Element " << i << std::endl;
     auto const row = i / num_cols + elem_row_start;
     auto const col = i % num_cols + elem_col_start;
 
@@ -302,7 +303,7 @@ void call_kronmult(int const n, P *x_ptrs[], P *output_ptrs[], P *work_ptrs[],
 {
 #ifdef ASGARD_USE_CUDA
   {
-      kronmult_gpu::kronmult_batched<p>(
+      kronmult_batched<p>(
           num_dims, n, operator_ptrs, lda, x_ptrs, output_ptrs, work_ptrs, num_krons);
     // -------------------------------------------
     // note important to wait for kernel to finish
@@ -311,7 +312,7 @@ void call_kronmult(int const n, P *x_ptrs[], P *output_ptrs[], P *work_ptrs[],
     expect(stat == cudaSuccess);
   }
 #else
-    kronmult_openmp::kronmult_batched<P>(num_dims, n, operator_ptrs, lda, x_ptrs, output_ptrs, work_ptrs, num_krons);
+    kronmult_batched<P>(num_dims, n, operator_ptrs, lda, x_ptrs, output_ptrs, work_ptrs, num_krons);
 #endif
 }
 
