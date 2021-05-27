@@ -40,7 +40,7 @@ private:
   // everything is specified correctly
 
   static int constexpr num_dims_           = 1;
-  static int constexpr num_sources_        = 1;
+  static int constexpr num_sources_        = 0;
   static int constexpr num_terms_          = 1;
   static double constexpr blob_speed_      = 2;   // v (matlab)
   static double constexpr blob_width_      = 0.1; // sig (matlab)
