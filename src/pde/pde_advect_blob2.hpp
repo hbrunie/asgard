@@ -42,8 +42,8 @@ private:
   static int constexpr num_dims_           = 2;
   static int constexpr num_sources_        = 0;
   static int constexpr num_terms_          = 1;
-  static double constexpr blob_speed_      = 2;   // v (matlab)
-  static double constexpr blob_width_      = 0.1; // sig (matlab)
+  static double constexpr blob_speed_      = 5;   // v (matlab)
+  static double constexpr blob_width_      = 0.05; // sig (matlab)
   static bool constexpr do_poisson_solve_  = false;
   static bool constexpr has_analytic_soln_ = true;
 
