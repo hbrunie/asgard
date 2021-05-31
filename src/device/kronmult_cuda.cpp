@@ -12,7 +12,7 @@
 #define SHARED_MEMORY __shared__
 #define DEVICE_FUNCTION __device__
 #define HOST_FUNCTION __host__
-#include "kronmult_gpu/kronmult.hpp"
+#include "kronmult_gpu/kronmult.cuh"
 #else
 #define GLOBAL_FUNCTION
 #define SYNCTHREADS
@@ -303,7 +303,7 @@ void call_kronmult(int const n, P *x_ptrs[], P *output_ptrs[], P *work_ptrs[],
 {
 #ifdef ASGARD_USE_CUDA
   {
-      kronmult_batched<p>(
+      kronmult_batched_cuda<P>(
           num_dims, n, operator_ptrs, lda, x_ptrs, output_ptrs, work_ptrs, num_krons);
     // -------------------------------------------
     // note important to wait for kernel to finish
