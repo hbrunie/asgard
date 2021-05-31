@@ -68,8 +68,7 @@ adaptive_advance(method const step_method, PDE<float> &sp_pde, PDE<P> &pde,
   adaptive_grid.get_table().display("Coarsened");
 
   // refine
-  auto refining = true;
-  while (refining)
+  for (int i=0; i<1; i++)
   {
     // update boundary conditions
     auto const my_subgrid     = adaptive_grid.get_subgrid(get_rank());
@@ -94,7 +93,7 @@ adaptive_advance(method const step_method, PDE<float> &sp_pde, PDE<P> &pde,
     auto const old_size = adaptive_grid.size();
     auto const y_refined =
         adaptive_grid.refine_solution(pde, y_stepped, program_opts);
-    refining = static_cast<bool>(
+    static_cast<bool>(
         get_global_max(static_cast<float>(y_stepped.size() != y_refined.size()),
                        adaptive_grid.get_distrib_plan()));
 
@@ -102,23 +101,21 @@ adaptive_advance(method const step_method, PDE<float> &sp_pde, PDE<P> &pde,
                << adaptive_grid.size() << " elems\n";
   adaptive_grid.get_table().display("Refined");
 
-    if (!refining)
-    {
-        auto const y_stepped =
-            (step_method == method::exp)
-                ? explicit_advance(pde, adaptive_grid, transformer, program_opts,
-                                   unscaled_parts, y, workspace_size_MB, time, "Refining")
-                : implicit_advance(pde, adaptive_grid, transformer, unscaled_parts,
-                                   y, time, program_opts.solver, update_system);
-      y.resize(y_stepped.size()) = y_stepped;
-    }
-    else
-    {
-      auto const y1 =
-          adaptive_grid.redistribute_solution(y, old_plan, old_size);
-      y.resize(y1.size()) = y1;
-    }
+    auto const y1 =
+        adaptive_grid.redistribute_solution(y, old_plan, old_size);
+    y.resize(y1.size()) = y1;
   }
+  auto const my_subgrid     = adaptive_grid.get_subgrid(get_rank());
+  auto const unscaled_parts = boundary_conditions::make_unscaled_bc_parts(
+      pde, adaptive_grid.get_table(), transformer, my_subgrid.row_start,
+      my_subgrid.row_stop);
+  auto const y_stepped =
+      (step_method == method::exp)
+      ? explicit_advance(pde, adaptive_grid, transformer, program_opts,
+                         unscaled_parts, y, workspace_size_MB, time, "Refining")
+      : implicit_advance(pde, adaptive_grid, transformer, unscaled_parts,
+                         y, time, program_opts.solver, update_system);
+  y.resize(y_stepped.size()) = y_stepped;
 
   return y;
 }
